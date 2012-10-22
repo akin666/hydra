@@ -68,14 +68,20 @@ void Set::run()
 	{
 		State *current = *iter;
 		current->run();
-	}
-	for( StateSet::iterator iter = states.begin() ; iter != states.end() ; ++iter )
-	{
-		while( iter != states.end() && (*iter)->canExit() )
+
+		while( current->canExit() )
 		{
-			(*iter)->exit();
-			destroy( (*iter) );
+			current->exit();
+			destroy( current );
 			iter = states.erase( iter ); // returns next..
+			if( iter == states.end() )
+			{
+				break;
+			}
+
+			// next element..
+			current = *iter;
+			current->run();
 		}
 	}
 }
