@@ -1,0 +1,33 @@
+/*
+ * log.hpp
+ *
+ *  Created on: 16.6.2012
+ *      Author: akin
+ */
+
+#ifndef LOG_ABC_HPP_
+#define LOG_ABC_HPP_
+
+#include <os>
+#include <stdtypes>
+
+#ifdef OS_DETECTED
+# define USE_COMMON_LOG
+#endif
+
+class Log 
+{
+public:
+	Log();
+	~Log();
+
+	void printMessage( const string8& message );
+	void printError( const string8& message );
+	void printWarning( const string8& message );
+
+	void message( const char* format , ... );
+	void error( const char* format , ... );
+	void warning( const char* format , ... );
+};
+
+#endif // LOG_HPP_

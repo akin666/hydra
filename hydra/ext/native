@@ -1,0 +1,47 @@
+/*
+ * native
+ *
+ *  Created on: 16.6.2012
+ *      Author: akin
+ *      
+ *   Native platform functions.
+ *      
+ */
+
+#ifndef NATIVE_H_
+#define NATIVE_H_
+
+#include <stdtypes>
+#include <simg>
+#include <os>
+#include <time/time.hpp>
+#include <time/localtime.hpp>
+
+#ifdef OS_DETECTED
+# define USE_COMMON_NATIVELIB
+#endif
+
+namespace native {
+
+// Logging..
+void message( const char *message );
+void warning( const char *message );
+void alert( const char *message );
+
+// Time
+void getTime( Time& time ); // UTC Time!
+void getTime( LocalTime& time ); // Local Time!
+
+// File I/O
+FILE *openFileRead( const string8& path );
+FILE *openFileWrite( const string8& path );
+void closeFile( FILE *file );
+bool readFile( const string8& path , std::string& content );
+
+// Image loading functionality _always_ happens through softimage
+bool loadImageFile( const string8& path , simg::Buffer& softimage );
+bool saveImageFile( const string8& path , simg::Buffer& softimage );
+
+} // namespace native
+
+#endif // NATIVE_H_

@@ -1,0 +1,23 @@
+
+#ifndef GEOMETRY_RECTANGLE_UBER_CLASS_
+#define GEOMETRY_RECTANGLE_UBER_CLASS_
+
+#include <glm/glm>
+#include <stdtypes>
+
+namespace geometry {
+
+template <class CType>
+class Rectangle
+{
+public:
+	CType x,y;
+	CType width,height;
+};
+
+typedef Rectangle<float32> Rectanglef;
+typedef Rectangle<int32> Rectanglei;
+
+} // namespace geometry
+
+#endif // GEOMETRY_RECTANGLE_UBER_CLASS_

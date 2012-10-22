@@ -1,0 +1,21 @@
+
+#ifndef MMANNFILE_HOO_
+#define MMANNFILE_HOO_
+
+#include <os>
+
+#ifdef OS_DETECTED
+# if defined(OS_WINDOWS)
+// Windowz!
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include "mman-win32/mman.h"
+# else
+// Unixeh!
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <sys/mman.h>
+# endif
+#endif
+
+#endif // MMANNFILE_HOO_

@@ -1,0 +1,46 @@
+
+// 
+// StringTools
+// this is to create all the needed tools for minor
+// string operations, that are missing from string8
+// (i know boost, could provide stuff, but boost is like #include <uglyWorld> )
+// 
+
+#ifndef STRINGTOOLS_H_
+#define STRINGTOOLS_H_
+
+#include <stdtypes>
+#include <sstream>
+
+namespace stringtools {
+
+void toUpper( string8& str );
+void toLower( string8& str );
+
+template <class T>
+bool from_string(T& t,
+		const string8& s,
+		std::ios_base& (*f)(std::ios_base&))
+{
+	std::istringstream iss(s);
+	return !(iss >> f >> t).fail();
+}
+
+template<typename T, typename F>
+T to_ot( const F from )
+{
+	std::stringstream temp;
+	temp << from;
+	T to = T();
+	temp >> to;
+	return to;
+}
+
+// specialization need forward declarations.
+template<> string8 to_ot<string8, string8>( const string8 from );
+template<> bool to_ot<bool, string8>( const string8 from );
+template<> string8 to_ot<string8, bool>( const bool from );
+
+} // stringtools
+
+#endif
