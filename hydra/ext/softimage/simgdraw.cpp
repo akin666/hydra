@@ -10,7 +10,7 @@
 namespace simg
 {
 
-Draw::Draw( const glm::ivec2& resolution , Color::Type mode , mbuf::Iterator& iterator )
+Draw::Draw( const glm::ivec2& resolution , color::Type mode , mbuf::Iterator& iterator )
 : resolution( resolution )
 , mode( mode )
 , iterator( iterator )
