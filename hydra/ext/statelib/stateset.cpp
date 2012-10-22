@@ -64,21 +64,18 @@ void Set::run()
 		}
 	}
 
-	StateSet::iterator tmp;
 	for( StateSet::iterator iter = states.begin() ; iter != states.end() ; ++iter )
 	{
 		State *current = *iter;
 		current->run();
-
-		if( current->canExit() )
+	}
+	for( StateSet::iterator iter = states.begin() ; iter != states.end() ; ++iter )
+	{
+		while( iter != states.end() && (*iter)->canExit() )
 		{
-			current->exit();
-			destroy( current );
-			tmp = iter;
-			// reverse iter by one
-			--iter;
-			// kill tmp, iterators after tmp are invalidated now. ++iter in loop advances correctly to next.
-			states.erase( tmp );
+			(*iter)->exit();
+			destroy( (*iter) );
+			iter = states.erase( iter ); // returns next..
 		}
 	}
 }
