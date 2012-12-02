@@ -81,7 +81,7 @@ typedef uint32		 	BufferIndex;
 typedef uint64 			EntityID;
 
 // String types
-typedef std::string string8;
+typedef std::string 	string8;
 typedef string8::size_type StringPos;
 
 #endif // STDTYPES_H_123_

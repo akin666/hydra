@@ -31,8 +31,8 @@ typedef int32		 	Tick;
 typedef int32			Timezone;
 
 // Time
-typedef uint64			PreciseTime;
-typedef float64			FloatTime;
+typedef int64			PreciseTime;	// Microseconds
+typedef float64			FloatTime;		// Seconds
 
 class Time
 {

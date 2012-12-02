@@ -1,5 +1,4 @@
-/// Refactored to use my own coding style.
-///
+
 //
 // Protothread class and macros for lightweight, stackless threads in C++.
 //
@@ -50,6 +49,10 @@
 // such damage.
 //
 
+/// Refactored to use my own coding style.
+/// added protothreadset typedef.
+/// added missing virtual destructor
+
 #ifndef __PROTOTHREAD_H__
 #define __PROTOTHREAD_H__
 
@@ -93,6 +96,9 @@ public:
     // of its Run() function.
     Protothread() 
     : _ptLine(0) 
+    {}
+    
+    virtual ~Protothread()
     {}
 
     // Restart protothread.
@@ -169,5 +175,7 @@ protected:
 #define PT_YIELD_UNTIL(condition) \
     do { ptYielded = false; _ptLine = __LINE__; case __LINE__: \
     if (!ptYielded || !(condition)) return true; } while (0)
+
+typedef std::vector< ProtoThread *> ProtothreadSet;
 
 #endif // __PROTOTHREAD_H__

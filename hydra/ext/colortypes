@@ -30,6 +30,8 @@ enum Type
 	DEPTH16 = 12,
 	DEPTH24 = 13,
 	DEPTH32 = 14,
+	RGB565 = 15,
+	RGBA4444 = 16,
 };
 
 // Utility functions
