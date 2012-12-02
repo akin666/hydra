@@ -1,0 +1,10 @@
+
+#ifndef ENTITYHEADER_123_
+#define ENTITYHEADER_123_
+
+#include <entitylib/entity.hpp>
+#include <entitylib/property.hpp>
+#include <entitylib/propertymanager.hpp>
+#include <entitylib/tproperty.hpp>
+
+#endif // ENTITYHEADER_123_

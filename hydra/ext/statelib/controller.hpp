@@ -5,8 +5,8 @@
  *      Author: akin
  */
 
-#ifndef CONTROLLER_HPP_
-#define CONTROLLER_HPP_
+#ifndef STATE_CONTROLLER_HPP_
+#define STATE_CONTROLLER_HPP_
 
 #include <protothread>
 
@@ -34,4 +34,4 @@ public:
 };
 
 } // namespace state
-#endif // CONTROLLER_HPP_
+#endif // STATE_CONTROLLER_HPP_
