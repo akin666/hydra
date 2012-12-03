@@ -8,7 +8,7 @@
 #ifndef ENTITYLIB_TPROPERTY_HPP_
 #define ENTITYLIB_TPROPERTY_HPP_
 
-#include "property.hpp"
+#include "entityproperty.hpp"
 #include <unordered_map>
 
 namespace entity {
@@ -93,7 +93,7 @@ public:
 			return (iter->second);
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	// Specialize

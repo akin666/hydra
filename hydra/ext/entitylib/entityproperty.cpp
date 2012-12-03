@@ -5,7 +5,7 @@
  *      Author: akin
  */
 
-#include "property.hpp"
+#include "entityproperty.hpp"
 #include "propertymanager.hpp"
 
 namespace entity {

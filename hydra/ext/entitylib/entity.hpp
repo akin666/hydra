@@ -14,18 +14,7 @@ namespace entity {
 
 typedef uint64 ID;
 
-class Id
-{
-private:
-	Id();
-protected:
-	static std::atomic<ID> current;
-public:
-	static const ID null;
-
-	static ID create();
-	static void destroy( ID id );
-};
+extern const ID null;
 
 } // entity
 
