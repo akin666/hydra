@@ -6,45 +6,36 @@
  */
 
 #include "entityproperty.hpp"
-#include "propertymanager.hpp"
+#include "entitymanager.hpp"
 
 namespace entity {
 
-Property::Property()
+Property::Property( Manager& manager )
+: manager( manager )
 {
 }
 
 Property::~Property()
 {
-}
-
-void Property::attachEntity( ID id )
-{
-}
-
-void Property::detachEntity( ID id )
-{
-}
-
-void Property::enableEntity( bool enabled , ID id )
-{
+	// allocating in dtor, might be extremely bad idea.
+	IDSet ids;
+	getEntities( ids );
+	for( ID& id : ids )
+	{
+		detach( id );
+	}
 }
 
 void Property::attach( ID id )
 {
-	PropertyManager::attach( id , this );
+	manager.reg( id , this );
 	attachEntity( id );
 }
 
 void Property::detach( ID id )
 {
-	PropertyManager::detach( id , this );
+	manager.unreg( id , this );
 	detachEntity( id );
-}
-
-void Property::enable( bool enabled , ID id )
-{
-	enableEntity( enabled , id );
 }
 
 bool Property::has( ID id )

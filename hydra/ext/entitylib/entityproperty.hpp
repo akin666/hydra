@@ -12,23 +12,31 @@
 
 namespace entity {
 
+class Manager;
 class Property
 {
+private:
+	Manager& manager;
 protected:
-	virtual void attachEntity( ID id );
-	virtual void detachEntity( ID id );
-	virtual void enableEntity( bool enabled , ID id );
+	// manager needs to call detach attach
+	// but i dot want to expose new functions
+	// to everyone, so it is a friend.
+	friend class Manager;
+
+	// override these functions
+	// for attaching/detaching
+	virtual void attachEntity( ID id ) = 0;
+	virtual void detachEntity( ID id ) = 0;
 public:
-	Property();
+	Property( Manager& manager );
 	virtual ~Property();
 
 	void attach( ID id );
 	void detach( ID id );
-	void enable( bool enabled , ID id );
 
-	virtual bool has( ID id );
-
-	virtual string8 getName();
+	virtual void getEntities( IDSet& ids ) = 0;
+	virtual bool has( ID id ) const;
+	virtual string8 getName() const;
 };
 
 typedef std::vector< Property* > PropertySet;
