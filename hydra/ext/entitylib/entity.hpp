@@ -24,8 +24,8 @@ typedef std::vector<ID> IDSet;
 class Data
 {
 public:
-	ducktype void dtor() = 0;
-	ducktype void ctor() = 0;
+	ducktype void destructor() = 0;
+	ducktype void constructor() = 0;
 };
 */
 

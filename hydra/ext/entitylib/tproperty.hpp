@@ -10,6 +10,7 @@
 
 #include "entityproperty.hpp"
 #include <unordered_map>
+#include "entitydatapool.hpp"
 
 namespace entity {
 
@@ -20,6 +21,7 @@ public:
 	typedef std::unordered_map< ID , PType* > Map;
 protected:
 	Map data;
+	DataPool<PType> pool;
 
 	virtual void attachEntity( EntityID id )
 	{
@@ -29,7 +31,7 @@ protected:
 			return;
 		}
 
-		PType *n = new PType;
+		PType *n = pool.construct();
 		data[ id ] = n;
 	}
 
@@ -43,7 +45,7 @@ protected:
 
 		PType *n = iter->second;
 		data.erase( iter );
-		delete n;
+		pool.destruct( n );
 	}
 
 	virtual void enableEntity( bool enabled , EntityID id )
@@ -80,7 +82,7 @@ public:
 			return *(iter->second);
 		}
 
-		PType *n = new PType;
+		PType *n = pool.construct();
 		data[ id ] = n;
 		return *n;
 	}
