@@ -25,14 +25,7 @@ protected:
 
 	virtual void attachEntity( EntityID id )
 	{
-		typename Map::iterator iter = data.find( id );
-		if( iter != data.end() )
-		{
-			return;
-		}
-
-		PType *n = pool.construct();
-		data[ id ] = n;
+		get( id );
 	}
 
 	virtual void detachEntity( EntityID id )
@@ -46,6 +39,7 @@ protected:
 		PType *n = iter->second;
 		data.erase( iter );
 		pool.destruct( n );
+		pool.sort();
 	}
 public:
 	TProperty()

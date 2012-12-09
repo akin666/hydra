@@ -9,6 +9,7 @@
 #define ALLOCATIONPOOL_HPP_
 
 #include <vector>
+#include <stdtypes>
 
 namespace allocation {
 
@@ -34,7 +35,12 @@ public:
 		clear();
 	}
 
-	CDataType *construct()
+	ducktype bool initialize()
+	{
+		return true;
+	}
+
+	ducktype CDataType *construct()
 	{
 		if( frees.size() < 1 )
 		{
@@ -62,13 +68,13 @@ public:
 		return tmp;
 	}
 
-	void destruct( CDataType *unit )
+	ducktype void destruct( CDataType *unit )
 	{
 		unit->destructor();
 		frees.push_back( unit );
 	}
 
-	void add( size_t count )
+	ducktype void add( size_t count )
 	{
 		CDataType *array = new CDataType[ alloccount ];
 		for( int i = 0 ; i < alloccount ; ++i )
@@ -78,7 +84,7 @@ public:
 		allocs.push_back( array );
 	}
 
-	void clear()
+	ducktype void clear()
 	{
 		frees.clear();
 		for( auto iter = allocs.begin() ; iter != allocs.end() ; ++iter )
@@ -88,6 +94,11 @@ public:
 		allocs.clear();
 		size_t objectSize = sizeof( CDataType );
 		alloccount = basesize / objectSize;
+	}
+
+	ducktype void sort()
+	{
+		// Sort the free allocations, so that the low address ones are first.
 	}
 };
 
