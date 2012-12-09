@@ -10,7 +10,7 @@
 
 #include "entityproperty.hpp"
 #include <unordered_map>
-#include <allocation/allocationpool.hpp>
+#include <allocation/allocationpool>
 
 namespace entity {
 
