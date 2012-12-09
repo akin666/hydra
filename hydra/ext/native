@@ -14,12 +14,13 @@
 #include <stdtypes>
 #include <simg>
 #include <os>
-#include <time/time.hpp>
-#include <time/localtime.hpp>
 
 #ifdef OS_DETECTED
 # define USE_COMMON_NATIVELIB
 #endif
+
+class Time;
+class LocalTime;
 
 namespace native {
 

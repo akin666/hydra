@@ -36,7 +36,7 @@ public:
 	void attach( ID id );
 	void detach( ID id );
 
-	virtual void getEntities( IDSet& ids ) = 0;
+	virtual void clear();
 	virtual bool has( ID id ) const;
 };
 

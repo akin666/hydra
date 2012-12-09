@@ -51,6 +51,11 @@ public:
 		return data.find( id ) != data.end();
 	}
 
+	virtual void clear()
+	{
+		pool.clear();
+	}
+
 	PType& get( EntityID id )
 	{
 		typename Map::iterator iter = data.find( id );

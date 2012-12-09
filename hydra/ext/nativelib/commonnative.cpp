@@ -7,14 +7,19 @@
 
 #include <native>
 
+#define USE_COMMON_NATIVELIB
 #ifdef USE_COMMON_NATIVELIB
 
 #include <iostream>
-#include <time>
 #include <cstdio>
 
 #include <stb_image.h>
 #include <TGAImage.h>
+
+#include <time/time.hpp>
+#include <time/localtime.hpp>
+
+#include <ctime>
 
 #ifndef MAX_TEXT_FILE_SIZE
 # define MAX_TEXT_FILE_SIZE 1048576 // 1Megs

@@ -19,13 +19,11 @@ Property::Property( Manager& manager )
 
 Property::~Property()
 {
-	// allocating in dtor, might be extremely bad idea.
-	IDSet ids;
-	getEntities( ids );
-	for( ID& id : ids )
-	{
-		detach( id );
-	}
+	clear();
+}
+
+void Property::clear()
+{
 }
 
 void Property::attach( ID id )
