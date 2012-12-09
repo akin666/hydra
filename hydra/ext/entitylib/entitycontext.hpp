@@ -55,7 +55,7 @@ public:
 		auto iter = properties.find( PropertyType::type );
 		if( properties.end() != iter )
 		{
-			return **iter;
+			return *(dynamic_cast<PropertyType*>(iter->second));
 		}
 
 		PropertyType *tmp = new PropertyType( manager );

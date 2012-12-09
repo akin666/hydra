@@ -19,6 +19,7 @@
 #include <string>
 
 #define ducktype /*just programming hint*/
+#define ducked //
 
 // Common defines:
 #ifndef DELTA

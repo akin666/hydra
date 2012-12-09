@@ -28,7 +28,7 @@ protected:
 	virtual void attachEntity( ID id ) = 0;
 	virtual void detachEntity( ID id ) = 0;
 public:
-	ducktype static string8 type;
+	ducked static string8 type;
 
 	Property( Manager& manager );
 	virtual ~Property();

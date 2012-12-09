@@ -42,7 +42,8 @@ protected:
 		pool.sort();
 	}
 public:
-	TProperty()
+	TProperty( Manager& manager )
+	: Property( manager )
 	{
 	}
 

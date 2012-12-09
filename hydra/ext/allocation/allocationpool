@@ -77,7 +77,7 @@ public:
 	ducktype void add( size_t count )
 	{
 		CDataType *array = new CDataType[ alloccount ];
-		for( int i = 0 ; i < alloccount ; ++i )
+		for( size_t i = 0 ; i < alloccount ; ++i )
 		{
 			frees.push_back( &array[i] );
 		}
