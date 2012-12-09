@@ -3,8 +3,8 @@
  *      Author: akin
  */
 
-#ifndef _OS_H_
-#define _OS_H_
+#ifndef _DETECTION_OS_H_
+#define _DETECTION_OS_H_
 
 #define OS_NOT_DETECTED
 #define CRY_OS_NOT_DETECTED
@@ -80,5 +80,5 @@
 # error Operating system was not detected, Please elaborate?
 #endif
 
-#endif // _OS_H_ 
+#endif // _DETECTION_OS_H_ 
 
