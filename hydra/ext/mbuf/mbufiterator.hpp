@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <iostream> // size_t
 
 namespace mbuf
 {
@@ -45,7 +46,7 @@ public:
 		return (CType*)retain( tmpit , tmpsize );
 	}
 
-	template <class CType> CType *data( std::size_t it = 0  , std::size_t count )
+	template <class CType> CType *data( std::size_t it  , std::size_t count )
 	{
 		std::size_t tmpsize = sizeof( CType ) * count;
 		return (CType*)retain( it , tmpsize );

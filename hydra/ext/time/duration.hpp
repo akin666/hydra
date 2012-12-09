@@ -8,7 +8,7 @@
 #ifndef TIME_DURATION_HPP_
 #define TIME_DURATION_HPP_
 
-#include <stdtypes>
+#include "time.hpp"
 
 namespace time {
 

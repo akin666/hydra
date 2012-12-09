@@ -45,9 +45,4 @@ bool Property::has( ID id ) const
 	return false;
 }
 
-string8 Property::getName() const
-{
-	return "null";
-}
-
 } // namespace entity

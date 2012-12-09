@@ -10,8 +10,6 @@
 
 #include "time.hpp"
 
-namespace time {
-
 class LocalTime
 {
 protected:
@@ -53,5 +51,4 @@ public:
 	string8 toString();
 };
 
-} // namespace orion
 #endif // HH_LOCALTIME_HPP_

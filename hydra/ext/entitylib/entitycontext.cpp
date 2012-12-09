@@ -13,7 +13,7 @@ namespace entity {
 
 Context::Context()
 : current( FIRST_ENTITY )
-, manager( *this )
+, factory( *this )
 {
 }
 

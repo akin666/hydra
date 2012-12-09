@@ -12,6 +12,7 @@
 #include <stdtypes>
 #include <colortypes>
 #include <mbuf/mbufbuffer.hpp>
+#include <mbuf/mbufiterator.hpp>
 #include <geometry/rectangle>
 
 namespace simg
@@ -20,7 +21,7 @@ namespace simg
 class Draw
 {
 private:
-	glm::ivec2& resolution;
+	glm::ivec2 resolution;
 	color::Type mode;
 	mbuf::Iterator iterator;
 public:

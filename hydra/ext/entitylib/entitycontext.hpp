@@ -11,6 +11,7 @@
 #include "entity.hpp"
 #include "entityproperty.hpp"
 #include "entitymanager.hpp"
+#include "entityfactory.hpp"
 #include <unordered_map>
 
 namespace entity {

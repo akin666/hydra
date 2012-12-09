@@ -6,6 +6,7 @@
  */
 
 #include "simgdraw.hpp"
+#include <cstring>
 
 namespace simg
 {
@@ -39,7 +40,7 @@ void Draw::draw( const glm::ivec2& position , const glm::ivec2& res , mbuf::Iter
 		size_t size = bytespp * ((lasty < resolution.y ? lasty : resolution.y) * res.x);
 
 		// memcpy!
-		::memcpy( this->iterator.data<int8>( begin , size ) , iterator.data<int8>( 0 , size ) , size );
+		std::memcpy( this->iterator.data<int8>( begin , size ) , iterator.data<int8>( 0 , size ) , size );
 		return;
 	}
 
@@ -63,7 +64,7 @@ void Draw::draw( const glm::ivec2& position , const glm::ivec2& res , mbuf::Iter
 	for( int i = 0 ; i < copy_size.y ; ++i )
 	{
 		// memcpy!
-		::memcpy( dst , src , cpsize );
+		std::memcpy( dst , src , cpsize );
 		dst+=dstjmp;
 		src+=srcjmp;
 	}

@@ -23,20 +23,20 @@ protected:
 	int8 *realbuffer; 	// ownership
 	mbuf::Iterator *iterator;
 	int totalSize;
-	Color::Type mode;
+	color::Type mode;
 	glm::ivec2 resolution;
 	uint8 bytespp;
 public:
 	Buffer();
 	// Wrap Buffer around existing buffer, does not transfer ownership.
-	Buffer( const glm::ivec2& resolution , Color::Type mode , void *pixelbuffer );
-	Buffer( const glm::ivec2& resolution , Color::Type mode , mbuf::Buffer& pixelbuffer );
+	Buffer( const glm::ivec2& resolution , color::Type mode , void *pixelbuffer );
+	Buffer( const glm::ivec2& resolution , color::Type mode , mbuf::Buffer& pixelbuffer );
 	virtual ~Buffer();
 
-	void setMode( Color::Type mode );
+	void setMode( color::Type mode );
 	void setResolution( const glm::ivec2& resolution );
 
-	Color::Type getMode() const;
+	color::Type getMode() const;
 	glm::ivec2 getResolution() const;
 
 	void *access() const;

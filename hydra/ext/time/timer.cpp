@@ -7,11 +7,11 @@
 
 #include "timer.hpp"
 
-namespace orion
+namespace time
 {
 
 Timer::Timer()
 {
 }
 
-} // namespace orion 
+} // namespace time

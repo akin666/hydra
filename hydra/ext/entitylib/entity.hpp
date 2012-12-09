@@ -9,6 +9,7 @@
 #define ENTITYLIB_ENTITY_HPP_
 
 #include <stdtypes>
+#include <vector>
 #include <unordered_map>
 
 namespace entity {

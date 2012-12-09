@@ -8,8 +8,6 @@
 #include "localtime.hpp"
 #include <native>
 
-namespace orion {
-
 LocalTime::LocalTime()
 : year( 0 ),
   month( 0 ),
@@ -132,7 +130,7 @@ void LocalTime::parse( string8 string )
 
 void LocalTime::update()
 {
-	getTime( *this );
+	native::getTime( *this );
 }
 
 string8 LocalTime::toString()
@@ -140,4 +138,3 @@ string8 LocalTime::toString()
 	return "";
 }
 
-} // namespace orion
