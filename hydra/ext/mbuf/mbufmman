@@ -1,7 +1,7 @@
 
 #include <os>
 
-#ifdef OS_DETECTED
+#ifndef OS_NOT_DETECTED
 # if defined(OS_WINDOWS)
 // Windowz!
 #warning WINDOWSEMU MMAN selected
@@ -15,4 +15,6 @@
 #  include <sys/types.h>
 #  include <sys/mman.h>
 # endif
+#else
+#warning NO MANN NO OS_DETECTED
 #endif
