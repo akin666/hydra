@@ -19,7 +19,10 @@
 #include <time/time.hpp>
 #include <time/localtime.hpp>
 
-#include <ctime>
+#include <colortypes>
+#include <log>
+
+#include <sys/time.h>
 
 #ifndef MAX_TEXT_FILE_SIZE
 # define MAX_TEXT_FILE_SIZE 1048576 // 1Megs
@@ -32,6 +35,8 @@
 #ifndef MAX_IMAGE_RESOLUTION
 # define MAX_IMAGE_RESOLUTION 8192 // So, max to be 8192*8192 ~ 268,435,456 bytes, 268Mb, thats quite alot..
 #endif
+
+using namespace color;
 
 namespace native {
 

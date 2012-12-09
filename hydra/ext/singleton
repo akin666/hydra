@@ -9,11 +9,9 @@
 #define SINGLETON_HPP_
 
 #include <iostream>
-#include <thread>
+#include <uthread>
 #include <stdexcept>
 
-namespace bolt
-{
 template <class CType>
 class Singleton
 {
@@ -98,8 +96,6 @@ template <class CType>
 void unsetSingleton() 
 {
 	Singleton<CType>::unset();
-}
-
 }
 
 #endif /* SINGLETON_HPP_ */
