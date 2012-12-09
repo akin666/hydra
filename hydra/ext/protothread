@@ -89,6 +89,9 @@
 //     PT_END();
 // }
 //
+
+#include <vector>
+
 class Protothread
 {
 public:
@@ -112,14 +115,14 @@ public:
     // (his restart automatically, which is usually not what you want).
     void stop() 
     {
-    	_ptLine = LineNumberInvalid;
+    	_ptLine = lineNumberInvalid;
     }
 
     // Return true if the protothread is running or waiting, false if it has
     // ended or exited.
     bool isRunning() const 
     { 
-    	return _ptLine != LineNumberInvalid; 
+    	return _ptLine != lineNumberInvalid; 
     }
 
     // Run next part of protothread or return immediately if it's still

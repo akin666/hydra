@@ -7,6 +7,7 @@
 
 #include "softimagebuffer.hpp"
 #include <string.h>
+#include <mbuf/mbufiterator.hpp>
 
 namespace simg
 {

@@ -6,19 +6,19 @@
  */
 
 #include "stringtools"
-#include <functional>
-#include <algorithm>
+//#include <functional>
+//#include <algorithm>
 
 namespace stringtools {
 
 void toUpper( string8& str )
 {
-	std::transform(str.begin(), str.end(), str.begin(), toupper );
+//	std::transform(str.begin(), str.end(), str.begin(), toupper );
 }
 
 void toLower( string8& str )
 {
-	std::transform(str.begin(), str.end(), str.begin(), tolower);
+//	std::transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
 template<>
