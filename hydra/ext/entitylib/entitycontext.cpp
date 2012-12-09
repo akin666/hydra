@@ -12,7 +12,8 @@
 namespace entity {
 
 Context::Context()
-: current(FIRST_ENTITY)
+: current( FIRST_ENTITY )
+, manager( *this )
 {
 }
 
@@ -32,16 +33,7 @@ void Context::destroy( ID id )
 		return;
 	}
 	// Destroy ID
-	// (or at least, all its datasets)
-//	PropertyManager::detachAll( id );
-}
-
-void Context::attach( ID id , Property *property )
-{
-}
-
-void Context::detach( ID id , Property *property )
-{
+	manager.clear( id );
 }
 
 } // namespace entity

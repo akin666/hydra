@@ -10,18 +10,18 @@
 
 #include "entityproperty.hpp"
 #include <unordered_map>
-#include "entitydatapool.hpp"
+#include <allocation/allocationpool.hpp>
 
 namespace entity {
 
 template <class PType>
 class TProperty : public Property
 {
-public:
-	typedef std::unordered_map< ID , PType* > Map;
 protected:
+	typedef std::unordered_map< ID , PType* > Map;
+
 	Map data;
-	DataPool<PType> pool;
+	allocation::Pool<PType> pool;
 
 	virtual void attachEntity( EntityID id )
 	{
@@ -47,26 +47,9 @@ protected:
 		data.erase( iter );
 		pool.destruct( n );
 	}
-
-	virtual void enableEntity( bool enabled , EntityID id )
-	{
-		typename Map::iterator iter = data.find( id );
-		if( iter == data.end() )
-		{
-			return;
-		}
-
-		PType *n = iter->second;
-		n->enable( enabled );
-	}
 public:
 	TProperty()
 	{
-	}
-
-	virtual ~TProperty()
-	{
-		// detach all!
 	}
 
 	virtual bool has( EntityID id )
@@ -96,12 +79,6 @@ public:
 		}
 
 		return nullptr;
-	}
-
-	// Specialize
-	virtual string8 getName()
-	{
-		return "";
 	}
 };
 

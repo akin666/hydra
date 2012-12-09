@@ -28,6 +28,8 @@ protected:
 	virtual void attachEntity( ID id ) = 0;
 	virtual void detachEntity( ID id ) = 0;
 public:
+	ducktype static string8 type;
+
 	Property( Manager& manager );
 	virtual ~Property();
 
@@ -36,10 +38,10 @@ public:
 
 	virtual void getEntities( IDSet& ids ) = 0;
 	virtual bool has( ID id ) const;
-	virtual string8 getName() const;
 };
 
 typedef std::vector< Property* > PropertySet;
+typedef std::unordered_map< string8 , Property* > PropertyMap;
 
 } // namespace entity
 #endif // ENTITYLIB_PROPERTY_HPP_

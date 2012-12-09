@@ -10,6 +10,7 @@
 
 #include "entity.hpp"
 #include "entityproperty.hpp"
+#include "entitymanager.hpp"
 #include <unordered_map>
 
 namespace entity {
@@ -17,12 +18,11 @@ namespace entity {
 class Context
 {
 private:
-	typedef std::unordered_map< ID , PropertySet > PropertyMap;
-
 	std::atomic<ID> current;
-	PropertySet properties;
 
-	PropertyMap data;
+	Manager manager;
+	Factory factory;
+	PropertyMap properties;
 public:
 	Context();
 	~Context();
@@ -30,8 +30,37 @@ public:
 	ID create();
 	void destroy( ID id );
 
-	void attach( ID id , Property *property );
-	void detach( ID id , Property *property );
+	// Property access methods.
+	template < class PropertyType >
+	void add()
+	{
+		get<PropertyType>();
+	}
+
+	template < class PropertyType >
+	void remove()
+	{
+		auto iter = properties.find( PropertyType::type );
+		if( properties.end() != iter )
+		{
+			delete *iter;
+			properties.erase( iter );
+		}
+	}
+
+	template < class PropertyType >
+	PropertyType& get()
+	{
+		auto iter = properties.find( PropertyType::type );
+		if( properties.end() != iter )
+		{
+			return **iter;
+		}
+
+		PropertyType *tmp = new PropertyType( manager );
+		properties[PropertyType::type] = tmp;
+		return *tmp;
+	}
 };
 
 } // namespace entity

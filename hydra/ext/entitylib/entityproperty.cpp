@@ -10,6 +10,8 @@
 
 namespace entity {
 
+ducktype string8 Property::type("null");
+
 Property::Property( Manager& manager )
 : manager( manager )
 {
@@ -38,12 +40,12 @@ void Property::detach( ID id )
 	detachEntity( id );
 }
 
-bool Property::has( ID id )
+bool Property::has( ID id ) const
 {
 	return false;
 }
 
-string8 Property::getName()
+string8 Property::getName() const
 {
 	return "null";
 }
