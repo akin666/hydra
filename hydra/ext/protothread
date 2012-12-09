@@ -179,6 +179,6 @@ protected:
     do { ptYielded = false; _ptLine = __LINE__; case __LINE__: \
     if (!ptYielded || !(condition)) return true; } while (0)
 
-typedef std::vector< ProtoThread *> ProtothreadSet;
+typedef std::vector< Protothread *> ProtothreadSet;
 
 #endif // __PROTOTHREAD_H__

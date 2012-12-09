@@ -1,7 +1,4 @@
 
-#ifndef MMANNFILE_HOO_
-#define MMANNFILE_HOO_
-
 #include <os>
 
 #ifdef OS_DETECTED
@@ -19,5 +16,3 @@
 #  include <sys/mman.h>
 # endif
 #endif
-
-#endif // MMANNFILE_HOO_

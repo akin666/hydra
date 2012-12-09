@@ -8,7 +8,7 @@
 #include "mbuffile.hpp"
 #include <iostream>
 
-#include "mman"
+#include "mbufmman"
 #include <sys/stat.h>
 
 #include <cassert>

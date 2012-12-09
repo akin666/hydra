@@ -22,14 +22,14 @@ void Controller::clear()
 {
 	for( auto iter : data )
 	{
-		delete *iter;
+		delete iter;
 	}
 	data.clear();
 }
 
 void Controller::run()
 {
-	for( auto iter : data )
+	for( auto iter = data.begin() ; iter != data.end() ; ++iter )
 	{
 		while( iter != data.end() && !(*iter)->run() )
 		{
