@@ -1,0 +1,21 @@
+/*
+ * command
+ * Command pattern root interface.
+ *  Created on: 1.7.2012
+ *      Author: akin
+ */
+
+#ifndef HYDRA_COMMAND_
+#define HYDRA_COMMAND_
+
+class Command
+{
+public:
+	virtual ~Command()
+	{
+	}
+
+	virtual void operator() = 0;
+};
+
+#endif // HYDRA_COMMAND_
