@@ -4,12 +4,10 @@
 #ifndef OS_NOT_DETECTED
 # if defined(OS_WINDOWS)
 // Windowz!
-#warning WINDOWSEMU MMAN selected
 #  include <unistd.h>
 #  include <sys/types.h>
 #  include "mman-win32/mman.h"
 # else
-#warning UNIX MMAN selected
 // Unixeh!
 #  include <unistd.h>
 #  include <sys/types.h>
