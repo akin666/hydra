@@ -11,7 +11,6 @@
 #include <cstdlib>
 #include <stdtypes>
 
-/*
 template <class CType>
 CType random()
 {
@@ -30,6 +29,5 @@ CType random( const CType min , const CType max )
 
 template <> float32 random( const float32 min , const float32 max );
 template <> float64 random( const float64 min , const float64 max );
-*/
 
 #endif // RANDOM_HPP_ 
