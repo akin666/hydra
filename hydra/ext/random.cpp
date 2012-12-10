@@ -8,6 +8,7 @@
 #include "random"
 #include <cmath>
 
+/*
 template <>
 float32 random()
 {
@@ -31,5 +32,5 @@ template <> float64 random( const float64 min , const float64 max )
 	float64 diff = max - min;
 	return min + (rand()/((float64)RAND_MAX) * diff );
 }
-
+*/
 

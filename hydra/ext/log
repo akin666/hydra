@@ -31,6 +31,6 @@ public:
 	void warning( const char* format , ... );
 };
 
-#define LOG getSingleton<Log>()
+#define LOG createSingleton<Log>()
 
 #endif // LOG_HPP_
