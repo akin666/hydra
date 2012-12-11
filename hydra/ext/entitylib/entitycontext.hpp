@@ -11,7 +11,6 @@
 #include "entity.hpp"
 #include "entityproperty.hpp"
 #include "entitymanager.hpp"
-#include "entityfactory.hpp"
 #include <unordered_map>
 
 namespace entity {
@@ -22,7 +21,6 @@ private:
 	std::atomic<ID> current;
 
 	Manager manager;
-	Factory factory;
 	PropertyMap properties;
 public:
 	Context();
