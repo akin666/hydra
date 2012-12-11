@@ -23,12 +23,12 @@ protected:
 	Map data;
 	allocation::Pool<PType> pool;
 
-	virtual void attachEntity( EntityID id )
+	virtual void attachEntity( ID id )
 	{
 		get( id );
 	}
 
-	virtual void detachEntity( EntityID id )
+	virtual void detachEntity( ID id )
 	{
 		typename Map::iterator iter = data.find( id );
 		if( iter == data.end() )
@@ -47,7 +47,7 @@ public:
 	{
 	}
 
-	virtual bool has( EntityID id )
+	virtual bool has( ID id )
 	{
 		return data.find( id ) != data.end();
 	}
@@ -57,7 +57,7 @@ public:
 		pool.clear();
 	}
 
-	PType& get( EntityID id )
+	PType& get( ID id )
 	{
 		typename Map::iterator iter = data.find( id );
 		if( iter != data.end() )
@@ -70,7 +70,7 @@ public:
 		return *n;
 	}
 
-	PType *getNoCreate( EntityID id )
+	PType *getNoCreate( ID id )
 	{
 		typename Map::iterator iter = data.find( id );
 		if( iter != data.end() )
@@ -82,5 +82,5 @@ public:
 	}
 };
 
-} // namespace orion
+} // namespace entity
 #endif // ENTITYLIB_TPROPERTY_HPP_
