@@ -5,7 +5,10 @@
  *      Author: akin
  */
 
-#include "text.hpp"
+#include "uitext.hpp"
+
+namespace ui {
 
 ducktype const std::string Text::type("text");
 
+} // namespace ui

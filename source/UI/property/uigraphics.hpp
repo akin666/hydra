@@ -5,14 +5,16 @@
  *      Author: akin
  */
 
-#ifndef TEXT_HPP_
-#define TEXT_HPP_
+#ifndef UIGRAPHICS_HPP_
+#define UIGRAPHICS_HPP_
 
 #include <stdtypes>
 #include <glm/glm>
 #include <entitylib/tproperty.hpp>
 
-class Text
+namespace ui {
+
+class Graphics
 {
 public:
 	ducktype static const std::string type;
@@ -23,12 +25,13 @@ public:
 
 	ducktype void destructor()
 	{
-		text.clear();
 	}
 
-	string8 text;
+	// Vertex buffers and that sort of stuff.. maybe even shader selection?
 };
 
-typedef entity::TProperty<Text> TextProperty;
+typedef entity::TProperty<Graphics> GraphicsProperty;
 
-#endif /* TEXT_HPP_ */
+} // namespace ui
+
+#endif /* GRAPHICS_HPP_ */

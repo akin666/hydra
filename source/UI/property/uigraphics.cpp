@@ -5,7 +5,10 @@
  *      Author: akin
  */
 
-#include "graphics.hpp"
+#include "uigraphics.hpp"
+
+namespace ui {
 
 ducktype const std::string Graphics::type("graphics");
 
+} // namespace ui

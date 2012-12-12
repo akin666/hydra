@@ -5,25 +5,30 @@
  *      Author: akin
  */
 
-#ifndef USERINTERFACEFACTORY_HPP_
-#define USERINTERFACEFACTORY_HPP_
+#ifndef UIFACTORY_HPP_
+#define UIFACTORY_HPP_
 
 #include <entitylib/entitycontext.hpp>
-#include "property/graphics.hpp"
-#include "property/location.hpp"
-#include "property/text.hpp"
 
-class UserInterfaceFactory
+#include "property/uigraphics.hpp"
+#include "property/uilocation.hpp"
+#include "property/uitext.hpp"
+
+namespace ui {
+
+class Factory
 {
 private:
 	GraphicsProperty& graphics;
 	LocationProperty& location;
 	TextProperty& text;
 public:
-	UserInterfaceFactory( entity::Context& context );
-	~UserInterfaceFactory();
+	Factory( entity::Context& context );
+	~Factory();
 
 	// TODO, Add function, that will parse from json, what properties are attached to entity ID.
 };
+
+} // namespace ui
 
 #endif // USERINTERFACEFACTORY_HPP_

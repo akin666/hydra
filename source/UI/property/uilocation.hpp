@@ -5,12 +5,14 @@
  *      Author: akin
  */
 
-#ifndef LOCATION_HPP_
-#define LOCATION_HPP_
+#ifndef UILOCATION_HPP_
+#define UILOCATION_HPP_
 
 #include <stdtypes>
 #include <glm/glm>
 #include <entitylib/tproperty.hpp>
+
+namespace ui {
 
 class Location
 {
@@ -28,5 +30,7 @@ public:
 };
 
 typedef entity::TProperty<Location> LocationProperty;
+
+} // namespace ui
 
 #endif /* LOCATION_HPP_ */

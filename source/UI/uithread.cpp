@@ -5,28 +5,31 @@
  *      Author: akin
  */
 
-#include "userinterfacescheduler.hpp"
+#include "uithread.hpp"
 
 #define STATE_NONE 0x0000
 #define STATE_EXIT 0x0001
 
-UserInterfaceScheduler::UserInterfaceScheduler( entity::Context& context )
+namespace ui {
+
+Thread::Thread()
 : state( STATE_NONE )
 , graphics( context.get<GraphicsProperty>() )
 , location( context.get<LocationProperty>() )
+, factory( context )
 {
 }
 
-UserInterfaceScheduler::~UserInterfaceScheduler()
+Thread::~Thread()
 {
 }
 
-void UserInterfaceScheduler::stop()
+void Thread::stop()
 {
 	state |= STATE_EXIT;
 }
 
-bool UserInterfaceScheduler::run()
+bool Thread::run()
 {
 	PT_BEGIN();
 	while( (state & STATE_EXIT) == 0 )
@@ -38,3 +41,4 @@ bool UserInterfaceScheduler::run()
 	PT_END();
 }
 
+} // namespace ui

@@ -5,7 +5,10 @@
  *      Author: akin
  */
 
-#include "location.hpp"
+#include "uilocation.hpp"
+
+namespace ui {
 
 ducktype const std::string Location::type("location");
 
+} // namespace ui

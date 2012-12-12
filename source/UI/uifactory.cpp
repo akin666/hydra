@@ -5,16 +5,19 @@
  *      Author: akin
  */
 
-#include "userinterfacefactory.hpp"
+#include "uifactory.hpp"
 
-UserInterfaceFactory::UserInterfaceFactory( entity::Context& context )
+namespace ui {
+
+Factory::Factory( entity::Context& context )
 : graphics( context.get<GraphicsProperty>() )
 , location( context.get<LocationProperty>() )
 , text( context.get<TextProperty>() )
 {
 }
 
-UserInterfaceFactory::~UserInterfaceFactory()
+Factory::~Factory()
 {
 }
 
+} // namespace ui
