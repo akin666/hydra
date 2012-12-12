@@ -10,10 +10,13 @@
 
 #include <stdtypes>
 #include <glm/glm>
+#include <entitylib/tproperty.hpp>
 
 class Graphics
 {
 public:
+	ducktype static const std::string type;
+
 	ducktype void constructor()
 	{
 	}
@@ -25,5 +28,6 @@ public:
 	// Vertex buffers and that sort of stuff.. maybe even shader selection?
 };
 
+typedef entity::TProperty<Graphics> GraphicsProperty;
 
 #endif /* GRAPHICS_HPP_ */

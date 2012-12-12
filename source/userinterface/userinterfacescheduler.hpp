@@ -11,8 +11,9 @@
 #include <protothread>
 #include <entitylib/entitycontext.hpp>
 
-class GraphicsProperty;
-class LocationProperty;
+#include "property/graphics.hpp"
+#include "property/location.hpp"
+
 class UserInterfaceScheduler : public Protothread
 {
 private:

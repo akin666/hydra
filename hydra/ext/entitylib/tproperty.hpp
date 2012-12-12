@@ -17,6 +17,8 @@ namespace entity {
 template <class PType>
 class TProperty : public Property
 {
+public:
+	static ducktype const std::string type;
 protected:
 	typedef std::unordered_map< ID , PType* > Map;
 
@@ -81,6 +83,9 @@ public:
 		return nullptr;
 	}
 };
+
+template <class PType>
+const ducktype std::string TProperty<PType>::type( PType::type );
 
 } // namespace entity
 #endif // ENTITYLIB_TPROPERTY_HPP_

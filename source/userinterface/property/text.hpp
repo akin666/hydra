@@ -10,10 +10,13 @@
 
 #include <stdtypes>
 #include <glm/glm>
+#include <entitylib/tproperty.hpp>
 
 class Text
 {
 public:
+	ducktype static const std::string type;
+
 	ducktype void constructor()
 	{
 	}
@@ -26,5 +29,6 @@ public:
 	string8 text;
 };
 
+typedef entity::TProperty<Text> TextProperty;
 
 #endif /* TEXT_HPP_ */

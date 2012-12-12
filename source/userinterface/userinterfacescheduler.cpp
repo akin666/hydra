@@ -7,9 +7,6 @@
 
 #include "userinterfacescheduler.hpp"
 
-#include "property/graphicsproperty.hpp"
-#include "property/locationproperty.hpp"
-
 #define STATE_NONE 0x0000
 #define STATE_EXIT 0x0001
 

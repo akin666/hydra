@@ -9,10 +9,10 @@
 #define USERINTERFACEFACTORY_HPP_
 
 #include <entitylib/entitycontext.hpp>
+#include "property/graphics.hpp"
+#include "property/location.hpp"
+#include "property/text.hpp"
 
-class GraphicsProperty;
-class LocationProperty;
-class TextProperty;
 class UserInterfaceFactory
 {
 private:
