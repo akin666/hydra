@@ -13,6 +13,7 @@
 
 namespace logic {
 
+class Thread;
 class Scheduler
 {
 public:
@@ -20,8 +21,8 @@ public:
 	~Scheduler();
 
 	// queue stuff, that is runnable
-	// proto itself is responsible for locks et al.
-	void queue( Protothread *thread );
+	// thread itself is responsible for locks et al.
+	void queue( Thread *thread );
 
 	// spawn protos interface
 	void start( render::Queue& target );

@@ -6,6 +6,7 @@
  */
 
 #include "logicscheduler.hpp"
+#include "logicthread.hpp"
 
 namespace logic {
 
@@ -17,7 +18,7 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::queue( Protothread* thread )
+void Scheduler::queue( Thread* thread )
 {
 }
 

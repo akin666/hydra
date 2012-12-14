@@ -6,6 +6,7 @@
  */
 
 #include "renderqueue.hpp"
+#include "renderrenderer.hpp"
 
 namespace render {
 
@@ -17,7 +18,7 @@ Queue::~Queue()
 {
 }
 
-void Queue::add( Protothread* thread )
+void Queue::add( Renderer* thread )
 {
 }
 

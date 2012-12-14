@@ -8,10 +8,9 @@
 #ifndef RENDERQUEUE_HPP_
 #define RENDERQUEUE_HPP_
 
-#include <protothread>
-
 namespace render {
 
+class Renderer;
 class Queue
 {
 public:
@@ -19,8 +18,8 @@ public:
 	~Queue();
 
 	// queue stuff, that is immediately runnable, tries to render, until run finishes.
-	// proto itself is responsible for locks et al.
-	void add( Protothread *thread );
+	// renderer itself is responsible for locks et al.
+	void add( Renderer *thread );
 
 	// indicate 'done' from logic
 	void finished();
