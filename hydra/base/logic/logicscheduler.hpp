@@ -10,12 +10,19 @@
 
 #include <protothread>
 #include "../render/renderqueue.hpp"
+#include <uthread>
 
 namespace logic {
 
 class Thread;
 class Scheduler
 {
+protected:
+	std::mutex mutex;
+	std::mutex deepMutex;
+
+	ThreadSet threads;
+	ThreadSet added;
 public:
 	Scheduler();
 	~Scheduler();

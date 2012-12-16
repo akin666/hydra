@@ -8,11 +8,17 @@
 #ifndef RENDERQUEUE_HPP_
 #define RENDERQUEUE_HPP_
 
+#include <tque>
+
 namespace render {
 
 class Renderer;
 class Queue
 {
+private:
+	typedef TQue<Renderer *> RendererQue;
+	RendererQue queue;
+	std::atomic<int> flags;
 public:
 	Queue();
 	~Queue();
@@ -22,10 +28,10 @@ public:
 	void add( Renderer *thread );
 
 	// indicate 'done' from logic
-	void finished();
+	void finish();
 
 	// run interface
-	void run();
+	void start();
 };
 
 } // namespace render

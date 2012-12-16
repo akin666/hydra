@@ -11,6 +11,7 @@
 #include <protothread>
 #include <entitylib/entitycontext.hpp>
 #include "../render/renderqueue.hpp"
+#include <vector>
 
 namespace logic {
 
@@ -28,6 +29,8 @@ public:
 
 	void setRenderQueue( render::Queue *rqueue );
 };
+
+typedef std::vector<Thread*> ThreadSet;
 
 } // namespace logic
 #endif // LOGICTHREAD_HPP_
