@@ -7,6 +7,9 @@
 //============================================================================
 
 #include <iostream>
+#include <logic/logicscheduler.hpp>
+#include <render/renderqueue.hpp>
+
 using namespace std;
 
 int main() {

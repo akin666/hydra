@@ -8,6 +8,7 @@
 #ifndef RENDERQUEUE_HPP_
 #define RENDERQUEUE_HPP_
 
+#include <stdtypes>
 #include <tque>
 
 namespace render {

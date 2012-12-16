@@ -24,9 +24,9 @@ render::Queue *Thread::getRenderQueue()
 	return renderqueue;
 }
 
-void Thread::setRenderQueue( render::Queue *rqueue )
+void Thread::setRenderQueue( render::Queue& rqueue )
 {
-	renderqueue = rqueue;
+	renderqueue = &rqueue;
 }
 
 

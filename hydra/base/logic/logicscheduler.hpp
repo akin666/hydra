@@ -8,7 +8,7 @@
 #ifndef LOGICSCHEDULER_HPP_
 #define LOGICSCHEDULER_HPP_
 
-#include <protothread>
+#include "logicthread.hpp"
 #include "../render/renderqueue.hpp"
 #include <uthread>
 

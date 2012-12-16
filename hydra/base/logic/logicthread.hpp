@@ -27,7 +27,7 @@ public:
 	Thread();
 	virtual ~Thread();
 
-	void setRenderQueue( render::Queue *rqueue );
+	void setRenderQueue( render::Queue& rqueue );
 };
 
 typedef std::vector<Thread*> ThreadSet;

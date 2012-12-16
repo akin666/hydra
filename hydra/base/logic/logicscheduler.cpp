@@ -48,6 +48,7 @@ void Scheduler::start( render::Queue& target )
 	// TODO! add real threading
 	for( ThreadSet::iterator iter = threads.begin() ; iter != threads.end() ; ++iter )
 	{
+		(*iter)->setRenderQueue( target );
 		while( !(*iter)->run() )
 		{
 			// kill
