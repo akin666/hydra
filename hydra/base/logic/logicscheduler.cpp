@@ -10,7 +10,8 @@
 
 namespace logic {
 
-Scheduler::Scheduler()
+Scheduler::Scheduler( render::Queue& target )
+: renderqueue( target )
 {
 }
 
@@ -29,7 +30,7 @@ void Scheduler::queue( Thread* thread )
 	added.push_back( thread );
 }
 
-void Scheduler::start( render::Queue& target )
+void Scheduler::start( )
 {
 	std::lock_guard<std::mutex> lock( deepMutex );
 
@@ -38,6 +39,8 @@ void Scheduler::start( render::Queue& target )
 		for( ThreadSet::iterator iter = added.begin() ; iter != added.end() ; ++iter )
 		{
 			threads.push_back( *iter );
+			(*iter)->setRenderQueue( renderqueue );
+			(*iter)->setScheduler( *this );
 		}
 
 		added.clear();
@@ -48,7 +51,6 @@ void Scheduler::start( render::Queue& target )
 	// TODO! add real threading
 	for( ThreadSet::iterator iter = threads.begin() ; iter != threads.end() ; ++iter )
 	{
-		(*iter)->setRenderQueue( target );
 		while( !(*iter)->run() )
 		{
 			// kill

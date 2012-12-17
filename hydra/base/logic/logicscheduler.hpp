@@ -23,8 +23,10 @@ protected:
 
 	ThreadSet threads;
 	ThreadSet added;
+
+	render::Queue& renderqueue;
 public:
-	Scheduler();
+	Scheduler( render::Queue& target );
 	~Scheduler();
 
 	// queue stuff, that is runnable
@@ -32,7 +34,7 @@ public:
 	void queue( Thread *thread );
 
 	// spawn protos interface
-	void start( render::Queue& target );
+	void start();
 };
 
 } // namespace logic
