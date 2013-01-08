@@ -1,20 +1,20 @@
 /*
- * renderrenderer.cpp
+ * renderthead.cpp
  *
  *  Created on: 14.12.2012
  *      Author: akin
  */
 
-#include "renderrenderer.hpp"
+#include "renderthead.hpp"
 
 namespace render
 {
 
-Renderer::Renderer()
+Thread::Thread()
 {
 }
 
-Renderer::~Renderer()
+Thread::~Thread()
 {
 }
 

@@ -6,7 +6,7 @@
  */
 
 #include "renderqueue.hpp"
-#include "renderrenderer.hpp"
+#include "renderthread.hpp"
 
 #define RENDERQUEUE_NONE 0x0
 #define RENDERQUEUE_QUIT 0x1
@@ -22,7 +22,7 @@ Queue::~Queue()
 {
 }
 
-void Queue::add( Renderer* thread )
+void Queue::add( Thread* thread )
 {
 	if( thread == nullptr )
 	{
@@ -48,7 +48,7 @@ void Queue::start()
 
 	// nullptr is like 'game over' after we hit it, we know that end is near.
 	// there should not be 2 of them in que
-	Renderer *current = nullptr;
+	Thread *current = nullptr;
 	while( (current = queue.pop()) != nullptr )
 	{
 		// recycle thread, till run returns false

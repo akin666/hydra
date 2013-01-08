@@ -13,20 +13,20 @@
 
 namespace render {
 
-class Renderer;
+class Thread;
 class Queue
 {
 private:
-	typedef TQue<Renderer *> RendererQue;
+	typedef TQue<Thread *> RendererQue;
 	RendererQue queue;
 	std::atomic<int> flags;
 public:
 	Queue();
 	~Queue();
 
-	// queue stuff, that is immediately runnable, tries to render, until run finishes.
-	// renderer itself is responsible for locks et al.
-	void add( Renderer *thread );
+	// queue stuff, that is immediately runnable, tries to run, until run finishes.
+	// render sthread itself is responsible for locks et al.
+	void add( Thread *thread );
 
 	// indicate 'done' from logic
 	void finish();
