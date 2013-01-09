@@ -7,7 +7,7 @@
 //============================================================================
 
 #include <iostream>
-#include <loop.hpp>
+#include <logic/logicengine.hpp>
 
 #include "UI/uithread.hpp"
 
@@ -15,11 +15,13 @@ using namespace std;
 
 int main() {
 
-	Loop loop;
+	logic::Engine engine;
 
 	ui::Thread uilogic;
 
-	loop.getScheduler().queue( uilogic );
+	engine.getScheduler().queue( uilogic );
+
+	engine.run();
 
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;

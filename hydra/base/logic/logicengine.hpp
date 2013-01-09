@@ -1,24 +1,26 @@
 /*
- * loop.hpp
+ * engine.hpp
  *
  *  Created on: 10.1.2013
  *      Author: akin
  */
 
-#ifndef LOOP_HPP_
-#define LOOP_HPP_
+#ifndef LOGICENGINE_HPP_
+#define LOGICENGINE_HPP_
 
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
 
-class Loop
+namespace logic {
+
+class Engine
 {
 private:
 	render::Scheduler rscheduler;
 	logic::Scheduler lsceduler;
 public:
-	Loop();
-	~Loop();
+	Engine();
+	~Engine();
 
 	logic::Scheduler& getScheduler();
 
@@ -27,4 +29,6 @@ public:
 	void run();
 };
 
-#endif // LOOP_HPP_
+} // logic
+
+#endif // ENGINE_HPP_

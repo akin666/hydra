@@ -1,27 +1,29 @@
 /*
- * loop.cpp
+ * logicengine.cpp
  *
  *  Created on: 10.1.2013
  *      Author: akin
  */
 
-#include "loop.hpp"
+#include "logicengine.hpp"
 
-Loop::Loop()
+namespace logic {
+
+Engine::Engine()
 : lsceduler( rscheduler )
 {
 }
 
-Loop::~Loop()
+Engine::~Engine()
 {
 }
 
-logic::Scheduler& Loop::getScheduler()
+logic::Scheduler& Engine::getScheduler()
 {
 	return lsceduler;
 }
 
-void Loop::run()
+void Engine::run()
 {
 	// blocking, should start several threads to do their bidding
 	lsceduler.start();
@@ -29,3 +31,5 @@ void Loop::run()
 	// blocking, should block, until no more stuff to render and the lscheduler also has informed that all is done.
 	rscheduler.start();
 }
+
+} // logic
