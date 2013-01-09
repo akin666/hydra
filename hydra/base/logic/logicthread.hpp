@@ -10,7 +10,7 @@
 
 #include <protothread>
 #include <entitylib/entitycontext.hpp>
-#include "../render/renderqueue.hpp"
+#include "../render/renderscheduler.hpp"
 #include <vector>
 
 namespace logic {
@@ -21,18 +21,18 @@ class Thread : public Protothread
 private:
 	entity::Context context;
 
-	render::Queue *renderqueue;
+	render::Scheduler *renderScheduler;
 	Scheduler *scheduler;
 protected:
-	render::Queue *getRenderQueue();
-	Scheduler *getScheduler();
+	render::Scheduler *getRenderScheduler();
+	Scheduler *getLogicScheduler();
 	entity::Context *getEntityContext();
 public:
 	Thread();
 	virtual ~Thread();
 
-	void setRenderQueue( render::Queue& rqueue );
-	void setScheduler( Scheduler& scheduler );
+	void set( render::Scheduler& targets );
+	void set( Scheduler& scheduler );
 };
 
 typedef std::vector<Thread*> ThreadSet;

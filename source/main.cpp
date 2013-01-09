@@ -7,12 +7,20 @@
 //============================================================================
 
 #include <iostream>
-#include <logic/logicscheduler.hpp>
-#include <render/renderqueue.hpp>
+#include <loop.hpp>
+
+#include "UI/uithread.hpp"
 
 using namespace std;
 
 int main() {
+
+	Loop loop;
+
+	ui::Thread uilogic;
+
+	loop.getScheduler().queue( uilogic );
+
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }

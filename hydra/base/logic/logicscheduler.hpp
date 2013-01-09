@@ -9,7 +9,7 @@
 #define LOGICSCHEDULER_HPP_
 
 #include "logicthread.hpp"
-#include "../render/renderqueue.hpp"
+#include "../render/renderscheduler.hpp"
 #include <uthread>
 
 namespace logic {
@@ -24,14 +24,14 @@ protected:
 	ThreadSet threads;
 	ThreadSet added;
 
-	render::Queue& renderqueue;
+	render::Scheduler& target;
 public:
-	Scheduler( render::Queue& target );
+	Scheduler( render::Scheduler& target );
 	~Scheduler();
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
-	void queue( Thread *thread );
+	void queue( Thread& thread );
 
 	// spawn protos interface
 	void start();

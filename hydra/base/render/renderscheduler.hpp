@@ -5,8 +5,8 @@
  *      Author: akin
  */
 
-#ifndef RENDERQUEUE_HPP_
-#define RENDERQUEUE_HPP_
+#ifndef RENDERSCHEDULER_HPP_
+#define RENDERSCHEDULER_HPP_
 
 #include <stdtypes>
 #include <tque>
@@ -14,19 +14,19 @@
 namespace render {
 
 class Thread;
-class Queue
+class Scheduler
 {
 private:
 	typedef TQue<Thread *> RendererQue;
 	RendererQue queue;
 	std::atomic<int> flags;
 public:
-	Queue();
-	~Queue();
+	Scheduler();
+	~Scheduler();
 
 	// queue stuff, that is immediately runnable, tries to run, until run finishes.
 	// render sthread itself is responsible for locks et al.
-	void add( Thread *thread );
+	void add( Thread& thread );
 
 	// indicate 'done' from logic
 	void finish();
@@ -36,4 +36,4 @@ public:
 };
 
 } // namespace render
-#endif // RENDERQUEUE_HPP_
+#endif // RENDERSCHEDULER_HPP_

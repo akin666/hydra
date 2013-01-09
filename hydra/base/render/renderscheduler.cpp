@@ -1,50 +1,50 @@
 /*
- * RENDERQUEUE.cpp
+ * RENDERSCHEDULER.cpp
  *
  *  Created on: 14.12.2012
  *      Author: akin
  */
 
-#include "renderqueue.hpp"
+#include "renderscheduler.hpp"
 #include "renderthread.hpp"
 
-#define RENDERQUEUE_NONE 0x0
-#define RENDERQUEUE_QUIT 0x1
+#define RENDERSCHEDULER_NONE 0x0
+#define RENDERSCHEDULER_QUIT 0x1
 
 namespace render {
 
-Queue::Queue()
-: flags(RENDERQUEUE_NONE)
+Scheduler::Scheduler()
+: flags(RENDERSCHEDULER_NONE)
 {
 }
 
-Queue::~Queue()
+Scheduler::~Scheduler()
 {
 }
 
-void Queue::add( Thread* thread )
+void Scheduler::add( Thread& thread )
 {
 	if( thread == nullptr )
 	{
 		return;
 	}
-	queue.push( thread );
+	queue.push( &thread );
 }
 
-void Queue::finish()
+void Scheduler::finish()
 {
-	if( (flags & RENDERQUEUE_QUIT) != 0 )
+	if( (flags & RENDERSCHEDULER_QUIT) != 0 )
 	{
 		// already finished, cannot finish twice.
 		return;
 	}
-	flags |= RENDERQUEUE_QUIT;
+	flags |= RENDERSCHEDULER_QUIT;
 	queue.push( nullptr );
 }
 
-void Queue::start()
+void Scheduler::start()
 {
-	flags &= ~RENDERQUEUE_QUIT;
+	flags &= ~RENDERSCHEDULER_QUIT;
 
 	// nullptr is like 'game over' after we hit it, we know that end is near.
 	// there should not be 2 of them in que

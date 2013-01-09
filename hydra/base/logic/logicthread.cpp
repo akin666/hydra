@@ -11,7 +11,7 @@ namespace logic
 {
 
 Thread::Thread()
-: renderqueue( nullptr )
+: renderScheduler( nullptr )
 , scheduler( nullptr )
 {
 }
@@ -20,9 +20,9 @@ Thread::~Thread()
 {
 }
 
-render::Queue *Thread::getRenderQueue()
+render::Scheduler *Thread::getRenderScheduler()
 {
-	return renderqueue;
+	return renderScheduler;
 }
 
 Scheduler *Thread::getScheduler()
@@ -35,12 +35,12 @@ entity::Context *Thread::getEntityContext()
 	return &context;
 }
 
-void Thread::setRenderQueue( render::Queue& rqueue )
+void Thread::set( render::Scheduler& target )
 {
-	renderqueue = &rqueue;
+	renderScheduler = &target;
 }
 
-void Thread::setScheduler( Scheduler& scheduler )
+void Thread::set( Scheduler& scheduler )
 {
 	this->scheduler = &scheduler;
 }
