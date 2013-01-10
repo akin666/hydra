@@ -25,7 +25,7 @@ render::Scheduler *Thread::getRenderScheduler()
 	return renderScheduler;
 }
 
-Scheduler *Thread::getScheduler()
+Scheduler *Thread::getLogicScheduler()
 {
 	return scheduler;
 }

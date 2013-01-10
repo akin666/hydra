@@ -9,6 +9,7 @@
 #define WORKWORKER_HPP_
 
 #include <TQue>
+#include <protothread>
 
 namespace work {
 

@@ -24,10 +24,6 @@ Scheduler::~Scheduler()
 
 void Scheduler::add( Thread& thread )
 {
-	if( thread == nullptr )
-	{
-		return;
-	}
 	queue.push( &thread );
 }
 

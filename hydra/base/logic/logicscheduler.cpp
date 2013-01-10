@@ -21,11 +21,6 @@ Scheduler::~Scheduler()
 
 void Scheduler::queue( Thread& thread )
 {
-	if( thread == nullptr )
-	{
-		return;
-	}
-
 	std::lock_guard<std::mutex> lock( mutex );
 	added.push_back( &thread );
 }
