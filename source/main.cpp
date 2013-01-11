@@ -29,7 +29,7 @@ public:
 
 int main()
 {
-	System<DummyThread> system;
+	System system;
 
 	do
 	{
@@ -37,6 +37,9 @@ int main()
 		{
 			return -1;
 		}
+
+		system.createThread<DummyThread>();
+
 		do
 		{
 			system.run();

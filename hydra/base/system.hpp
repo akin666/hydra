@@ -9,7 +9,6 @@
 #define HYDRASYSTEM_HPP_
 
 #include <log>
-#include <singleton>
 #include <config/config.hpp>
 
 #include <graphics/graphicssystem.hpp>
@@ -23,114 +22,41 @@
 # define HYDRA_CONFIG "config.json"
 #endif
 
-template <class GameLogicSystem>
 class System
 {
 private:
 	graphics::System graphics;
 	audio::System audio;
+	network::System net;
+
 	cfg::Config config;
 	Log log;
-	network::System net;
 
 	render::Scheduler rscheduler;
 	logic::Scheduler lscheduler;
-
-	GameLogicSystem *gls;
 public:
-	System()
-	: lscheduler( rscheduler )
-	, gls( nullptr )
+	System();
+	~System();
+
+	template <class GameLogicSystem>
+	GameLogicSystem *createThread()
 	{
-	}
-
-	~System()
-	{
-		uninitialize();
-	}
-
-	void uninitialize()
-	{
-		net.uninitialize();
-		audio.uninitialize();
-		graphics.uninitialize();
-		log.uninitialize();
-	}
-
-	bool initialize( string8 path = HYDRA_CONFIG )
-	{
-		if( !log.initialize( ) )
-		{
-			return false;
-		}
-		setSingleton<Log>( &log );
-
-		// Hello log:
-		LOG->message("Build micro version: %s %i", __DATE__ , __TIME__ );
-
-		// Configuration
-		if( !config.loadFromPath( path ) )
-		{
-			LOG->error("%s:%i failed to load primary configuration (%s)!" , __FILE__ , __LINE__ , path.c_str() );
-			if( path == HYDRA_CONFIG || !config.loadFromPath( HYDRA_CONFIG ) )
-			{
-				if( path != HYDRA_CONFIG )
-				{
-					LOG->error("%s:%i failed to load secondary configuration (%s)!" , __FILE__ , __LINE__ , HYDRA_CONFIG );
-				}
-				return false;
-			}
-		}
-
-		// Graphics
-		if( !graphics.initialize( config ) )
-		{
-			return false;
-		}
-
-		// Audio
-		if( !audio.initialize( config ) )
-		{
-			return false;
-		}
-
-		// Networking
-		if( !net.initialize( config ) )
-		{
-			return false;
-		}
-
-		// Create the game thread
-		gls = new GameLogicSystem;
+		GameLogicSystem *tmp = new GameLogicSystem;
 
 		// add the thread to scheduler
-		lscheduler.queue( *gls );
+		lscheduler.queue( *tmp );
 
-		return true;
+		// once thread is finished, maybe logic scheduler should delete it.
+		return tmp;
 	}
 
-	int run()
-	{
-		{
-			// blocking, should start several threads to do their bidding
-			lscheduler.start();
+	void uninitialize();
 
-			// blocking, should block, until no more stuff to render and the lscheduler also has informed that all is done.
-			rscheduler.start();
-		}
+	bool initialize( string8 path = HYDRA_CONFIG );
 
-		return 0;
-	}
-
-	bool shouldExit()
-	{
-		return false;
-	}
-
-	bool shouldRestart()
-	{
-		return false;
-	}
+	int run();
+	bool shouldExit();
+	bool shouldRestart();
 };
 
 #endif // HYDRASYSTEM_HPP_
