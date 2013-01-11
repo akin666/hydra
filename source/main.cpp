@@ -7,22 +7,45 @@
 //============================================================================
 
 #include <iostream>
-#include <logic/logicengine.hpp>
-
+#include <system.hpp>
 #include "UI/uithread.hpp"
 
-using namespace std;
+class DummyThread : public logic::Thread
+{
+public:
+	DummyThread()
+	{
+	}
 
-int main() {
+	virtual ~DummyThread()
+	{
+	}
 
-	logic::Engine engine;
+	virtual bool run()
+	{
+		return true;
+	}
+};
 
-	ui::Thread uilogic;
+int main()
+{
+	System<DummyThread> system;
 
-	engine.getScheduler().queue( uilogic );
+	do
+	{
+		if( !system.initialize() )
+		{
+			return -1;
+		}
+		do
+		{
+			system.run();
+		}
+		while( !system.shouldExit() );
 
-	engine.run();
+		system.uninitialize();
+	}
+	while( system.shouldRestart() );
 
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	return 0;
 }

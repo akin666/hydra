@@ -9,6 +9,11 @@
 
 namespace cfg {
 
+bool Config::loadFromPath( const string8 path )
+{
+	return false;
+}
+
 bool Config::loadFromString( const string8& data )
 {
 	Json::Reader reader;

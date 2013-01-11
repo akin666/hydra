@@ -25,6 +25,15 @@ Log::~Log()
 {
 }
 
+bool Log::initialize()
+{
+	return true;
+}
+
+void Log::uninitialize()
+{
+}
+
 void Log::printMessage( const string8& message )
 {
 	::native::message( message.c_str() );

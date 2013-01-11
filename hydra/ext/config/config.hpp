@@ -34,6 +34,7 @@ protected:
 	{
 	}
 public:
+	bool loadFromPath( const string8 path );
 	bool loadFromString( const string8& data );
 	bool loadFromStream( std::istream& input );
 
