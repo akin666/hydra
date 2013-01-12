@@ -9,12 +9,12 @@
 
 namespace cfg {
 
-bool Config::loadFromPath( const string8 path )
+bool Config::loadFromPath( const String8 path )
 {
 	return false;
 }
 
-bool Config::loadFromString( const string8& data )
+bool Config::loadFromString( const String8& data )
 {
 	Json::Reader reader;
 
@@ -48,7 +48,7 @@ bool Config::loadFromStream( std::istream& input )
 	return success;
 }
 
-bool Config::saveToString( string8& data , bool styled )
+bool Config::saveToString( String8& data , bool styled )
 {
 	// rule nO.1, You do not speak of CTOR abuse. ever. it is done. but never ever say anything about it.
 	if( styled )
@@ -70,7 +70,7 @@ bool Config::saveToStream( std::ostream& output)
 	return true;
 }
 
-Json::Value *findPath( string8& key , Json::Value& root , StringPos begin = 0 )
+Json::Value *findPath( String8& key , Json::Value& root , StringPos begin = 0 )
 {
 	// Only Objects are allowed.
 	if( !root.isObject() )
@@ -82,7 +82,7 @@ Json::Value *findPath( string8& key , Json::Value& root , StringPos begin = 0 )
 	StringPos end = key.find_first_of( '.' , begin );
 
 	// Not point? we possibly at the last part
-	if( end == string8::npos )
+	if( end == String8::npos )
 	{
 		std::string realKey = key.substr( begin );
 
@@ -104,19 +104,19 @@ Json::Value *findPath( string8& key , Json::Value& root , StringPos begin = 0 )
 	return findPath( key , root[realKey] , end + 1 );
 }
 
-Json::Value *Config::getValue( string8 key )
+Json::Value *Config::getValue( String8 key )
 {
 	// Did not find the value in changeset, so taking a look at original data.
 	return findPath( key , root );
 }
 
-bool Config::has( string8 key )
+bool Config::has( String8 key )
 {
 	return findPath( key , root ) != NULL;
 }
 
 // Getters
-template <> bool Config::getValue<float32>( string8 key , float32& type )
+template <> bool Config::getValue<float32>( String8 key , float32& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isDouble() )
@@ -127,7 +127,7 @@ template <> bool Config::getValue<float32>( string8 key , float32& type )
 	return false;
 }
 
-template <> bool Config::getValue<float64>( string8 key , float64& type )
+template <> bool Config::getValue<float64>( String8 key , float64& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isDouble() )
@@ -138,7 +138,7 @@ template <> bool Config::getValue<float64>( string8 key , float64& type )
 	return false;
 }
 
-template <> bool Config::getValue<string8>( string8 key , string8& type )
+template <> bool Config::getValue<String8>( String8 key , String8& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isString() )
@@ -149,7 +149,7 @@ template <> bool Config::getValue<string8>( string8 key , string8& type )
 	return false;
 }
 
-template <> bool Config::getValue<int32>( string8 key , int32& type )
+template <> bool Config::getValue<int32>( String8 key , int32& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isInt() )
@@ -160,7 +160,7 @@ template <> bool Config::getValue<int32>( string8 key , int32& type )
 	return false;
 }
 
-template <> bool Config::getValue<uint32>( string8 key , uint32& type )
+template <> bool Config::getValue<uint32>( String8 key , uint32& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isUInt() )
@@ -171,7 +171,7 @@ template <> bool Config::getValue<uint32>( string8 key , uint32& type )
 	return false;
 }
 
-template <> bool Config::getValue<bool>( string8 key , bool& type )
+template <> bool Config::getValue<bool>( String8 key , bool& type )
 {
 	Json::Value *value = getValue( key );
 	if( value != NULL && value->isBool() )
@@ -184,13 +184,13 @@ template <> bool Config::getValue<bool>( string8 key , bool& type )
 
 
 // Setters
-Json::Value& makePath( string8& key , Json::Value& root , StringPos begin = 0 )
+Json::Value& makePath( String8& key , Json::Value& root , StringPos begin = 0 )
 {
 	// find the point.
 	StringPos end = key.find_first_of( '.' , begin );
 
 	// No point? we at the last part
-	if( end == string8::npos )
+	if( end == String8::npos )
 	{
 		return root;
 	}
@@ -198,47 +198,47 @@ Json::Value& makePath( string8& key , Json::Value& root , StringPos begin = 0 )
 	return makePath( key , root[key.substr( begin , end )] , end + 1 );
 }
 
-string8 lastKey( const string8& key )
+String8 lastKey( const String8& key )
 {
 	StringPos pos = key.find_last_of(".");
-	if( pos == string8::npos )
+	if( pos == String8::npos )
 	{
 		return key;
 	}
 	return key.substr( pos + 1 );
 }
 
-template <> void Config::setValue<float32>( string8 key , float32& type )
+template <> void Config::setValue<float32>( String8 key , float32& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = (double)type;
 }
 
-template <> void Config::setValue<float64>( string8 key , float64& type )
+template <> void Config::setValue<float64>( String8 key , float64& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = (double)type;
 }
 
-template <> void Config::setValue<string8>( string8 key , string8& type )
+template <> void Config::setValue<String8>( String8 key , String8& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = type;
 }
 
-template <> void Config::setValue<int32>( string8 key , int32& type )
+template <> void Config::setValue<int32>( String8 key , int32& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = (int)type;
 }
 
-template <> void Config::setValue<uint32>( string8 key , uint32& type )
+template <> void Config::setValue<uint32>( String8 key , uint32& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = (unsigned int)type;
 }
 
-template <> void Config::setValue<bool>( string8 key , bool& type )
+template <> void Config::setValue<bool>( String8 key , bool& type )
 {
 	Json::Value& parent = makePath( key , root );
 	parent[ lastKey( key ) ] = type;

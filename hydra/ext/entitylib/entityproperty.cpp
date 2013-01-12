@@ -10,7 +10,7 @@
 
 namespace entity {
 
-ducktype string8 Property::type("null");
+ducktype String8 Property::type("null");
 
 Property::Property( Manager& manager )
 : manager( manager )

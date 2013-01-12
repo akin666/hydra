@@ -29,5 +29,7 @@ public:
 	void terminate();
 };
 
+typedef std::shared_ptr<Worker> WorkerPtr;
+
 } // namespace tpool
 #endif // TPOOL_WORKER_H_

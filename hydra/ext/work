@@ -3,6 +3,7 @@
 #define WORK_H_
 
 #include <tque>
+#include <memory>
 
 class Work
 {
@@ -15,6 +16,7 @@ public:
 	virtual void end() = 0;
 };
 
-typedef TQue<Work*> WorkQue;
+typedef std::shared_ptr<Work> WorkPtr;
+typedef TQue<Work> WorkQue;
 	
 #endif //  WORK_H_ 

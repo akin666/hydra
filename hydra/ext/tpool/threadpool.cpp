@@ -11,8 +11,7 @@ unsigned int ThreadPool::getHardwareThreadCount()
 }
 
 ThreadPool::ThreadPool()
-: workers(NULL),
-  worker_count( 2 )
+: worker_count( 2 )
 {
 }
 
@@ -22,33 +21,24 @@ ThreadPool::~ThreadPool()
 
 void ThreadPool::initialize( unsigned int count )
 {
-	if( workers == NULL )
+	std::lock_guard<std::mutex> lock(mutex);
+	worker_count = count;
+	while( workers.size() < worker_count )
 	{
-		worker_count = count;
-		workers = new Worker[worker_count];
-
-		for( int i = count - 1 ; i >= 0 ; --i )
-		{
-			workers[i].init( data );
-		}
-	}
-	else
-	{
-		throw std::runtime_error("ThreadPool Workers already initialized!.");
+		WorkerPtr ptr( new Worker );
+		workers.push_back( ptr );
+		ptr->init( data );
 	}
 }
 
 void ThreadPool::kill()
 {
-	if( workers != NULL )
+	std::lock_guard<std::mutex> lock(mutex);
+	for( auto workerptr : workers )
 	{
-		for( int i = worker_count - 1 ; i >= 0 ; --i )
-		{
-			workers[i].terminate();
-		}
-		delete[] workers;
-		workers = NULL;
+		workerptr->terminate();
 	}
+	workers.clear();
 }
 
 int ThreadPool::getWorkerCount()
@@ -56,7 +46,7 @@ int ThreadPool::getWorkerCount()
 	return worker_count;
 }
 
-void ThreadPool::schedule( Work *work )
+void ThreadPool::schedule( WorkPtr& work )
 {
 	data.push( work );
 }

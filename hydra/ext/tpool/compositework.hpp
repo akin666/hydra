@@ -32,7 +32,7 @@ public:
 	virtual void end();
 
 	bool isRunning();
-	void push( Work *work );
+	void push( WorkPtr& work );
 };
 
 } // namespace tpool

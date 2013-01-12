@@ -19,10 +19,10 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::queue( Thread& thread )
+void Scheduler::queue( ThreadPtr& thread )
 {
 	std::lock_guard<std::mutex> lock( mutex );
-	added.push_back( &thread );
+	added.push_back( thread );
 }
 
 void Scheduler::start( )
@@ -31,11 +31,11 @@ void Scheduler::start( )
 
 	// Add new threads into set
 	{
-		for( ThreadSet::iterator iter = added.begin() ; iter != added.end() ; ++iter )
+		for( auto thread : added )
 		{
-			threads.push_back( *iter );
-			(*iter)->set( target );
-			(*iter)->set( *this );
+			threads.push_back( thread );
+			thread->set( target );
+			thread->set( *this );
 		}
 
 		added.clear();

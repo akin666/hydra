@@ -45,10 +45,10 @@ public:
 	Year getYear() const;
 	void setYear(Year year);
 
-	void parse( string8 string );
+	void parse( String8 string );
 	void update();
 
-	string8 toString();
+	String8 toString();
 };
 
 #endif // HH_LOCALTIME_HPP_

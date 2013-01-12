@@ -25,9 +25,9 @@ public:
 	virtual bool initialize();
 	virtual void uninitialize();
 	
-	virtual void printMessage( const string8& message );
-	virtual void printError( const string8& message );
-	virtual void printWarning( const string8& message );
+	virtual void printMessage( const String8& message );
+	virtual void printError( const String8& message );
+	virtual void printWarning( const String8& message );
 
 	void message( const char* format , ... );
 	void error( const char* format , ... );

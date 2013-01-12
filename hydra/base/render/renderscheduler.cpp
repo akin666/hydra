@@ -6,7 +6,6 @@
  */
 
 #include "renderscheduler.hpp"
-#include "renderthread.hpp"
 
 #define RENDERSCHEDULER_NONE 0x0
 #define RENDERSCHEDULER_QUIT 0x1
@@ -22,9 +21,11 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::add( Thread& thread )
+void Scheduler::add( ThreadPtr& thread )
 {
-	queue.push( &thread );
+	std::lock_guard<std::mutex> lock(mutex);
+	queue.push_back( thread );
+	condition.notify_one();
 }
 
 void Scheduler::finish()
@@ -34,32 +35,76 @@ void Scheduler::finish()
 		// already finished, cannot finish twice.
 		return;
 	}
+
 	flags |= RENDERSCHEDULER_QUIT;
-	queue.push( nullptr );
+	condition.notify_one();
+}
+
+
+bool Scheduler::stillRemaining()
+{
+	std::lock_guard<std::mutex> lock(mutex);
+	return !queue.empty();
 }
 
 void Scheduler::start()
 {
 	flags &= ~RENDERSCHEDULER_QUIT;
 
-	// nullptr is like 'game over' after we hit it, we know that end is near.
-	// there should not be 2 of them in que
-	Thread *current = nullptr;
-	while( (current = queue.pop()) != nullptr )
+	ThreadPtr current;
+
+	// Active state
+	// stuff still coming
+	while( (flags & RENDERSCHEDULER_QUIT) != 0 )
 	{
-		// recycle thread, till run returns false
-		if( current->run() )
+		// Current should be pure at the beginning of the loop, dirty data confuses the loop.
+		current.reset();
 		{
-			queue.push( current );
+			// Block till we get new data OR till we get message that no more threads are coming in
+			std::unique_lock<std::mutex> lock(mutex);;
+			while( queue.empty() && ( (flags & RENDERSCHEDULER_QUIT) != 0 ) )
+			{
+				condition.wait(lock);
+			}
+			if( !queue.empty() )
+			{
+				current = queue.front();
+				queue.pop_front();
+			}
+		}
+		// If we have a live thread, when we get here, run it
+		if( current )
+		{
+			// If the thread does not finish, it goes to the end of renderlist.
+			if( current->run() )
+			{
+				add( current );
+			}
 		}
 	}
-	// There can be only one nullptr in que, pop rest of the stuff out.
-	while( (current = queue.pop( RendererQue::RETURN_NULL_IF_EMPTY )) != nullptr )
+
+	// Passive state
+	// No more stuff coming in, cleanup the queue
+	while( stillRemaining() )
 	{
-		// recycle thread, till run returns false
-		if( current->run() )
+		current.reset();
 		{
-			queue.push( current );
+			// We, (bit paranoidically) try to get data out
+			std::lock_guard<std::mutex> lock(mutex);
+			if( !queue.empty() )
+			{
+				current = queue.front();
+				queue.pop_front();
+			}
+		}
+		// If we have a live thread, when we get here, run it
+		if( current )
+		{
+			// If the thread does not finish, it goes to the end of renderlist.
+			if( current->run() )
+			{
+				add( current );
+			}
 		}
 	}
 }

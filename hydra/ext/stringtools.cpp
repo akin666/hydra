@@ -11,30 +11,30 @@
 
 namespace stringtools {
 
-void toUpper( string8& str )
+void toUpper( String8& str )
 {
 //	std::transform(str.begin(), str.end(), str.begin(), toupper );
 }
 
-void toLower( string8& str )
+void toLower( String8& str )
 {
 //	std::transform(str.begin(), str.end(), str.begin(), tolower);
 }
 
 template<>
-string8 to_ot<string8, string8>( const string8 from )
+String8 to_ot<String8, String8>( const String8 from )
 {
 	return from;
 }
 
 template<>
-bool to_ot<bool, string8>( const string8 from )
+bool to_ot<bool, String8>( const String8 from )
 {
 	return from.size() == 4; // true == 4 false == 5
 }
 
 template<>
-string8 to_ot<string8, bool>( const bool from )
+String8 to_ot<String8, bool>( const bool from )
 {
 	return from ? "true" : "false";
 }

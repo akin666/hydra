@@ -64,12 +64,15 @@ void Worker::operator()()
 		condition.notify_one();
 	}
 
-	Work *current;
+	WorkPtr current;
 	while( going )
 	{
+		// keep it clean.
+		current.reset();
+
 		// Pop front. or wait something to pop.
-		current = queu->pop();
-		if( current != NULL )
+		queu->pop( current );
+		if( current )
 		{
 			// Is the work ready to be done?
 			if( !current->begin() )

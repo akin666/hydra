@@ -38,18 +38,21 @@ bool CompositeWork::begin()
 void CompositeWork::run()
 {
 	setRunning( true );
-	Work *current;
+	WorkPtr current;
 
-	while( ( current = work.pop( work.RETURN_NULL_IF_EMPTY ) ) != NULL )
+	while( work.tryPop( current ) )
 	{
-		if( current->begin() )
+		if( current )
 		{
-			current->run();
-			current->end();
-		}
-		else
-		{
-			work.push( current );
+			if( current->begin() )
+			{
+				current->run();
+				current->end();
+			}
+			else
+			{
+				work.push( current );
+			}
 		}
 	}
 	setRunning( false );
@@ -64,7 +67,7 @@ bool CompositeWork::isRunning()
 	return getRunning();
 }
 
-void CompositeWork::push( Work *work )
+void CompositeWork::push( WorkPtr& work )
 {
 	this->work.push( work );
 }

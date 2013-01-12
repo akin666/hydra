@@ -3,6 +3,7 @@
 #define TPOOL_THREADPOOL_H_
 
 #include <work>
+#include <uthread>
 #include "worker.hpp"
 
 namespace tpool
@@ -10,9 +11,12 @@ namespace tpool
 
 class ThreadPool
 {
-protected:
+private:
+	std::mutex mutex;
+
 	WorkQue data;
-	Worker *workers;
+	typedef std::vector<WorkerPtr> WorkerSet;
+	WorkerSet workers;
 	int worker_count;
 public:
 	ThreadPool();
@@ -22,7 +26,7 @@ public:
 
 	void initialize( unsigned int count );
 
-	void schedule( Work *work );
+	void schedule( WorkPtr& work );
 
 	int getWorkerCount();
 

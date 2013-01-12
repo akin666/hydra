@@ -88,12 +88,12 @@ void getTime( LocalTime& time )
 
 
 // File I/O
-FILE *openFileRead( const string8& path )
+FILE *openFileRead( const String8& path )
 {
 	return fopen ( path.c_str() , "rb" );
 }
 
-FILE *openFileWrite( const string8& path )
+FILE *openFileWrite( const String8& path )
 {
 	return fopen ( path.c_str() , "wb" );
 }
@@ -103,7 +103,7 @@ void closeFile( FILE *file )
 	fclose( file );
 }
 
-bool readFile( const string8& path , string8& content )
+bool readFile( const String8& path , String8& content )
 {
 	FILE * file = openFileRead( path );
 
@@ -149,7 +149,7 @@ bool readFile( const string8& path , string8& content )
 }
 
 // Image loading functionality _always_ happens through softimage
-bool loadImageFile( const string8 path , simg::Buffer& softimage )
+bool loadImageFile( const String8 path , simg::Buffer& softimage )
 {
 	// define MAX_IMAGE_FILE_SIZE 33554432
 	// define MAX_IMAGE_RESOLUTION 8192
@@ -239,7 +239,7 @@ bool loadImageFile( const string8 path , simg::Buffer& softimage )
 	return true;
 }
 
-bool saveImageFile( const string8 path , simg::Buffer& softimage )
+bool saveImageFile( const String8 path , simg::Buffer& softimage )
 {
 	switch( softimage.getMode() )
 	{

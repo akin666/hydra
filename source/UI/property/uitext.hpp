@@ -28,7 +28,7 @@ public:
 		text.clear();
 	}
 
-	string8 text;
+	String8 text;
 };
 
 typedef entity::TProperty<Text> TextProperty;

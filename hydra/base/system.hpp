@@ -39,20 +39,17 @@ public:
 	~System();
 
 	template <class GameLogicSystem>
-	GameLogicSystem *createThread()
+	void createThread()
 	{
-		GameLogicSystem *tmp = new GameLogicSystem;
+		logic::ThreadPtr ptr( new GameLogicSystem );
 
 		// add the thread to scheduler
-		lscheduler.queue( *tmp );
-
-		// once thread is finished, maybe logic scheduler should delete it.
-		return tmp;
+		lscheduler.queue( ptr );
 	}
 
 	void uninitialize();
 
-	bool initialize( string8 path = HYDRA_CONFIG );
+	bool initialize( String8 path = HYDRA_CONFIG );
 
 	int run();
 	bool shouldExit();

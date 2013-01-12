@@ -31,7 +31,7 @@ public:
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
-	void queue( Thread& thread );
+	void queue( ThreadPtr& thread );
 
 	// spawn protos interface
 	void start();

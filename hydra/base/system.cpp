@@ -26,7 +26,7 @@ void System::uninitialize()
 	log.uninitialize();
 }
 
-bool System::initialize( string8 path )
+bool System::initialize( String8 path )
 {
 	if( !log.initialize( ) )
 	{

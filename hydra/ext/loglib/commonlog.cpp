@@ -34,17 +34,17 @@ void Log::uninitialize()
 {
 }
 
-void Log::printMessage( const string8& message )
+void Log::printMessage( const String8& message )
 {
 	::native::message( message.c_str() );
 }
 
-void Log::printError( const string8& message )
+void Log::printError( const String8& message )
 {
 	::native::alert( message.c_str() );
 }
 
-void Log::printWarning( const string8& message )
+void Log::printWarning( const String8& message )
 {
 	::native::warning( message.c_str() );
 }
@@ -56,7 +56,7 @@ void Log::message( const char* format , ... )
 	va_start( args, format );
 	vsnprintf( buffer, (MAX_LOG_MSG_LEN - 1), format, args);
 	va_end( args );
-	string8 msg(buffer);
+	String8 msg(buffer);
 	printMessage( msg );
 }
 
@@ -67,7 +67,7 @@ void Log::error( const char* format , ... )
 	va_start( args, format );
 	vsnprintf( buffer, (MAX_LOG_MSG_LEN - 1), format, args);
 	va_end( args );
-	string8 msg(buffer);
+	String8 msg(buffer);
 	printError( msg );
 }
 
@@ -78,7 +78,7 @@ void Log::warning( const char* format , ... )
 	va_start( args, format );
 	vsnprintf( buffer, (MAX_LOG_MSG_LEN - 1), format, args);
 	va_end( args );
-	string8 msg(buffer);
+	String8 msg(buffer);
 	printWarning( msg );
 }
 

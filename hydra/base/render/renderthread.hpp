@@ -9,6 +9,7 @@
 #define RENDERTHREAD_HPP_
 
 #include <protothread>
+#include <stdtypes>
 
 namespace render {
 
@@ -18,6 +19,9 @@ public:
 	Thread();
 	virtual ~Thread();
 };
+
+typedef std::shared_ptr<Thread> ThreadPtr;
+typedef std::vector<ThreadPtr> ThreadSet;
 
 } // namespace render
 #endif // RENDERTHREAD_HPP_

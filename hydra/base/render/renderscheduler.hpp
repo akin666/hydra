@@ -9,24 +9,31 @@
 #define RENDERSCHEDULER_HPP_
 
 #include <stdtypes>
-#include <tque>
+#include <uthread>
+#include <deque>
+#include "renderthread.hpp"
 
 namespace render {
 
-class Thread;
 class Scheduler
 {
 private:
-	typedef TQue<Thread *> RendererQue;
-	RendererQue queue;
+	typedef std::deque< ThreadPtr > RenderQue;
+
+	std::mutex mutex;
+	std::condition_variable condition;
+	RenderQue queue;
+
 	std::atomic<int> flags;
+
+	bool stillRemaining();
 public:
 	Scheduler();
 	~Scheduler();
 
 	// queue stuff, that is immediately runnable, tries to run, until run finishes.
 	// render sthread itself is responsible for locks et al.
-	void add( Thread& thread );
+	void add( ThreadPtr& thread );
 
 	// indicate 'done' from logic
 	void finish();

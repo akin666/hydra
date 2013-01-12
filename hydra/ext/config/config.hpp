@@ -20,29 +20,29 @@ class Config
 protected:
 	Json::Value root;
 
-	Json::Value *getValue( string8 key );
+	Json::Value *getValue( String8 key );
 
 	// by default we do not recognize the type.
 	template <class CType>
-	bool getValue( string8 key , CType& type )
+	bool getValue( String8 key , CType& type )
 	{
 		return false;
 	}
 
 	template <class CType>
-	void setValue( string8 key , CType& type )
+	void setValue( String8 key , CType& type )
 	{
 	}
 public:
-	bool loadFromPath( const string8 path );
-	bool loadFromString( const string8& data );
+	bool loadFromPath( const String8 path );
+	bool loadFromString( const String8& data );
 	bool loadFromStream( std::istream& input );
 
-	bool saveToString( string8& data , bool styled = true );
+	bool saveToString( String8& data , bool styled = true );
 	bool saveToStream( std::ostream& output );
 
 	template <class CType>
-	CType get( string8 key , CType def )
+	CType get( String8 key , CType def )
 	{
 		CType val;
 		if( !getValue( key , val ) )
@@ -53,7 +53,7 @@ public:
 	}
 
 	template <class CType>
-	CType require( string8 key )
+	CType require( String8 key )
 	{
 		CType val;
 		if( !getValue( key , val ) )
@@ -65,30 +65,30 @@ public:
 	}
 
 	template <class CType>
-	void set( string8 key , CType def )
+	void set( String8 key , CType def )
 	{
 		setValue( key , def );
 	}
 
-	bool has( string8 key );
+	bool has( String8 key );
 };
 
 
 // specializations
 // getters
-template <> bool Config::getValue<float32>( string8 key , float32& type );
-template <> bool Config::getValue<float64>( string8 key , float64& type );
-template <> bool Config::getValue<string8>( string8 key , string8& type );
-template <> bool Config::getValue<int32>( string8 key , int32& type );
-template <> bool Config::getValue<uint32>( string8 key , uint32& type );
-template <> bool Config::getValue<bool>( string8 key , bool& type );
+template <> bool Config::getValue<float32>( String8 key , float32& type );
+template <> bool Config::getValue<float64>( String8 key , float64& type );
+template <> bool Config::getValue<String8>( String8 key , String8& type );
+template <> bool Config::getValue<int32>( String8 key , int32& type );
+template <> bool Config::getValue<uint32>( String8 key , uint32& type );
+template <> bool Config::getValue<bool>( String8 key , bool& type );
 // setters
-template <> void Config::setValue<float32>( string8 key , float32& type );
-template <> void Config::setValue<float64>( string8 key , float64& type );
-template <> void Config::setValue<string8>( string8 key , string8& type );
-template <> void Config::setValue<int32>( string8 key , int32& type );
-template <> void Config::setValue<uint32>( string8 key , uint32& type );
-template <> void Config::setValue<bool>( string8 key , bool& type );
+template <> void Config::setValue<float32>( String8 key , float32& type );
+template <> void Config::setValue<float64>( String8 key , float64& type );
+template <> void Config::setValue<String8>( String8 key , String8& type );
+template <> void Config::setValue<int32>( String8 key , int32& type );
+template <> void Config::setValue<uint32>( String8 key , uint32& type );
+template <> void Config::setValue<bool>( String8 key , bool& type );
 
 } // namespace cfg
 #endif // CONFIG_HPP_

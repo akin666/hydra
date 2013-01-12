@@ -17,12 +17,12 @@ class Duration
 protected:
 	PreciseTime begin;
 	PreciseTime length;
-	string8 name;
+	String8 name;
 public:
 	Duration();
 
-	void setName( const string8& name );
-	string8 getName() const;
+	void setName( const String8& name );
+	String8 getName() const;
 
 	void setBegin( PreciseTime begin );
 	PreciseTime getBegin() const;
@@ -32,7 +32,7 @@ public:
 
 	PreciseTime getEnd() const;
 
-	void setup( PreciseTime begin , PreciseTime length , const string8& name );
+	void setup( PreciseTime begin , PreciseTime length , const String8& name );
 };
 
 } // time

@@ -34,14 +34,14 @@ void getTime( Time& time ); // UTC Time!
 void getTime( LocalTime& time ); // Local Time!
 
 // File I/O
-FILE *openFileRead( const string8& path );
-FILE *openFileWrite( const string8& path );
+FILE *openFileRead( const String8& path );
+FILE *openFileWrite( const String8& path );
 void closeFile( FILE *file );
-bool readFile( const string8& path , std::string& content );
+bool readFile( const String8& path , std::string& content );
 
 // Image loading functionality _always_ happens through softimage
-bool loadImageFile( const string8& path , simg::Buffer& softimage );
-bool saveImageFile( const string8& path , simg::Buffer& softimage );
+bool loadImageFile( const String8& path , simg::Buffer& softimage );
+bool saveImageFile( const String8& path , simg::Buffer& softimage );
 
 } // namespace native
 

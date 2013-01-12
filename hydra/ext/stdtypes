@@ -17,6 +17,9 @@
 #include <cstdint>	// int8_t, int16_t, int32_t,int64_t , uint8_t, uint16_t, uint32_t, uint64_t etc.
 #include <atomic>	// atomic things.
 #include <string>
+#include <memory>	// c++11 std::shared_ptr
+#include <list>
+#include <vector>
 
 #define ducktype /*just programming hint*/
 #define ducked //
@@ -85,7 +88,9 @@ typedef uint32		 	BufferIndex;
 typedef uint64 			EntityID;
 
 // String types
-typedef std::string 	string8;
-typedef string8::size_type StringPos;
+typedef std::string 	String8;
+typedef String8::size_type StringPos;
+
+typedef std::vector<String8> StringSet;
 
 #endif // STDTYPES_H_123_

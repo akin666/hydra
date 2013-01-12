@@ -2,68 +2,78 @@
 #ifndef TQUE_H_
 #define TQUE_H_
 
+#include <memory>
 #include <iostream>
 #include <deque>
 #include <uthread>
 
-template <class tclass>
+template <class CType>
 class TQue
 {
-public:
-	static const unsigned int NO_FLAGS = 0x0000;
-	static const unsigned int RETURN_NULL_IF_EMPTY = 0x0001;
-protected:
+public:	
+	typedef std::shared_ptr<CType> Ptr;
+private:
 	std::mutex mutex;
 	std::condition_variable condition;
-	std::deque< tclass > data;
-	unsigned int data_count;
+	std::deque< Ptr > data;
 public:
-	TQue() : data_count(0) {}
-	virtual ~TQue(){}
+	TQue() 
+	{
+	}
+	
+	~TQue()
+	{
+	}
 
 	// blocking, but pushes as fast as possible
-	void push( tclass package );
-
+	void push( Ptr& ptr );
+	
 	// blocking.
-	tclass pop( unsigned char flags = NO_FLAGS );
+	void pop( Ptr& ptr );
+	
+	// nonblocking.
+	bool tryPop( Ptr& ptr );
 };
 
-template <class tclass>
-void TQue<tclass>::push( tclass package )
+template <class CType>
+void TQue<CType>::push( Ptr& ptr )
 {
 	std::lock_guard<std::mutex> lock(mutex);
-
-	data.push_back( package );
-	++data_count;
+	data.push_back( ptr );
 
 	condition.notify_one();
 }
 
-template <class tclass>
-tclass TQue<tclass>::pop( unsigned char flags )
+template <class CType>
+void TQue<CType>::pop( Ptr& ptr )
 {
 	std::unique_lock<std::mutex> lock(mutex);
+	ptr.reset();
 
-	if( (flags & RETURN_NULL_IF_EMPTY) != 0 )
+	while( data.empty() )
 	{
-		if( data.empty() )
-		{
-			 return NULL;
-		}
-	}
-	else
-	{
-		while( data.empty() )
-		{
-			condition.wait(lock);
-		}
+		condition.wait(lock);
 	}
 
-	tclass popped = data.front();
+	ptr = data.front();
 	data.pop_front();
-	--data_count;
+}
 
-	return popped;
+template <class CType>
+bool TQue<CType>::tryPop( Ptr& ptr )
+{
+	std::unique_lock<std::mutex> lock(mutex);
+	ptr.reset();
+
+	if( data.empty() )
+	{
+		return false;
+	}
+	
+	ptr = data.front();
+	data.pop_front();
+	
+	return true;
 }
 
 #endif // TQUE_H_ 
