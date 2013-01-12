@@ -7,35 +7,32 @@
 namespace tpool {
 
 Worker::Worker()
-: queu( NULL ),
-  thread(NULL),
-  going( false )
+: thread( nullptr )
+, going( false )
 {
 }
 
 Worker::~Worker()
 {
 	delete thread;
-	thread = NULL;
+	thread = nullptr;
 }
 
-void Worker::init( WorkQue& wqueu )
+void Worker::init( ProtoQueuePtr& wqueu )
 {
-	if( thread == NULL )
+	if( thread == nullptr )
 	{
 		// This Sync of worker thread, and initializer, ensures that
 		// the worker really is initialized after exiting this function.
 		// ! If this is not done, the workers probably will get initialized
 		// much later..
 		std::unique_lock<std::mutex> lock(mutex);
-
-		if( thread != NULL )
+		if( thread != nullptr )
 		{
-			delete thread;
+			return;
 		}
 
-		queu = &wqueu;
-
+		queu = wqueu;
 		going = false;
 		thread = new std::thread( std::ref(*this) );
 
@@ -64,7 +61,7 @@ void Worker::operator()()
 		condition.notify_one();
 	}
 
-	WorkPtr current;
+	ProtothreadPtr current;
 	while( going )
 	{
 		// keep it clean.
@@ -74,15 +71,14 @@ void Worker::operator()()
 		queu->pop( current );
 		if( current )
 		{
-			// Is the work ready to be done?
-			if( !current->begin() )
+			// Is the thread done?
+			if( current->isRunning() )
 			{
-				// No? push it back, continue.
-				queu->push( current );
-				continue;
+				if( !current->run() )
+				{
+					queu->push( current );
+				}
 			}
-			current->run();
-			current->end();
 		}
 	}
 
@@ -100,7 +96,7 @@ void Worker::operator()()
 
 void Worker::terminate()
 {
-	if( going && thread != NULL )
+	if( going && thread != nullptr )
 	{
 		std::unique_lock<std::mutex> lock(mutex);
 		going = false;
@@ -111,7 +107,7 @@ void Worker::terminate()
 		}
 
 		delete thread;
-		thread = NULL;
+		thread = nullptr;
 	}
 }
 

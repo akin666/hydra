@@ -11,61 +11,64 @@
 #include <iostream>
 #include <uthread>
 #include <stdexcept>
+#include <memory>
 
 template <class CType>
 class Singleton
 {
-protected:
+public:
+	typedef std::shared_ptr<CType> Ptr;
+private:
 	static std::mutex mutex;
-	static CType *singleton;
+	static Ptr singleton;
 public:
 	static bool isSet()
-	{
-		return singleton != NULL;
-	}
-
-	static CType *reset()
-	{
-		CType *tmp = singleton;
-		singleton = NULL;
-		return tmp;
-	}
-
-	static void set( CType *ct )
-	{
-		singleton = ct;
-	}
-
-	static CType *get()
 	{
 		return singleton;
 	}
 
-	static void safeSet( CType *ct )
+	static void reset()
+	{
+		singleton.reset();
+	}
+
+	static void set( Ptr& ct )
+	{
+		singleton = ct;
+	}
+
+	static Ptr get()
+	{
+		return singleton;
+	}
+
+	static void safeSet( Ptr ct )
 	{
 		std::lock_guard<std::mutex> lock(mutex);
 		singleton = ct;
 	}
 
-	static CType *safeGet()
+	static Ptr safeGet()
 	{
 		std::lock_guard<std::mutex> lock(mutex);
 		return singleton;
 	}
 	
-	static CType *create()
+	static Ptr create()
 	{
 		std::lock_guard<std::mutex> lock(mutex);
-		if( singleton == NULL ) 
+		if( !singleton ) 
 		{
-			singleton = new CType();
+			Ptr tmp( new CType );
+			singleton = tmp;
 		}
 		return singleton;
 	}
 };
 
 template <class CType>
-CType *Singleton<CType>::singleton = NULL;
+typename Singleton<CType>::Ptr Singleton<CType>::singleton;
+
 template <class CType>
 std::mutex Singleton<CType>::mutex;
 
@@ -75,27 +78,27 @@ std::mutex Singleton<CType>::mutex;
 // setSingleton<MyClass>( new MyOtherClass );
 // unsetSingleton<MyClass>();
 template <class CType>
-CType *getSingleton() 
+typename Singleton<CType>::Ptr getSingleton() 
 {
 	return Singleton<CType>::get();
 }
 
 template <class CType>
-CType *createSingleton()
+typename Singleton<CType>::Ptr createSingleton()
 {
 	return Singleton<CType>::create();
 }
 
 template <class CType>
-void setSingleton( CType *ct ) 
+void setSingleton( typename Singleton<CType>::Ptr& ct ) 
 {
 	Singleton<CType>::set( ct );
 }
 
 template <class CType>
-void unsetSingleton() 
+void resetSingleton() 
 {
-	Singleton<CType>::unset();
+	Singleton<CType>::reset();
 }
 
-#endif /* SINGLETON_HPP_ */
+#endif // SINGLETON_HPP_ 

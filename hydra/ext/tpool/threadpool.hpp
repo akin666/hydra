@@ -2,19 +2,18 @@
 #ifndef TPOOL_THREADPOOL_H_
 #define TPOOL_THREADPOOL_H_
 
-#include <work>
+#include <protothread>
 #include <uthread>
 #include "worker.hpp"
 
-namespace tpool
-{
+namespace tpool {
 
 class ThreadPool
 {
 private:
 	std::mutex mutex;
 
-	WorkQue data;
+	ProtoQueuePtr data;
 	typedef std::vector<WorkerPtr> WorkerSet;
 	WorkerSet workers;
 	int worker_count;
@@ -24,9 +23,9 @@ public:
 
 	static unsigned int getHardwareThreadCount();
 
-	void initialize( unsigned int count );
+	bool initialize( unsigned int count );
 
-	void schedule( WorkPtr& work );
+	void schedule( ProtothreadPtr& work );
 
 	int getWorkerCount();
 

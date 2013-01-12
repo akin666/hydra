@@ -15,6 +15,7 @@ System::System()
 
 System::~System()
 {
+	uninitialize();
 }
 
 void System::uninitialize()

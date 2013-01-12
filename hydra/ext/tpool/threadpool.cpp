@@ -11,24 +11,35 @@ unsigned int ThreadPool::getHardwareThreadCount()
 }
 
 ThreadPool::ThreadPool()
-: worker_count( 2 )
+: data( new ProtoQueue )
+, worker_count( 2 )
 {
 }
 
 ThreadPool::~ThreadPool()
 {
+	kill();
 }
 
-void ThreadPool::initialize( unsigned int count )
+bool ThreadPool::initialize( unsigned int count )
 {
-	std::lock_guard<std::mutex> lock(mutex);
-	worker_count = count;
-	while( workers.size() < worker_count )
+	try
 	{
-		WorkerPtr ptr( new Worker );
-		workers.push_back( ptr );
-		ptr->init( data );
+		std::lock_guard<std::mutex> lock(mutex);
+		worker_count = count;
+		while( workers.size() < worker_count )
+		{
+			WorkerPtr ptr( new Worker );
+			workers.push_back( ptr );
+			ptr->init( data );
+		}
 	}
+	catch( ... )
+	{
+		kill();
+		return false;
+	}
+	return true;
 }
 
 void ThreadPool::kill()
@@ -46,9 +57,9 @@ int ThreadPool::getWorkerCount()
 	return worker_count;
 }
 
-void ThreadPool::schedule( WorkPtr& work )
+void ThreadPool::schedule( ProtothreadPtr& work )
 {
-	data.push( work );
+	data->push( work );
 }
 
 } // tpool

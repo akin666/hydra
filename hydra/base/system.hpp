@@ -8,12 +8,7 @@
 #ifndef HYDRASYSTEM_HPP_
 #define HYDRASYSTEM_HPP_
 
-#include <log>
 #include <config/config.hpp>
-
-#include <graphics/graphicssystem.hpp>
-#include <audio/audiosystem.hpp>
-#include <network/networksystem.hpp>
 
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
@@ -25,12 +20,7 @@
 class System
 {
 private:
-	graphics::System graphics;
-	audio::System audio;
-	network::System net;
-
 	cfg::Config config;
-	Log log;
 
 	render::Scheduler rscheduler;
 	logic::Scheduler lscheduler;

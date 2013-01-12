@@ -90,7 +90,8 @@
 // }
 //
 
-#include <vector>
+#include <vector>	// vector for set
+#include <memory>	// shared_ptr
 
 class Protothread
 {
@@ -179,6 +180,7 @@ protected:
     do { ptYielded = false; _ptLine = __LINE__; case __LINE__: \
     if (!ptYielded || !(condition)) return true; } while (0)
 
-typedef std::vector< Protothread *> ProtothreadSet;
+typedef std::shared_ptr<Protothread> ProtothreadPtr;
+typedef std::vector<ProtothreadPtr> ProtothreadSet;
 
 #endif // __PROTOTHREAD_H__

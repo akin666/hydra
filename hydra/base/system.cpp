@@ -8,6 +8,12 @@
 #include "system.hpp"
 #include <singleton>
 
+#include <log>
+#include <graphics/graphicssystem.hpp>
+#include <audio/audiosystem.hpp>
+#include <network/networksystem.hpp>
+#include <tpool/threadpool.hpp>
+
 System::System()
 : lscheduler( rscheduler )
 {
@@ -20,19 +26,26 @@ System::~System()
 
 void System::uninitialize()
 {
-	net.uninitialize();
-	audio.uninitialize();
-	graphics.uninitialize();
-	log.uninitialize();
+	resetSingleton<network::System>();
+	resetSingleton<audio::System>();
+	resetSingleton<graphics::System>();
+	resetSingleton<tpool::ThreadPool>();
+	resetSingleton<Log>();
 }
 
 bool System::initialize( String8 path )
 {
-	if( !log.initialize( ) )
+	Singleton<Log>::Ptr log( new Log );
+	Singleton<graphics::System>::Ptr graphics( new graphics::System );
+	Singleton<audio::System>::Ptr audio( new audio::System );
+	Singleton<network::System>::Ptr	network( new network::System );
+	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
+
+	if( !log->initialize( ) )
 	{
 		return false;
 	}
-	setSingleton<Log>( &log );
+	setSingleton<Log>( log );
 
 	// Hello log:
 	LOG->message("Build micro version: %s %i", __DATE__ , __TIME__ );
@@ -51,23 +64,44 @@ bool System::initialize( String8 path )
 		}
 	}
 
-	// Graphics
-	if( !graphics.initialize( config ) )
+	// Threading
+	// TODO!, read threadCount from config.
+	unsigned int threadCount = 0;
+	unsigned int queryCount = tpool::ThreadPool::getHardwareThreadCount();
+	if( threadCount < 1 || threadCount > 4*queryCount )
 	{
+		threadCount = queryCount;
+	}
+	if( !threadpool->initialize( threadCount ) )
+	{
+		LOG->error("%s:%i failed to initialize threadpool (c:%i)!" , __FILE__ , __LINE__ , threadCount );
 		return false;
 	}
+	setSingleton<tpool::ThreadPool>( threadpool );
+
+	// Graphics
+	if( !graphics->initialize( config ) )
+	{
+		LOG->error("%s:%i failed to initialize graphics!" , __FILE__ , __LINE__ );
+		return false;
+	}
+	setSingleton<graphics::System>( graphics );
 
 	// Audio
-	if( !audio.initialize( config ) )
+	if( !audio->initialize( config ) )
 	{
+		LOG->error("%s:%i failed to initialize audio!" , __FILE__ , __LINE__ );
 		return false;
 	}
+	setSingleton<audio::System>( audio );
 
 	// Networking
-	if( !net.initialize( config ) )
+	if( !network->initialize( config ) )
 	{
+		LOG->error("%s:%i failed to initialize networking!" , __FILE__ , __LINE__ );
 		return false;
 	}
+	setSingleton<network::System>( network );
 
 	return true;
 }

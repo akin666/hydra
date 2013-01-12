@@ -4,25 +4,29 @@
 
 #include <tque>
 #include <thread>
-#include <work>
+#include <protothread>
+#include <stdtypes>
 
 namespace tpool {
+
+typedef TQue<Protothread> ProtoQueue;
+typedef std::shared_ptr<ProtoQueue> ProtoQueuePtr;
 
 class Worker
 {
 protected:
 	// shared queue with other workers.
-	WorkQue *queu;
+	ProtoQueuePtr queu;
 	std::thread *thread;
 
 	std::mutex mutex;
 	std::condition_variable condition;
-	bool going;
+	std::atomic<bool> going;
 public:
 	Worker();
 	~Worker();
 
-	void init( WorkQue& wqueu );
+	void init( ProtoQueuePtr& wqueu );
 
 	void operator()();
 
