@@ -8,7 +8,7 @@
 #ifndef GRAPHICSSYSTEM_HPP_
 #define GRAPHICSSYSTEM_HPP_
 
-#include <config/config.hpp>
+#include <json>
 
 namespace graphics {
 
@@ -19,7 +19,7 @@ public:
 	~System();
 
 	void uninitialize();
-	bool initialize( cfg::Config& config );
+	bool initialize( Json::ValuePtr& config );
 };
 
 } // namespace graphics

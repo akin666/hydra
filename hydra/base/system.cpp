@@ -14,6 +14,8 @@
 #include <network/networksystem.hpp>
 #include <tpool/threadpool.hpp>
 
+#include <json>
+
 System::System()
 : lscheduler( rscheduler )
 {
@@ -40,6 +42,7 @@ bool System::initialize( String8 path )
 	Singleton<audio::System>::Ptr audio( new audio::System );
 	Singleton<network::System>::Ptr	network( new network::System );
 	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
+	Singleton<Json::Value>::Ptr config( new Json::Value );
 
 	if( !log->initialize( ) )
 	{
@@ -51,10 +54,10 @@ bool System::initialize( String8 path )
 	LOG->message("Build micro version: %s %i", __DATE__ , __TIME__ );
 
 	// Configuration
-	if( !config.loadFromPath( path ) )
+	if( !Json::Helper::loadFromPath( config , path ) )
 	{
 		LOG->error("%s:%i failed to load primary configuration (%s)!" , __FILE__ , __LINE__ , path.c_str() );
-		if( path == HYDRA_CONFIG || !config.loadFromPath( HYDRA_CONFIG ) )
+		if( path == HYDRA_CONFIG || !Json::Helper::loadFromPath( config , HYDRA_CONFIG ) )
 		{
 			if( path != HYDRA_CONFIG )
 			{
@@ -63,6 +66,7 @@ bool System::initialize( String8 path )
 			return false;
 		}
 	}
+	setSingleton<Json::Value>( config );
 
 	// Threading
 	// TODO!, read threadCount from config.

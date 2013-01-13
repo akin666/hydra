@@ -13,6 +13,10 @@
 #include <iostream>
 #include <cstdio>
 
+#include <fstream>
+#include <string>
+#include <cerrno>
+
 #include <stb_image.h>
 #include <TGAImage.h>
 
@@ -105,6 +109,18 @@ void closeFile( FILE *file )
 
 bool readFile( const String8& path , String8& content )
 {
+	std::ifstream file( path , std::ios::in | std::ios::binary );
+	if( file )
+	{
+		file.seekg( 0, std::ios::end );
+		content.resize( file.tellg() );
+		file.seekg( 0, std::ios::beg );
+		file.read( &content[0] , content.size() );
+		file.close();
+		return true;
+	}
+	return false;
+	/*
 	FILE * file = openFileRead( path );
 
 	if( file == NULL )
@@ -144,6 +160,7 @@ bool readFile( const String8& path , String8& content )
 	content = (char*)buffer;
 
 	delete[] buffer;
+	*/
 
 	return true;
 }

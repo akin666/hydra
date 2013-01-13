@@ -22,7 +22,7 @@ void System::uninitialize()
 {
 }
 
-bool System::initialize( cfg::Config& config )
+bool System::initialize( Json::ValuePtr& config )
 {
 	return true;
 }

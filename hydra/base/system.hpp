@@ -8,8 +8,6 @@
 #ifndef HYDRASYSTEM_HPP_
 #define HYDRASYSTEM_HPP_
 
-#include <config/config.hpp>
-
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
 
@@ -20,8 +18,6 @@
 class System
 {
 private:
-	cfg::Config config;
-
 	render::Scheduler rscheduler;
 	logic::Scheduler lscheduler;
 public:

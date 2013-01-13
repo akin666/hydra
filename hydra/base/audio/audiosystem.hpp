@@ -8,7 +8,7 @@
 #ifndef AUDIOSYSTEM_HPP_
 #define AUDIOSYSTEM_HPP_
 
-#include <config/config.hpp>
+#include <json>
 
 namespace audio {
 
@@ -19,7 +19,7 @@ public:
 	~System();
 
 	void uninitialize();
-	bool initialize( cfg::Config& config );
+	bool initialize( Json::ValuePtr& config );
 };
 
 } // namespace audio

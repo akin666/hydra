@@ -8,7 +8,7 @@
 #ifndef NETWORKSYSTEM_HPP_
 #define NETWORKSYSTEM_HPP_
 
-#include <config/config.hpp>
+#include <json>
 
 namespace network {
 
@@ -19,7 +19,7 @@ public:
 	~System();
 
 	void uninitialize();
-	bool initialize( cfg::Config& config );
+	bool initialize( Json::ValuePtr& config );
 };
 
 } // namespace network

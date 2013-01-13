@@ -37,7 +37,7 @@ void getTime( LocalTime& time ); // Local Time!
 FILE *openFileRead( const String8& path );
 FILE *openFileWrite( const String8& path );
 void closeFile( FILE *file );
-bool readFile( const String8& path , std::string& content );
+bool readFile( const String8& path , String8& content );
 
 // Image loading functionality _always_ happens through softimage
 bool loadImageFile( const String8& path , simg::Buffer& softimage );

@@ -6,6 +6,7 @@
  */
 
 #include "graphicssystem.hpp"
+#include <log>
 
 namespace graphics {
 
@@ -22,8 +23,13 @@ void System::uninitialize()
 {
 }
 
-bool System::initialize( cfg::Config& config )
+bool System::initialize( Json::ValuePtr& config )
 {
+	if( Json::Helper::has( config , "graphics.width" ) )
+	{
+		LOG->message("Hai have width");
+	}
+
 	return true;
 }
 
