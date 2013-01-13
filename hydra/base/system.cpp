@@ -16,6 +16,10 @@
 
 #include <json>
 
+#ifndef CONFIG_SYSTEM_PATH
+# define CONFIG_SYSTEM_PATH "system"
+#endif
+
 System::System()
 : lscheduler( rscheduler )
 {
@@ -69,9 +73,9 @@ bool System::initialize( String8 path )
 	setSingleton<Json::Value>( config );
 
 	// Threading
-	// TODO!, read threadCount from config.
-	unsigned int threadCount = 0;
 	unsigned int queryCount = tpool::ThreadPool::getHardwareThreadCount();
+	unsigned int threadCount = Json::Helper::get( config , CONFIG_SYSTEM_PATH ".threadcount" , queryCount );
+
 	if( threadCount < 1 || threadCount > 4*queryCount )
 	{
 		threadCount = queryCount;
