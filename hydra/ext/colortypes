@@ -16,6 +16,7 @@ namespace color {
 
 enum Type
 {
+	NONE = 0,
 	RGB8 = 1,
 	RGBA8 = 2,
 	ARGB8 = 3,
@@ -32,6 +33,7 @@ enum Type
 	DEPTH32 = 14,
 	RGB565 = 15,
 	RGBA4444 = 16,
+	RGBA5551 = 17,
 };
 
 // Utility functions
