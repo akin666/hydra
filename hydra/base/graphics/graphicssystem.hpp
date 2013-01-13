@@ -9,17 +9,27 @@
 #define GRAPHICSSYSTEM_HPP_
 
 #include <json>
+#include <commontypes.h>
 
 namespace graphics {
 
 class System
 {
+private:
+	glm::ivec2 dimensions;
+	glm::ivec4 colors;
+	int dpi;
+	int stencil;
+	int depth;
+	bool fullscreen;
 public:
 	System();
 	~System();
 
 	void uninitialize();
 	bool initialize( Json::ValuePtr& config );
+
+	void print() const;
 };
 
 } // namespace graphics

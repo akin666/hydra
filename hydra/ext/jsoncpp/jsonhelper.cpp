@@ -133,6 +133,10 @@ template <> void convert<float>( Value& root , float& target )
 	{
 		target = root.asInt();
 	}
+	else if( root.isUInt() )
+	{
+		target = root.asUInt();
+	}
 }
 
 template <> void convert<double>( Value& root , double& target )
@@ -144,6 +148,10 @@ template <> void convert<double>( Value& root , double& target )
 	else if( root.isInt() )
 	{
 		target = root.asInt();
+	}
+	else if( root.isUInt() )
+	{
+		target = root.asUInt();
 	}
 }
 
