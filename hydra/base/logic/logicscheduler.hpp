@@ -21,8 +21,8 @@ protected:
 	std::mutex mutex;
 	std::mutex deepMutex;
 
-	ThreadSet threads;
-	ThreadSet added;
+	ProtothreadSet threads;
+	ProtothreadSet added;
 
 	render::Scheduler& target;
 public:
@@ -31,7 +31,7 @@ public:
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
-	void queue( ThreadPtr& thread );
+	void queue( ProtothreadPtr& thread );
 
 	// spawn protos interface
 	void start();

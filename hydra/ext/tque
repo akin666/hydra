@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include <deque>
+#include <vector>
 #include <uthread>
 
 template <class CType>
@@ -12,6 +13,7 @@ class TQue
 {
 public:	
 	typedef std::shared_ptr<CType> Ptr;
+	typedef std::vector<Ptr> PtrSet;
 private:
 	std::mutex mutex;
 	std::condition_variable condition;
@@ -28,6 +30,9 @@ public:
 	// blocking, but pushes as fast as possible
 	void push( Ptr& ptr );
 	
+	// blocking, but pushes a bunch of things
+	void push( PtrSet& ptr );
+	
 	// blocking.
 	void pop( Ptr& ptr );
 	
@@ -42,6 +47,18 @@ void TQue<CType>::push( Ptr& ptr )
 	data.push_back( ptr );
 
 	condition.notify_one();
+}
+
+template <class CType>
+void TQue<CType>::push( PtrSet& ptr )
+{
+	// TODO! there might be faster method to push all to data.
+	std::lock_guard<std::mutex> lock(mutex);
+	for( auto unit : ptr )
+	{
+		data.push_back( unit );
+	}
+	condition.notify_all();
 }
 
 template <class CType>

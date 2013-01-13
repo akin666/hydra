@@ -26,6 +26,7 @@ public:
 	bool initialize( unsigned int count );
 
 	void schedule( ProtothreadPtr& work );
+	void schedule( ProtothreadSet& set );
 
 	int getWorkerCount();
 

@@ -27,7 +27,7 @@ public:
 	template <class GameLogicSystem>
 	void createThread()
 	{
-		logic::ThreadPtr ptr( new GameLogicSystem );
+		ProtothreadPtr ptr( new GameLogicSystem );
 
 		// add the thread to scheduler
 		lscheduler.queue( ptr );

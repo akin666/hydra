@@ -6,8 +6,9 @@
 
 namespace tpool {
 
-Worker::Worker()
-: thread( nullptr )
+Worker::Worker( int id )
+: id( id )
+, thread( nullptr )
 , going( false )
 {
 }
@@ -16,6 +17,11 @@ Worker::~Worker()
 {
 	delete thread;
 	thread = nullptr;
+}
+
+int Worker::getID() const
+{
+	return id;
 }
 
 void Worker::init( ProtoQueuePtr& wqueu )
@@ -74,7 +80,7 @@ void Worker::operator()()
 			// Is the thread done?
 			if( current->isRunning() )
 			{
-				if( !current->run() )
+				if( current->run() && (!current->runOnce()) )
 				{
 					queu->push( current );
 				}

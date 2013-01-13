@@ -14,6 +14,8 @@ Thread::Thread()
 : renderScheduler( nullptr )
 , scheduler( nullptr )
 {
+	// this thread will be fed to workers, who would grind them till they bleed..
+	setRunOnce( true );
 }
 
 Thread::~Thread()

@@ -52,6 +52,9 @@
 /// Refactored to use my own coding style.
 /// added protothreadset typedef.
 /// added missing virtual destructor
+/// added shared_ptr typedefs
+/// added worker id preference
+/// added flags
 
 #ifndef __PROTOTHREAD_H__
 #define __PROTOTHREAD_H__
@@ -99,7 +102,9 @@ public:
     // Construct a new protothread that will start from the beginning
     // of its Run() function.
     Protothread() 
-    : _ptLine(0) 
+    : _ptLine(0)
+    , preference( -1 )
+    , flags( 0 )
     {}
     
     virtual ~Protothread()
@@ -141,6 +146,39 @@ protected:
     // Stores the protothread's position (by storing the line number of
     // the last PT_WAIT, which is then switched on at the next Run).
     LineNumber _ptLine;
+private:
+    int preference;
+    unsigned int flags;
+    
+    void addFlags( unsigned int flags )
+	{
+		this->flags |= flags;
+	}
+	void removeFlags( unsigned int flags )
+	{
+		this->flags &= ~flags;
+	}
+	bool hasFlags( unsigned int flags ) const
+	{
+		return (this->flags & flags) == flags;
+	}
+public:
+	void setPreference( int p )
+	{
+		preference = p;
+	}
+	int getPreference() const
+	{
+		return preference;
+	}
+	void setRunOnce( bool state )
+	{
+		state ? addFlags( 0x0001 ) : removeFlags( 0x0001 );
+	}
+	bool runOnce() const
+	{
+		return hasFlags( 0x0001 );
+	}
 };
 
 // Declare start of protothread (use at start of run() implementation).

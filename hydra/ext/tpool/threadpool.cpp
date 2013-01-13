@@ -27,9 +27,10 @@ bool ThreadPool::initialize( unsigned int count )
 	{
 		std::lock_guard<std::mutex> lock(mutex);
 		worker_count = count;
+		int i = workers.size();
 		while( workers.size() < worker_count )
 		{
-			WorkerPtr ptr( new Worker );
+			WorkerPtr ptr( new Worker(++i) );
 			workers.push_back( ptr );
 			ptr->init( data );
 		}
@@ -60,6 +61,11 @@ int ThreadPool::getWorkerCount()
 void ThreadPool::schedule( ProtothreadPtr& work )
 {
 	data->push( work );
+}
+
+void ThreadPool::schedule( ProtothreadSet& set )
+{
+	data->push( set );
 }
 
 } // tpool

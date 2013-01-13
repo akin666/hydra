@@ -35,8 +35,5 @@ public:
 	void set( Scheduler& scheduler );
 };
 
-typedef std::shared_ptr<Thread> ThreadPtr;
-typedef std::vector<ThreadPtr> ThreadSet;
-
 } // namespace logic
 #endif // LOGICTHREAD_HPP_

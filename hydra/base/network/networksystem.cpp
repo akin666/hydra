@@ -24,7 +24,7 @@ void System::uninitialize()
 
 bool System::initialize( Json::ValuePtr& config )
 {
-	return true;
+	return false;
 }
 
 } // namespace network

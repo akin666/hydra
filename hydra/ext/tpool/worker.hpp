@@ -16,6 +16,7 @@ class Worker
 {
 protected:
 	// shared queue with other workers.
+	int id;
 	ProtoQueuePtr queu;
 	std::thread *thread;
 
@@ -23,9 +24,10 @@ protected:
 	std::condition_variable condition;
 	std::atomic<bool> going;
 public:
-	Worker();
+	Worker( int id = 0 );
 	~Worker();
 
+	int getID() const;
 	void init( ProtoQueuePtr& wqueu );
 
 	void operator()();
