@@ -55,7 +55,7 @@ bool System::initialize( String8 path )
 	setSingleton<Log>( log );
 
 	// Hello log:
-	LOG->message("Build micro version: %s %i", __DATE__ , __TIME__ );
+	LOG->message("Build micro version: %i, %s" , __TIME__ , __DATE__ );
 
 	// Configuration
 	if( !Json::Helper::loadFromPath( config , path ) )
@@ -74,9 +74,13 @@ bool System::initialize( String8 path )
 
 	// Threading
 	unsigned int queryCount = tpool::ThreadPool::getHardwareThreadCount();
+	if( queryCount < 2 )
+	{
+		queryCount = 2;
+	}
 	unsigned int threadCount = Json::Helper::get( config , CONFIG_SYSTEM_PATH ".threadcount" , queryCount );
 
-	if( threadCount < 1 || threadCount > 4*queryCount )
+	if( threadCount < 1 || threadCount > 8*queryCount )
 	{
 		threadCount = queryCount;
 	}
@@ -86,6 +90,7 @@ bool System::initialize( String8 path )
 		return false;
 	}
 	setSingleton<tpool::ThreadPool>( threadpool );
+	LOG->message("Threads: %i + main.", threadCount );
 
 	// Graphics
 	if( !graphics->initialize( config ) )
