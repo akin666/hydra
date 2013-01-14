@@ -17,8 +17,8 @@
 namespace graphics {
 
 Program::Program()
-: id( GL_NULL ),
-  state( GRAPHICS_PROGRAM_NONE )
+: id( GL_NULL )
+, state( GRAPHICS_PROGRAM_NONE )
 {
 }
 
