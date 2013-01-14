@@ -9,6 +9,7 @@
 //#define USE_GLFW
 //#define USE_SDL
 //#define USE_GL
+#define USE_GL3
 
 #define GL_NULL 0
 
@@ -64,6 +65,7 @@
 #endif
 
 #if not defined(LOG_SYSTEM_ERROR)
+# include <log>
 # define LOG_SYSTEM_ERROR LOG->error
 #endif
 
@@ -81,23 +83,6 @@
 	case GL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i GL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
 	default : { LOG_SYSTEM_ERROR( "%s:%i GL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
   } } }
-  /* 
-  
-# define GL_TEST_ERROR(txt) { \
-  int gl_error_var; \
-  while( ( gl_error_var = glGetError() ) != GL_NO_ERROR ) { \
-  switch( gl_error_var ) { \
-	case GL_NO_ERROR : break; \
-	case GL_INVALID_VALUE : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_VALUE %s" , __FILE__ , __LINE__ , txt ); break; } \
-	case GL_INVALID_ENUM : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_ENUM %s" , __FILE__ , __LINE__ , txt ); break; } \
-	case GL_INVALID_OPERATION : { LOG_SYSTEM_ERROR( "%s:%i GL_INVALID_OPERATION %s" , __FILE__ , __LINE__ , txt ); break; } \
-	case GL_STACK_OVERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_OVERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
-	case GL_STACK_UNDERFLOW : { LOG_SYSTEM_ERROR( "%s:%i GL_STACK_UNDERFLOW %s" , __FILE__ , __LINE__ , txt ); break; } \
-	case GL_OUT_OF_MEMORY : { LOG_SYSTEM_ERROR( "%s:%i GL_OUT_OF_MEMORY %s" , __FILE__ , __LINE__ , txt ); break; } \
-	default : { LOG_SYSTEM_ERROR( "%s:%i GL WTF! %s" , __FILE__ , __LINE__ , txt ); break; } \
-  } } }
-  
-  */
 #else
 # define GL_TEST_ERROR(txt)
 #endif
@@ -108,13 +93,15 @@
 // raii tester. C++!
 #ifndef GL_TEST_RAII
 # ifndef _RELEASE
-   class GLTestRAII { public: GLTestRAII() { GL_TEST_START() } ~GLTestRAII() { GL_TEST_END() } };
+   class GLTestRAII { 
+   	public: 
+   	 GLTestRAII() { GL_TEST_START() } 
+   	 ~GLTestRAII() { GL_TEST_END() } 
+   };
 #  define GL_TEST_RAII GLTestRAII glRAIITester
 # else
 #  define GL_TEST_RAII
 # endif
 #endif
-
-} // orion
 
 #endif // _STDGL_H_ 
