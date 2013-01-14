@@ -79,7 +79,6 @@ bool System::initialize( String8 path )
 		queryCount = 2;
 	}
 	unsigned int threadCount = Json::Helper::get( config , CONFIG_SYSTEM_PATH ".threadcount" , queryCount );
-
 	if( threadCount < 1 || threadCount > 8*queryCount )
 	{
 		threadCount = queryCount;
