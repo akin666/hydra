@@ -5,11 +5,11 @@
 #include <stdtypes>
 
 //#define USE_GLEE
-//#define USE_GLEW
+#define USE_GLEW
 //#define USE_GLFW
 //#define USE_SDL
 //#define USE_GL
-#define USE_GL3
+//#define USE_GL3
 
 #define GL_NULL 0
 

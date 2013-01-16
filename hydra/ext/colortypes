@@ -32,13 +32,14 @@ enum Type
 	DEPTH24 = 13,
 	DEPTH32 = 14,
 	RGB565 = 15,
-	RGBA4444 = 16,
+	RGBA4 = 16,
 	RGBA5551 = 17,
 };
 
 // Utility functions
 std::size_t getByteSize( Type mode );
 std::size_t getNumberOfElements( Type mode );
+unsigned int resolveGLMode( Type mode );
 
 }
 
