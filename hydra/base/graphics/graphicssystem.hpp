@@ -10,11 +10,14 @@
 
 #include <json>
 #include <commontypes.h>
+#include "graphicssettings.hpp"
 
 namespace graphics {
 
 class System
 {
+private:
+	Settings settings;
 public:
 	System();
 	~System();
