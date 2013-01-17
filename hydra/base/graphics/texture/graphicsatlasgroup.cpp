@@ -58,7 +58,7 @@ bool AtlasGroup::request( SubTexture& texture )
 		{
 			if( atlas->request( texture.getDimension() , texture.getPosition() ) )
 			{
-				texture.set( &(*iter)->getTexture() );
+				texture.set( &(atlas->getTexture()) );
 				return true;
 			}
 		}

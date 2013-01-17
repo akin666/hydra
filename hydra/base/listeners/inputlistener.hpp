@@ -39,7 +39,7 @@ public:
 		MOVED,
 		CANCELLED
 	};
-
+public:
 	InputListener();
 	virtual ~InputListener();
 
