@@ -40,6 +40,10 @@ Settings::~Settings()
 {
 }
 
+void Settings::Settings::parse( Json::Value *value )
+{
+}
+
 int32 Settings::getAlpha() const
 {
 	return alpha;

@@ -15,13 +15,6 @@ namespace graphics {
 
 class System
 {
-private:
-	glm::ivec2 dimensions;
-	glm::ivec4 colors;
-	int dpi;
-	int stencil;
-	int depth;
-	bool fullscreen;
 public:
 	System();
 	~System();

@@ -9,26 +9,25 @@
 #define GRAPHICSSETTINGS_HPP_
 
 #include <commontypes.h>
+#include <json>
 
 namespace graphics {
 
 class Settings
 {
 protected:
-	glm::ivec2 dimensions;
+	glm::ivec4 dimensions;
+	glm::ivec4 colors;
 	float32 dpi;
-	int32 red;
-	int32 green;
-	int32 blue;
-	int32 alpha;
 	int32 stencil;
 	int32 depth;
-
 	int32 flags;
 public:
 	Settings();
     Settings( const Settings& other );
 	~Settings();
+
+	void parse( Json::Value *value );
 
 	int32 getAlpha() const;
 	void setAlpha(int32 alpha);

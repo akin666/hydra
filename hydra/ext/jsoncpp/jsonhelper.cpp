@@ -123,6 +123,11 @@ bool has( ValuePtr& root , const std::string& path )
 	return getValue( *(root.get()) , path , 0 ) != nullptr;
 }
 
+bool has( Value *root , const std::string& path )
+{
+	return getValue( *root , path , 0 ) != nullptr;
+}
+
 template <> void convert<float>( Value& root , float& target )
 {
 	if( root.isDouble() )

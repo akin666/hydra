@@ -22,26 +22,32 @@ bool loadFromStream( ValuePtr& root , std::istream& input );
 bool saveToString( ValuePtr& root , std::string& data , bool styled = true );
 bool saveToStream( ValuePtr& root , std::ostream& output );
 
-Value *getValue( ValuePtr& root , const std::string& path );
+Value *getValue( Value& root , const std::string& path );
+
 bool has( ValuePtr& root , const std::string& path );
+bool has( Value *root , const std::string& path );
 
 template <class CType> void convert( Value& root , CType& target )
 {
 }
 
-template <class CType> CType get( ValuePtr& root , const std::string& path , CType def )
+template <class CType> CType get( Value *root , const std::string& path , CType def )
 {
-	Value *value = getValue( root , path );
+	Value *value = getValue( *root , path );
 	if( value == nullptr )
 	{
 		return def;
 	}
 
 	CType tmp = def;
-	convert( *value , tmp );
+	convert<CType>( *value , tmp );
 	return tmp;
 }
 
+template <class CType> CType get( ValuePtr& root , const std::string& path , CType def )
+{
+	return get<CType>( root.get() , path , def );
+}
 
 template <> void convert<float>( Value& root , float& target );
 template <> void convert<double>( Value& root , double& target );
