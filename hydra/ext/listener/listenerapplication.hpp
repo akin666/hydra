@@ -5,16 +5,18 @@
  *      Author: akin
  */
 
-#ifndef APPLICATIONLISTENER_HPP_
-#define APPLICATIONLISTENER_HPP_
+#ifndef LISTENERAPPLICATION_HPP_
+#define LISTENERAPPLICATION_HPP_
 
 #include <commontypes.h>
 
-class ApplicationListener
+namespace listener {
+
+class Application
 {
 public:
-	ApplicationListener();
-	virtual ~ApplicationListener();
+	Application();
+	virtual ~Application();
 
 	// Initializing
 	virtual void processArgs( int argc , char *argv[] );
@@ -43,4 +45,6 @@ public:
 	virtual void handleEllipsisException();
 };
 
-#endif // APPLICATIONLISTENER_HPP_
+} // listener
+
+#endif // LISTENERAPPLICATION_HPP_

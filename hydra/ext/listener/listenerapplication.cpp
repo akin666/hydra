@@ -1,97 +1,100 @@
 /*
- * applicationlistener.cpp
+ * applicationlistener.cpp2
  *
  *  Created on: 17.1.2013
  *      Author: akin
  */
 
-#include "applicationlistener.hpp"
-
+#include "listenerapplication.hpp"
 #include <log>
 
-ApplicationListener::ApplicationListener()
+namespace listener {
+
+Application::Application()
 {
 }
 
-ApplicationListener::~ApplicationListener()
+Application::~Application()
 {
 }
 
 // Initializing
-void ApplicationListener::processArgs( int argc , char *argv[] )
+void Application::processArgs( int argc , char *argv[] )
 {
 	LOG->message( "%s:%i processargs " , __FILE__ , __LINE__ );
 }
 
-bool ApplicationListener::initialize()
+bool Application::initialize()
 {
 	LOG->message( "%s:%i init " , __FILE__ , __LINE__ );
 	return false;
 }
 
 // Commands.
-void ApplicationListener::suspend()
+void Application::suspend()
 {
 	LOG->message( "%s:%i suspend " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::resume()
+void Application::resume()
 {
 	LOG->message( "%s:%i resume " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::exit()
+void Application::exit()
 {
 	LOG->message( "%s:%i exit " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::restart()
+void Application::restart()
 {
 	LOG->message( "%s:%i restart " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::minimize()
+void Application::minimize()
 {
 	LOG->message( "%s:%i minimize " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::maximize()
+void Application::maximize()
 {
 	LOG->message( "%s:%i maximize " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::windowed()
+void Application::windowed()
 {
 	LOG->message( "%s:%i windowed " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::fullscreened()
+void Application::fullscreened()
 {
 	LOG->message( "%s:%i fullscreen " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::lostFocus()
+void Application::lostFocus()
 {
 	LOG->message( "%s:%i lostfocus " , __FILE__ , __LINE__ );
 }
 
-void ApplicationListener::memoryWarning( uint level )
+void Application::memoryWarning( uint level )
 {
 	LOG->message( "%s:%i memorywarning %i " , __FILE__ , __LINE__ , level );
 }
 
-void ApplicationListener::saveState()
+void Application::saveState()
 {
 	LOG->message( "%s:%i savestate " , __FILE__ , __LINE__ );
 }
 
 // App exception handling
-void ApplicationListener::handleException( std::exception& e )
+void Application::handleException( std::exception& e )
 {
 	LOG->message( "%s:%i Exception! %s " , __FILE__ , __LINE__ , e.what() );
 }
 
-void ApplicationListener::handleEllipsisException()
+void Application::handleEllipsisException()
 {
 	LOG->message( "%s:%i ellipsis exception! " , __FILE__ , __LINE__ );
 }
+
+} // listener
