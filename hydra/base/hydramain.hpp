@@ -5,8 +5,8 @@
  *      Author: akin
  */
 
-#ifndef HYDRASYSTEM_HPP_
-#define HYDRASYSTEM_HPP_
+#ifndef HYDRAMAIN_HPP_
+#define HYDRAMAIN_HPP_
 
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
@@ -15,14 +15,16 @@
 # define HYDRA_CONFIG "config.json"
 #endif
 
-class System
+namespace hydra {
+
+class Main
 {
 private:
 	render::Scheduler rscheduler;
 	logic::Scheduler lscheduler;
 public:
-	System();
-	~System();
+	Main();
+	~Main();
 
 	template <class GameLogicSystem>
 	void createThread()
@@ -42,4 +44,6 @@ public:
 	bool shouldRestart();
 };
 
-#endif // HYDRASYSTEM_HPP_
+} // hydra
+
+#endif // HYDRAMAIN_HPP_

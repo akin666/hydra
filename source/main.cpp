@@ -7,7 +7,7 @@
 //============================================================================
 
 #include <iostream>
-#include <system.hpp>
+#include <hydramain.hpp>
 #include "UI/uithread.hpp"
 
 class DummyThread : public logic::Thread
@@ -29,26 +29,26 @@ public:
 
 int main()
 {
-	System system;
+	hydra::Main main;
 
 	do
 	{
-		if( !system.initialize() )
+		if( !main.initialize() )
 		{
 			return -1;
 		}
 
-		system.createThread<DummyThread>();
+		main.createThread<DummyThread>();
 
 		do
 		{
-			system.run();
+			main.run();
 		}
-		while( !system.shouldExit() );
+		while( !main.shouldExit() );
 
-		system.uninitialize();
+		main.uninitialize();
 	}
-	while( system.shouldRestart() );
+	while( main.shouldRestart() );
 
 	return 0;
 }

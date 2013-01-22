@@ -5,7 +5,7 @@
  *      Author: akin
  */
 
-#include "system.hpp"
+#include "hydramain.hpp"
 #include <singleton>
 
 #include <log>
@@ -20,17 +20,19 @@
 # define CONFIG_SYSTEM_PATH "system"
 #endif
 
-System::System()
+namespace hydra {
+
+Main::Main()
 : lscheduler( rscheduler )
 {
 }
 
-System::~System()
+Main::~Main()
 {
 	uninitialize();
 }
 
-void System::uninitialize()
+void Main::uninitialize()
 {
 	resetSingleton<network::System>();
 	resetSingleton<audio::System>();
@@ -39,7 +41,7 @@ void System::uninitialize()
 	resetSingleton<Log>();
 }
 
-bool System::initialize( String8 path )
+bool Main::initialize( String8 path )
 {
 	Singleton<Log>::Ptr log( new Log );
 	Singleton<graphics::System>::Ptr graphics( new graphics::System );
@@ -118,7 +120,7 @@ bool System::initialize( String8 path )
 	return true;
 }
 
-int System::run()
+int Main::run()
 {
 	// blocking, should start several threads to do their bidding
 	lscheduler.start();
@@ -129,12 +131,14 @@ int System::run()
 	return 0;
 }
 
-bool System::shouldExit()
+bool Main::shouldExit()
 {
 	return false;
 }
 
-bool System::shouldRestart()
+bool Main::shouldRestart()
 {
 	return false;
 }
+
+} // hydra
