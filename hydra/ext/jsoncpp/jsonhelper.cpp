@@ -113,9 +113,9 @@ Value *getValue( Value& root , const std::string& path , StringPos begin )
 }
 
 
-Value *getValue( ValuePtr& root , const std::string& path )
+Value *getValue( Value& root , const std::string& path )
 {
-	return getValue( *(root.get()) , path , 0 );
+	return getValue( root , path , 0 );
 }
 
 bool has( ValuePtr& root , const std::string& path )

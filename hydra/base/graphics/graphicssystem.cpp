@@ -12,10 +12,6 @@
 namespace graphics {
 
 System::System()
-: dpi( 96 )
-, stencil( 0 )
-, depth( 0 )
-, fullscreen( false )
 {
 }
 
@@ -30,37 +26,32 @@ void System::uninitialize()
 
 bool System::initialize( Json::ValuePtr& config )
 {
-	dimensions.x = Json::Helper::get( config , GRAPHICS ".width" ,  640 );
-	dimensions.y = Json::Helper::get( config , GRAPHICS ".height" ,  480 );
+	Json::Value *value = Json::Helper::getValue( *config.get() , GRAPHICS );
 
-	dpi = Json::Helper::get( config , GRAPHICS ".dpi" ,  72 );
+	if( value != nullptr )
+	{
+		settings.parse( value );
+	}
+	else
+	{
+		settings.setWidth( Json::Helper::get( config , GRAPHICS ".width" ,  640 ) );
+		settings.setHeight( Json::Helper::get( config , GRAPHICS ".height" ,  480 ) );
 
-	colors.r = Json::Helper::get( config , GRAPHICS ".red" ,  8 );
-	colors.g = Json::Helper::get( config , GRAPHICS ".green" ,  8 );
-	colors.b = Json::Helper::get( config , GRAPHICS ".blue" ,  8 );
-	colors.a = Json::Helper::get( config , GRAPHICS ".alpha" ,  8 );
+		settings.setDpi( Json::Helper::get( config , GRAPHICS ".dpi" ,  72 ) );
 
-	stencil = Json::Helper::get( config , GRAPHICS ".stencil" ,  8 );
-	depth = Json::Helper::get( config , GRAPHICS ".depth" ,  24 );
-
-	print();
+		settings.setRed( Json::Helper::get( config , GRAPHICS ".red" ,  8 ) );
+		settings.setGreen( Json::Helper::get( config , GRAPHICS ".green" ,  8 ) );
+		settings.setBlue( Json::Helper::get( config , GRAPHICS ".blue" ,  8 ) );
+		settings.setAlpha( Json::Helper::get( config , GRAPHICS ".alpha" ,  8 ) );
+		settings.setStencil( Json::Helper::get( config , GRAPHICS ".stencil" ,  8 ) );
+		settings.setDepth( Json::Helper::get( config , GRAPHICS ".depth" ,  24 ) );
+	}
 
 	return true;
 }
 
 void System::print() const
 {
-	LOG->message( "%s:%i " , __FILE__ , __LINE__ );
-	LOG->message( " Dimensions: %ix%i DPI: %i R:%i G:%i B:%i A:%i Stencil:%i Depth:%i" ,
-			dimensions.x ,
-			dimensions.y ,
-			dpi ,
-			colors.r ,
-			colors.g ,
-			colors.b ,
-			colors.a ,
-			stencil ,
-			depth );
 }
 
 } // namespace graphics

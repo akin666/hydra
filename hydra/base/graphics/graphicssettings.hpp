@@ -16,7 +16,7 @@ namespace graphics {
 class Settings
 {
 protected:
-	glm::ivec4 dimensions;
+	glm::ivec2 dimensions;
 	glm::ivec4 colors;
 	float32 dpi;
 	int32 stencil;
@@ -40,6 +40,9 @@ public:
 
 	const glm::ivec2& getDimensions() const;
 	void setDimensions(const glm::ivec2& dimensions);
+
+	void setWidth( int width );
+	void setHeight( int height );
 
 	float32 getDpi() const;
 	void setDpi(float32 dpi);
