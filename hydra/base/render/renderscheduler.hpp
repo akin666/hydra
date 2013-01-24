@@ -11,14 +11,14 @@
 #include <stdtypes>
 #include <uthread>
 #include <deque>
-#include "renderthread.hpp"
+#include <protothread>
 
 namespace render {
 
 class Scheduler
 {
 private:
-	typedef std::deque< ThreadPtr > RenderQue;
+	typedef std::deque< ProtothreadPtr > RenderQue;
 
 	std::mutex mutex;
 	std::condition_variable condition;
@@ -33,7 +33,7 @@ public:
 
 	// queue stuff, that is immediately runnable, tries to run, until run finishes.
 	// render sthread itself is responsible for locks et al.
-	void add( ThreadPtr& thread );
+	void add( ProtothreadPtr& thread );
 
 	// indicate 'done' from logic
 	void finish();

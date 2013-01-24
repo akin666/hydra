@@ -1,26 +1,25 @@
 /*
- * applicationlistener.hpp
+ * applicationhandler.hpp
  *
- *  Created on: 17.1.2013
+ *  Created on: 24.1.2013
  *      Author: akin
  */
 
-#ifndef LISTENERAPPLICATION_HPP_
-#define LISTENERAPPLICATION_HPP_
+#ifndef APPLICATIONHANDLER_HPP_
+#define APPLICATIONHANDLER_HPP_
 
 #include <commontypes.h>
 
-namespace listener {
+namespace application {
 
-class Application
+class Handler
 {
 public:
-	Application();
-	virtual ~Application();
-
-	// Initializing
-	virtual void processArgs( int argc , char *argv[] );
-	virtual bool initialize();
+	typedef std::shared_ptr<Handler> Ptr;
+	typedef std::weak_ptr<Handler> WeakPtr;
+public:
+	Handler();
+	virtual ~Handler();
 
 	// Commands.
 	virtual void suspend(); // suspend the application, going into background.
@@ -45,6 +44,5 @@ public:
 	virtual void handleEllipsisException();
 };
 
-} // listener
-
-#endif // LISTENERAPPLICATION_HPP_
+} // namespace application 
+#endif // APPLICATIONHANDLER_HPP_ 

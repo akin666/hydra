@@ -1,24 +1,24 @@
 /*
- * inputdevice.hpp
+ * inputhandler.hpp
  *
  *  Created on: 22.1.2013
  *      Author: akin
  */
 
-#ifndef INPUTDEVICE_HPP_
-#define INPUTDEVICE_HPP_
+#ifndef INPUTHANDLER_HPP_
+#define INPUTHANDLER_HPP_
 
 #include "inputcommon.hpp"
 
 namespace input {
 
-class Device
+class Handler
 {
 public:
-	typedef std::shared_ptr<Device> Ptr;
-	typedef std::weak_ptr<Device> WeakPtr;
+	typedef std::shared_ptr<Handler> Ptr;
+	typedef std::weak_ptr<Handler> WeakPtr;
 public:
-	virtual ~Device();
+	virtual ~Handler();
 
 	virtual void handleButton( uint32 id , float state );
 	virtual void handleCharacter( uint32 id , float state );
@@ -28,4 +28,4 @@ public:
 };
 
 } // namespace input 
-#endif // INPUTDEVICE_HPP_ 
+#endif // INPUTHANDLER_HPP_

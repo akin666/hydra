@@ -9,7 +9,7 @@
 #define INPUTSOURCE_HPP_
 
 #include "inputcommon.hpp"
-#include "inputdevice.hpp"
+#include "inputhandler.hpp"
 
 namespace input {
 
@@ -18,17 +18,17 @@ class Source
 public:
 	typedef std::shared_ptr<Source> Ptr;
 	typedef std::weak_ptr<Source> WeakPtr;
-private:
+protected:
 	Type type;
 	Mode mode;
 	String8 name;
 
-	std::vector<Device::WeakPtr> devices;
+	std::vector<Handler::WeakPtr> items;
 public:
 	Source( const String8& name , Type type , Mode mode );
 	virtual ~Source();
 
-	void attach( Device::Ptr ptr );
+	void attach( Handler::Ptr ptr );
 	String8 getName() const;
 	Type getType() const;
 	Mode getMode() const;

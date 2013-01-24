@@ -9,12 +9,12 @@
 #include <singleton>
 
 #include <log>
-#include <graphics/graphicssystem.hpp>
-#include <audio/audiosystem.hpp>
-#include <network/networksystem.hpp>
 #include <tpool/threadpool.hpp>
 
 #include <json>
+
+#include <glfw/glfwcontext.hpp>
+#include <openal/openalcontext.hpp>
 
 #ifndef CONFIG_SYSTEM_PATH
 # define CONFIG_SYSTEM_PATH "system"
@@ -34,9 +34,6 @@ Main::~Main()
 
 void Main::uninitialize()
 {
-	resetSingleton<network::System>();
-	resetSingleton<audio::System>();
-	resetSingleton<graphics::System>();
 	resetSingleton<tpool::ThreadPool>();
 	resetSingleton<Log>();
 }
@@ -44,9 +41,6 @@ void Main::uninitialize()
 bool Main::initialize( String8 path )
 {
 	Singleton<Log>::Ptr log( new Log );
-	Singleton<graphics::System>::Ptr graphics( new graphics::System );
-	Singleton<audio::System>::Ptr audio( new audio::System );
-	Singleton<network::System>::Ptr	network( new network::System );
 	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
 	Singleton<Json::Value>::Ptr config( new Json::Value );
 
@@ -93,30 +87,46 @@ bool Main::initialize( String8 path )
 	setSingleton<tpool::ThreadPool>( threadpool );
 	LOG->message("Threads: %i + main.", threadCount );
 
-	// Graphics
-	if( !graphics->initialize( config ) )
+	//////
+	//  CC ooo rrr  eee
+	// C   o o rr  e e
+	//  CC ooo r r  eee
+	//////// Core
 	{
-		LOG->error("%s:%i failed to initialize graphics!" , __FILE__ , __LINE__ );
+		// TODO replace with factory? incase glfw is not the only one.
+		glfw::Context *context = new glfw::Context( application , input );
+		core = core::Context::Ptr( context );
+	}
+	if( !core->initialize( config ) )
+	{
+		LOG->error("%s:%i failed to initialize core!" , __FILE__ , __LINE__ );
 		return false;
 	}
-	setSingleton<graphics::System>( graphics );
 
-	// Audio
+	//////
+	//
+	// audio
+	//
+	//////// Audio
+	{
+		// TODO replace with factory? incase openal is not the only one.
+		openal::Context *context = new openal::Context( input );
+		audio = audio::Context::Ptr( context );
+	}
 	if( !audio->initialize( config ) )
 	{
 		LOG->error("%s:%i failed to initialize audio!" , __FILE__ , __LINE__ );
 		return false;
 	}
-	setSingleton<audio::System>( audio );
 
-	// Networking
+/*	// Networking
 	if( !network->initialize( config ) )
 	{
 		LOG->error("%s:%i failed to initialize networking!" , __FILE__ , __LINE__ );
 		return false;
 	}
 	setSingleton<network::System>( network );
-
+*/
 	return true;
 }
 

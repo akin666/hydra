@@ -21,7 +21,7 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::add( ThreadPtr& thread )
+void Scheduler::add( ProtothreadPtr& thread )
 {
 	std::lock_guard<std::mutex> lock(mutex);
 	queue.push_back( thread );
@@ -51,7 +51,7 @@ void Scheduler::start()
 {
 	flags &= ~RENDERSCHEDULER_QUIT;
 
-	ThreadPtr current;
+	ProtothreadPtr current;
 
 	// Active state
 	// stuff still coming

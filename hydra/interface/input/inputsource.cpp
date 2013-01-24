@@ -20,13 +20,13 @@ Source::~Source()
 {
 }
 
-void Source::attach( Device::Ptr ptr )
+void Source::attach( Handler::Ptr ptr )
 {
 	// the device must be unique
-	for( auto& device : devices )
+	for( auto& item : items )
 	{
 		// weak -> shared
-		if( auto real = device.lock() )
+		if( auto real = item.lock() )
 		{
 			if( ptr == real )
 			{
@@ -35,7 +35,7 @@ void Source::attach( Device::Ptr ptr )
 		}
 	}
 	// shared -> weak
-	devices.push_back( ptr );
+	items.push_back( ptr );
 }
 
 String8 Source::getName() const

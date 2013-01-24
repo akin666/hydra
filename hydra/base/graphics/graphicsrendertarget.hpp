@@ -15,6 +15,9 @@ namespace graphics {
 class RenderTarget
 {
 public:
+	typedef std::shared_ptr<RenderTarget> Ptr;
+	typedef std::weak_ptr<RenderTarget> WeakPtr;
+public:
 	RenderTarget() {}
 	virtual ~RenderTarget() {}
 

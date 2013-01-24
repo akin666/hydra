@@ -11,6 +11,12 @@
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
 
+#include <resource/resourcecache.hpp>
+#include <application/applicationmanager.hpp>
+#include <core/corecontext.hpp>
+#include <input/inputmanager.hpp>
+#include <audio/audiocontext.hpp>
+
 #ifndef HYDRA_CONFIG
 # define HYDRA_CONFIG "config.json"
 #endif
@@ -22,6 +28,12 @@ class Main
 private:
 	render::Scheduler rscheduler;
 	logic::Scheduler lscheduler;
+
+	resource::Cache::Ptr cache;
+	application::Manager::Ptr application;
+	core::Context::Ptr core;
+	input::Manager::Ptr input;
+	audio::Context::Ptr audio;
 public:
 	Main();
 	~Main();
