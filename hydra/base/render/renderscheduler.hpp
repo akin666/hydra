@@ -17,6 +17,9 @@ namespace render {
 
 class Scheduler
 {
+public:
+	typedef std::shared_ptr<Scheduler> Ptr;
+	typedef std::weak_ptr<Scheduler> WeakPtr;
 private:
 	typedef std::deque< ProtothreadPtr > RenderQue;
 

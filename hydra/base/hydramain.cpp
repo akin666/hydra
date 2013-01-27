@@ -23,7 +23,6 @@
 namespace hydra {
 
 Main::Main()
-: lscheduler( rscheduler )
 {
 }
 
@@ -40,6 +39,12 @@ void Main::uninitialize()
 
 bool Main::initialize( String8 path )
 {
+	// Add render scheduler
+	rscheduler = render::Scheduler::Ptr( new render::Scheduler );
+
+	// Add logic scheduler
+	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler( *this , rscheduler ) );
+
 	Singleton<Log>::Ptr log( new Log );
 	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
 	Singleton<Json::Value>::Ptr config( new Json::Value );
@@ -133,10 +138,10 @@ bool Main::initialize( String8 path )
 int Main::run()
 {
 	// blocking, should start several threads to do their bidding
-	lscheduler.start();
+	lscheduler->start();
 
 	// blocking, should block, until no more stuff to render and the lscheduler also has informed that all is done.
-	rscheduler.start();
+	rscheduler->start();
 
 	return 0;
 }

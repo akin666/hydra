@@ -26,8 +26,8 @@ namespace hydra {
 class Main
 {
 private:
-	render::Scheduler rscheduler;
-	logic::Scheduler lscheduler;
+	render::Scheduler::Ptr rscheduler;
+	logic::Scheduler::Ptr lscheduler;
 
 	resource::Cache::Ptr cache;
 	application::Manager::Ptr application;
@@ -44,7 +44,7 @@ public:
 		ProtothreadPtr ptr( new GameLogicSystem );
 
 		// add the thread to scheduler
-		lscheduler.queue( ptr );
+		lscheduler->queue( ptr );
 	}
 
 	void uninitialize();

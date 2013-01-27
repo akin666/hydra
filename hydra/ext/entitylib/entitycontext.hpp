@@ -12,11 +12,15 @@
 #include "entityproperty.hpp"
 #include "entitymanager.hpp"
 #include <unordered_map>
+#include <memory>	// c++11 std::shared_ptr
 
 namespace entity {
 
 class Context
 {
+public:
+	typedef std::shared_ptr<Context> Ptr;
+	typedef std::weak_ptr<Context> WeakPtr;
 private:
 	std::atomic<ID> current;
 

@@ -9,11 +9,13 @@
 #include "logicthread.hpp"
 #include <commontypes.h>
 #include <tpool/threadpool.hpp>
+#include <hydramain.hpp>
 
 namespace logic {
 
-Scheduler::Scheduler( render::Scheduler& target )
-: target( target )
+Scheduler::Scheduler( hydra::Main& main , render::Scheduler::Ptr& target )
+: main( main )
+, target( target )
 {
 }
 
@@ -35,6 +37,12 @@ void Scheduler::queue( ProtothreadPtr& thread )
 	added.push_back( thread );
 }
 
+// access renderer
+void Scheduler::getRenderer( render::Scheduler::Ptr& target )
+{
+	target = this->target;
+}
+
 void Scheduler::start( )
 {
 	std::lock_guard<std::mutex> lock( deepMutex );
@@ -47,8 +55,10 @@ void Scheduler::start( )
 			if( logicThread != nullptr )
 			{
 				threads.push_back( thread );
-				logicThread->set( target );
-				logicThread->set( *this );
+
+				// setup the scheduler, and make the thread to execute only once per frame.
+				logicThread->set( this );
+				logicThread->setRunOnce( true );
 			}
 		}
 

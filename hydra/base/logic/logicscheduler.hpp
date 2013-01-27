@@ -12,26 +12,38 @@
 #include "../render/renderscheduler.hpp"
 #include <uthread>
 
+// forward declaration of hydra::main needed..
+namespace hydra {
+class Main;
+}
+
 namespace logic {
 
 class Thread;
 class Scheduler
 {
-protected:
+public:
+	typedef std::shared_ptr<Scheduler> Ptr;
+	typedef std::weak_ptr<Scheduler> WeakPtr;
+private:
 	std::mutex mutex;
 	std::mutex deepMutex;
 
 	ProtothreadSet threads;
 	ProtothreadSet added;
 
-	render::Scheduler& target;
+	hydra::Main& main;
+	render::Scheduler::Ptr target;
 public:
-	Scheduler( render::Scheduler& target );
+	Scheduler( hydra::Main& main , render::Scheduler::Ptr& target );
 	~Scheduler();
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
 	void queue( ProtothreadPtr& thread );
+
+	// access renderer
+	void getRenderer( render::Scheduler::Ptr& target );
 
 	// spawn protos interface
 	void start();

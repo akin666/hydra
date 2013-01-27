@@ -7,24 +7,17 @@
 
 #include "logicthread.hpp"
 
-namespace logic
-{
+namespace logic {
 
 Thread::Thread()
-: renderScheduler( nullptr )
-, scheduler( nullptr )
+: scheduler( nullptr )
 {
-	// this thread will be fed to workers, who would grind them till they bleed..
-	setRunOnce( true );
+	// create the entity context
+	context = entity::Context::Ptr( new entity::Context );
 }
 
 Thread::~Thread()
 {
-}
-
-render::Scheduler *Thread::getRenderScheduler()
-{
-	return renderScheduler;
 }
 
 Scheduler *Thread::getLogicScheduler()
@@ -32,19 +25,14 @@ Scheduler *Thread::getLogicScheduler()
 	return scheduler;
 }
 
-entity::Context *Thread::getEntityContext()
+entity::Context::Ptr Thread::getEntityContext()
 {
-	return &context;
+	return context;
 }
 
-void Thread::set( render::Scheduler& target )
+void Thread::set( Scheduler *scheduler )
 {
-	renderScheduler = &target;
-}
-
-void Thread::set( Scheduler& scheduler )
-{
-	this->scheduler = &scheduler;
+	this->scheduler = scheduler;
 }
 
 } // namespace logic

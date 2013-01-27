@@ -10,7 +10,6 @@
 
 #include <protothread>
 #include <entitylib/entitycontext.hpp>
-#include "../render/renderscheduler.hpp"
 #include <vector>
 
 namespace logic {
@@ -19,20 +18,17 @@ class Scheduler;
 class Thread : public Protothread
 {
 private:
-	entity::Context context;
+	entity::Context::Ptr context;
 
-	render::Scheduler *renderScheduler;
 	Scheduler *scheduler;
 protected:
-	render::Scheduler *getRenderScheduler();
 	Scheduler *getLogicScheduler();
-	entity::Context *getEntityContext();
+	entity::Context::Ptr getEntityContext();
 public:
 	Thread();
 	virtual ~Thread();
 
-	void set( render::Scheduler& targets );
-	void set( Scheduler& scheduler );
+	void set( Scheduler *scheduler );
 };
 
 } // namespace logic
