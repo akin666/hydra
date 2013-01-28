@@ -9,8 +9,7 @@
 
 namespace openal {
 
-Context::Context( input::Manager::Ptr& inputmanager )
-: audio::Context( inputmanager )
+Context::Context()
 {
 }
 

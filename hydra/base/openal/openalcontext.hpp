@@ -15,7 +15,7 @@ namespace openal {
 class Context : public audio::Context
 {
 public:
-	Context( input::Manager::Ptr& inputmanager );
+	Context();
 	virtual ~Context();
 
 	virtual bool initialize( Json::ValuePtr& config );

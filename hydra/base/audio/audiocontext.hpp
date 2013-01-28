@@ -9,7 +9,6 @@
 #define AUDIOCONTEXT_HPP_
 
 #include <commontypes.h>
-#include <input/inputmanager.hpp>
 #include <json>
 
 namespace audio {
@@ -19,10 +18,8 @@ class Context
 public:
 	typedef std::shared_ptr<Context> Ptr;
 	typedef std::weak_ptr<Context> WeakPtr;
-protected:
-	input::Manager::Ptr& inputmanager;
 public:
-	Context( input::Manager::Ptr& inputmanager );
+	Context();
 	virtual ~Context();
 
 	virtual bool initialize( Json::ValuePtr& config ) = 0;

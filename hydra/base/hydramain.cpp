@@ -43,7 +43,7 @@ bool Main::initialize( String8 path )
 	rscheduler = render::Scheduler::Ptr( new render::Scheduler );
 
 	// Add logic scheduler
-	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler( *this , rscheduler ) );
+	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler( *this ) );
 
 	Singleton<Log>::Ptr log( new Log );
 	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
@@ -92,14 +92,10 @@ bool Main::initialize( String8 path )
 	setSingleton<tpool::ThreadPool>( threadpool );
 	LOG->message("Threads: %i + main.", threadCount );
 
-	//////
-	//  CC ooo rrr  eee
-	// C   o o rr  e e
-	//  CC ooo r r  eee
 	//////// Core
 	{
 		// TODO replace with factory? incase glfw is not the only one.
-		glfw::Context *context = new glfw::Context( application , input );
+		glfw::Context *context = new glfw::Context();
 		core = core::Context::Ptr( context );
 	}
 	if( !core->initialize( config ) )
@@ -108,14 +104,10 @@ bool Main::initialize( String8 path )
 		return false;
 	}
 
-	//////
-	//
-	// audio
-	//
 	//////// Audio
 	{
 		// TODO replace with factory? incase openal is not the only one.
-		openal::Context *context = new openal::Context( input );
+		openal::Context *context = new openal::Context();
 		audio = audio::Context::Ptr( context );
 	}
 	if( !audio->initialize( config ) )
@@ -154,6 +146,16 @@ bool Main::shouldExit()
 bool Main::shouldRestart()
 {
 	return false;
+}
+
+render::Scheduler::Ptr Main::getRenderer()
+{
+	return rscheduler;
+}
+
+logic::Scheduler::Ptr Main::getLogic()
+{
+	return lscheduler;
 }
 
 } // hydra

@@ -9,8 +9,7 @@
 
 namespace glfw {
 
-Context::Context( application::Manager::Ptr& applicationmanager , input::Manager::Ptr& inputmanager )
-: core::Context( applicationmanager , inputmanager )
+Context::Context()
 {
 }
 

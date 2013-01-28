@@ -33,17 +33,15 @@ private:
 	ProtothreadSet added;
 
 	hydra::Main& main;
-	render::Scheduler::Ptr target;
 public:
-	Scheduler( hydra::Main& main , render::Scheduler::Ptr& target );
+	Scheduler( hydra::Main& main );
 	~Scheduler();
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
 	void queue( ProtothreadPtr& thread );
 
-	// access renderer
-	void getRenderer( render::Scheduler::Ptr& target );
+	hydra::Main& accessMain();
 
 	// spawn protos interface
 	void start();

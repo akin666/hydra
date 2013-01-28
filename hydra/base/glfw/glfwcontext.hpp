@@ -15,7 +15,7 @@ namespace glfw {
 class Context : public core::Context
 {
 public:
-	Context( application::Manager::Ptr& applicationmanager , input::Manager::Ptr& inputmanager );
+	Context();
 	virtual ~Context();
 
 	virtual bool initialize( Json::ValuePtr& config );

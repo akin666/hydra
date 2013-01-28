@@ -13,9 +13,8 @@
 
 namespace logic {
 
-Scheduler::Scheduler( hydra::Main& main , render::Scheduler::Ptr& target )
+Scheduler::Scheduler( hydra::Main& main )
 : main( main )
-, target( target )
 {
 }
 
@@ -38,9 +37,10 @@ void Scheduler::queue( ProtothreadPtr& thread )
 }
 
 // access renderer
-void Scheduler::getRenderer( render::Scheduler::Ptr& target )
+
+hydra::Main& Scheduler::accessMain()
 {
-	target = this->target;
+	return main;
 }
 
 void Scheduler::start( )

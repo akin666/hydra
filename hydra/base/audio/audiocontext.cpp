@@ -9,8 +9,7 @@
 
 namespace audio {
 
-Context::Context( input::Manager::Ptr& inputmanager )
-: inputmanager( inputmanager )
+Context::Context()
 {
 }
 

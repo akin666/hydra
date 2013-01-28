@@ -8,13 +8,14 @@
 #ifndef HYDRAMAIN_HPP_
 #define HYDRAMAIN_HPP_
 
+#include <commontypes.h>
+#include <signal.h>
+
 #include <logic/logicscheduler.hpp>
 #include <render/renderscheduler.hpp>
 
 #include <resource/resourcecache.hpp>
-#include <application/applicationmanager.hpp>
 #include <core/corecontext.hpp>
-#include <input/inputmanager.hpp>
 #include <audio/audiocontext.hpp>
 
 #ifndef HYDRA_CONFIG
@@ -30,9 +31,7 @@ private:
 	logic::Scheduler::Ptr lscheduler;
 
 	resource::Cache::Ptr cache;
-	application::Manager::Ptr application;
 	core::Context::Ptr core;
-	input::Manager::Ptr input;
 	audio::Context::Ptr audio;
 public:
 	Main();
@@ -54,6 +53,27 @@ public:
 	int run();
 	bool shouldExit();
 	bool shouldRestart();
+
+	render::Scheduler::Ptr getRenderer();
+	logic::Scheduler::Ptr getLogic();
+
+	signal::Signal0<void> suspend;
+	signal::Signal0<void> resume;
+	signal::Signal0<void> exit;
+	signal::Signal0<void> restart;
+	signal::Signal0<void> minimize;
+	signal::Signal0<void> maximize;
+
+	signal::Signal0<void> windowed;
+	signal::Signal0<void> fullscreened;
+	signal::Signal0<void> lostFocus;
+
+	signal::Signal1<int> memoryWarning;
+	signal::Signal0<void> saveState;
+
+	// App exception handling
+	virtual void handleException( std::exception& e ) {}
+	virtual void handleEllipsisException() {}
 };
 
 } // hydra
