@@ -10,7 +10,7 @@
 #include <hydramain.hpp>
 #include "UI/uithread.hpp"
 
-class DummyThread : public logic::Thread
+class DummyThread : public Protothread
 {
 public:
 	DummyThread()

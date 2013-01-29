@@ -43,7 +43,7 @@ bool Main::initialize( String8 path )
 	rscheduler = render::Scheduler::Ptr( new render::Scheduler );
 
 	// Add logic scheduler
-	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler( *this ) );
+	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler );
 
 	Singleton<Log>::Ptr log( new Log );
 	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );

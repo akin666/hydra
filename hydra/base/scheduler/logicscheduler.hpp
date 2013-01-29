@@ -8,18 +8,11 @@
 #ifndef LOGICSCHEDULER_HPP_
 #define LOGICSCHEDULER_HPP_
 
-#include "logicthread.hpp"
-#include "../render/renderscheduler.hpp"
 #include <uthread>
-
-// forward declaration of hydra::main needed..
-namespace hydra {
-class Main;
-}
+#include <protothread>
 
 namespace logic {
 
-class Thread;
 class Scheduler
 {
 public:
@@ -31,17 +24,13 @@ private:
 
 	ProtothreadSet threads;
 	ProtothreadSet added;
-
-	hydra::Main& main;
 public:
-	Scheduler( hydra::Main& main );
+	Scheduler();
 	~Scheduler();
 
 	// queue stuff, that is runnable
 	// thread itself is responsible for locks et al.
 	void queue( ProtothreadPtr& thread );
-
-	hydra::Main& accessMain();
 
 	// spawn protos interface
 	void start();

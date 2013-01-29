@@ -179,6 +179,14 @@ public:
 	{
 		return hasFlags( 0x0001 );
 	}
+	void setFinished( bool state )
+	{
+		state ? addFlags( 0x0002 ) : removeFlags( 0x0002 );
+	}
+	bool isFinished() const
+	{
+		return hasFlags( 0x0002 );
+	}
 };
 
 // Declare start of protothread (use at start of run() implementation).

@@ -8,8 +8,8 @@
 #ifndef UITHREAD_HPP_
 #define UITHREAD_HPP_
 
-#include <logic/logicthread.hpp>
 #include <entitylib/entitycontext.hpp>
+#include <protothread>
 
 #include "uifactory.hpp"
 
@@ -18,7 +18,7 @@
 
 namespace ui {
 
-class Thread : public logic::Thread
+class Thread : public Protothread
 {
 private:
 	unsigned int state;

@@ -11,8 +11,8 @@
 #include <commontypes.h>
 #include <signal.h>
 
-#include <logic/logicscheduler.hpp>
-#include <render/renderscheduler.hpp>
+#include <scheduler/logicscheduler.hpp>
+#include <scheduler/renderscheduler.hpp>
 
 #include <resource/resourcecache.hpp>
 #include <core/corecontext.hpp>
