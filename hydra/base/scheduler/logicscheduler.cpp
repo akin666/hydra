@@ -19,7 +19,7 @@ Scheduler::~Scheduler()
 {
 }
 
-void Scheduler::queue( ProtothreadPtr& thread )
+void Scheduler::queue( Protothread::Ptr& thread )
 {
 	std::lock_guard<std::mutex> lock( mutex );
 	added.push_back( thread );

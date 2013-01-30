@@ -99,6 +99,9 @@
 class Protothread
 {
 public:
+	typedef std::shared_ptr<Protothread> 	Ptr;
+	typedef std::weak_ptr<Protothread> 		WeakPtr;
+public:
     // Construct a new protothread that will start from the beginning
     // of its Run() function.
     Protothread() 
@@ -226,7 +229,6 @@ public:
     do { ptYielded = false; _ptLine = __LINE__; case __LINE__: \
     if (!ptYielded || !(condition)) return true; } while (0)
 
-typedef std::shared_ptr<Protothread> ProtothreadPtr;
-typedef std::vector<ProtothreadPtr> ProtothreadSet;
+typedef std::vector<Protothread::Ptr> ProtothreadSet;
 
 #endif // __PROTOTHREAD_H__

@@ -67,7 +67,7 @@ void Worker::operator()()
 		condition.notify_one();
 	}
 
-	ProtothreadPtr current;
+	Protothread::Ptr current;
 	while( going )
 	{
 		// keep it clean.

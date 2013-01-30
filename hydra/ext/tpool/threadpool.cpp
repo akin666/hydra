@@ -58,7 +58,7 @@ int ThreadPool::getWorkerCount()
 	return worker_count;
 }
 
-void ThreadPool::schedule( ProtothreadPtr& work )
+void ThreadPool::schedule( Protothread::Ptr& work )
 {
 	data->push( work );
 }

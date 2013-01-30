@@ -14,6 +14,7 @@
 #include "coremouse.hpp"
 #include "corekeyboard.hpp"
 #include "corejoystick.hpp"
+#include "coretouch.hpp"
 
 namespace core {
 
@@ -22,24 +23,17 @@ class Context
 public:
 	typedef std::shared_ptr<Context> Ptr;
 	typedef std::weak_ptr<Context> WeakPtr;
-protected:
-	typedef std::vector< Joystick::Ptr > JoystickSet;
-	typedef std::vector< Mouse::Ptr > MouseSet;
-	typedef std::vector< Keyboard::Ptr > KeyboardSet;
-
-	JoystickSet joysticks;
-	MouseSet mouses;
-	KeyboardSet keyboards;
 public:
 	Context();
 	virtual ~Context();
 
 	virtual bool initialize( Json::ValuePtr& config ) = 0;
-	virtual graphics::RenderTarget::Ptr getRenderTarget() = 0;
+	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr ) = 0;
 
-	void get( Joystick::Ptr& ptr , int number = 0 );
-	void get( Keyboard::Ptr& ptr , int number = 0 );
-	void get( Mouse::Ptr& ptr , int number = 0 );
+	virtual void get( Joystick::Ptr& ptr , int number = 0 );
+	virtual void get( Keyboard::Ptr& ptr , int number = 0 );
+	virtual void get( Mouse::Ptr& ptr , int number = 0 );
+	virtual void get( Touch::Ptr& ptr , int number = 0 );
 };
 
 } // namespace core 

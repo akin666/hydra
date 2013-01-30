@@ -3,8 +3,9 @@
 #define ENTITYHEADER_123_
 
 #include <entitylib/entity.hpp>
-#include <entitylib/property.hpp>
-#include <entitylib/propertymanager.hpp>
+#include <entitylib/entitycontext.hpp>
+#include <entitylib/entityproperty.hpp>
+#include <entitylib/entitymanager.hpp>
 #include <entitylib/tproperty.hpp>
 
 #endif // ENTITYHEADER_123_

@@ -37,14 +37,7 @@ public:
 	Main();
 	~Main();
 
-	template <class GameLogicSystem>
-	void createThread()
-	{
-		ProtothreadPtr ptr( new GameLogicSystem );
-
-		// add the thread to scheduler
-		lscheduler->queue( ptr );
-	}
+	void schedule( Protothread::Ptr& ptr );
 
 	void uninitialize();
 

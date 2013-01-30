@@ -29,4 +29,8 @@ void Context::get( Mouse::Ptr& ptr , int number )
 {
 }
 
+void Context::get( Touch::Ptr& ptr , int number )
+{
+}
+
 } // namespace core 

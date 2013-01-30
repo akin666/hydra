@@ -31,6 +31,18 @@ Main::~Main()
 	uninitialize();
 }
 
+void Main::schedule( Protothread::Ptr& ptr )
+{
+	if( lscheduler )
+	{
+		lscheduler->queue( ptr );
+	}
+	else
+	{
+		// ASSERT? KILL? TODO!
+	}
+}
+
 void Main::uninitialize()
 {
 	resetSingleton<tpool::ThreadPool>();

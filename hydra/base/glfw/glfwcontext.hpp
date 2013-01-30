@@ -14,13 +14,15 @@ namespace glfw {
 
 class Context : public core::Context
 {
+private:
+	graphics::RenderTarget::Ptr rendertarget;
 public:
 	Context();
 	virtual ~Context();
 
 	virtual bool initialize( Json::ValuePtr& config );
 
-	virtual graphics::RenderTarget::Ptr getRenderTarget();
+	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr );
 };
 
 } // namespace glfw

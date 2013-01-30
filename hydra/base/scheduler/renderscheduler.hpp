@@ -21,7 +21,7 @@ public:
 	typedef std::shared_ptr<Scheduler> Ptr;
 	typedef std::weak_ptr<Scheduler> WeakPtr;
 private:
-	typedef std::deque< ProtothreadPtr > RenderQue;
+	typedef std::deque< Protothread::Ptr > RenderQue;
 
 	std::mutex mutex;
 	std::condition_variable condition;
@@ -36,7 +36,7 @@ public:
 
 	// queue stuff, that is immediately runnable, tries to run, until run finishes.
 	// render sthread itself is responsible for locks et al.
-	void add( ProtothreadPtr& thread );
+	void add( Protothread::Ptr& thread );
 
 	// indicate 'done' from logic
 	void finish();

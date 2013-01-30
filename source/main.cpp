@@ -10,26 +10,18 @@
 #include <hydramain.hpp>
 #include "UI/uithread.hpp"
 
-class DummyThread : public Protothread
-{
-public:
-	DummyThread()
-	{
-	}
-
-	virtual ~DummyThread()
-	{
-	}
-
-	virtual bool run()
-	{
-		return true;
-	}
-};
+#include "game.hpp"
 
 int main()
 {
 	hydra::Main main;
+
+	// Create game
+	Protothread::Ptr game;
+	{
+		Game *raw = new Game( main );
+		game = Protothread::Ptr( raw );
+	}
 
 	do
 	{
@@ -38,7 +30,7 @@ int main()
 			return -1;
 		}
 
-		main.createThread<DummyThread>();
+		main.schedule( game );
 
 		do
 		{

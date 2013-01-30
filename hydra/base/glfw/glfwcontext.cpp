@@ -6,6 +6,7 @@
  */
 
 #include "glfwcontext.hpp"
+#include "glfwrendertarget.hpp"
 
 namespace glfw {
 
@@ -19,13 +20,17 @@ Context::~Context()
 
 bool Context::initialize( Json::ValuePtr& config )
 {
+	// Load rendertarget
+	{
+		RenderTarget *rtarget = new RenderTarget;
+		rendertarget = graphics::RenderTarget::Ptr( rtarget );
+	}
+
 	return false;
 }
 
-graphics::RenderTarget::Ptr Context::getRenderTarget()
+void Context::getRenderTarget( graphics::RenderTarget::Ptr& ptr )
 {
-	graphics::RenderTarget::Ptr tt;
-	return tt;
 }
 
 } // namespace core 
