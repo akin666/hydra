@@ -16,13 +16,6 @@ int main()
 {
 	hydra::Main main;
 
-	// Create game
-	Protothread::Ptr game;
-	{
-		Game *raw = new Game( main );
-		game = Protothread::Ptr( raw );
-	}
-
 	do
 	{
 		if( !main.initialize() )
@@ -30,7 +23,15 @@ int main()
 			return -1;
 		}
 
-		main.schedule( game );
+		// Create game
+		{
+			Protothread::Ptr game;
+
+			Game *raw = new Game( main );
+			game = Protothread::Ptr( raw );
+
+			main.schedule( game );
+		}
 
 		do
 		{
