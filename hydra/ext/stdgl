@@ -6,7 +6,7 @@
 
 //#define USE_GLEE
 #define USE_GLEW
-//#define USE_GLFW
+#define USE_GLFW
 //#define USE_SDL
 //#define USE_GL
 //#define USE_GL3
@@ -26,6 +26,10 @@
 #endif
 
 #ifdef USE_GLFW
+# ifdef USE_GL3
+#  define GL3_PROTOTYPES 1
+#  define GLFW_INCLUDE_GL3 
+# endif
 # include <GL/glfw.h>
 #else
 #endif
@@ -42,7 +46,7 @@
 
 #ifdef USE_GL3
 # define GL3_PROTOTYPES 1
-# include <GL/gl3.h>
+# include <GL3/gl3.h>
 #else
 #endif
 

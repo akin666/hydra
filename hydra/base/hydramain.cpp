@@ -45,6 +45,13 @@ void Main::schedule( Protothread::Ptr& ptr )
 
 void Main::uninitialize()
 {
+	cache.reset();
+	audio.reset();
+	core.reset();
+
+	rscheduler.reset();
+	lscheduler.reset();
+
 	resetSingleton<tpool::ThreadPool>();
 	resetSingleton<Log>();
 }
@@ -160,14 +167,23 @@ bool Main::shouldRestart()
 	return false;
 }
 
-render::Scheduler::Ptr Main::getRenderer()
+void Main::get( render::Scheduler::Ptr& ptr )
 {
-	return rscheduler;
+	ptr = rscheduler;
 }
 
-logic::Scheduler::Ptr Main::getLogic()
+void Main::get( logic::Scheduler::Ptr& ptr )
 {
-	return lscheduler;
+	ptr = lscheduler;
+}
+
+// App exception handling
+void Main::handleException( std::exception& e )
+{
+}
+
+void Main::handleEllipsisException()
+{
 }
 
 } // hydra

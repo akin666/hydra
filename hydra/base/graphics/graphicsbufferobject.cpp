@@ -101,7 +101,7 @@ unsigned char *BufferObject::bindMemoryMap( const BindStyle style ) const
 		default: buffstyle = GL_READ_ONLY; break;
 	}
 
-	GLubyte* ptr = (GLubyte*)glMapBufferARB( (style == WRITE ? GL_PIXEL_PACK_BUFFER : GL_PIXEL_UNPACK_BUFFER ) , buffstyle );
+	GLubyte* ptr = (GLubyte*)glMapBuffer( (style == WRITE ? GL_PIXEL_PACK_BUFFER : GL_PIXEL_UNPACK_BUFFER ) , buffstyle );
 
 	GL_TEST_ERROR("BufferObject:bindMemoryMap END.");
 

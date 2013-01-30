@@ -47,8 +47,8 @@ public:
 	bool shouldExit();
 	bool shouldRestart();
 
-	render::Scheduler::Ptr getRenderer();
-	logic::Scheduler::Ptr getLogic();
+	void get( render::Scheduler::Ptr& ptr );
+	void get( logic::Scheduler::Ptr& ptr );
 
 	signal::Signal0<void> suspend;
 	signal::Signal0<void> resume;
@@ -65,8 +65,8 @@ public:
 	signal::Signal0<void> saveState;
 
 	// App exception handling
-	virtual void handleException( std::exception& e ) {}
-	virtual void handleEllipsisException() {}
+	void handleException( std::exception& e );
+	void handleEllipsisException();
 };
 
 } // hydra
