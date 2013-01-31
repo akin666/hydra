@@ -9,6 +9,7 @@
 #define GLFWRENDERTARGET_HPP_
 
 #include <graphics/graphicsrendertarget.hpp>
+#include <json>
 
 namespace glfw {
 
@@ -41,6 +42,8 @@ public:
 
 	virtual void bind();
 	virtual void unbind();
+
+	bool initialize( Json::ValuePtr& config );
 };
 
 } // namespace glfw 

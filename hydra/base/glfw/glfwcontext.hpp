@@ -15,6 +15,7 @@ namespace glfw {
 class Context : public core::Context
 {
 private:
+	uint32 state;
 	graphics::RenderTarget::Ptr rendertarget;
 public:
 	Context();

@@ -19,7 +19,7 @@ Context::~Context()
 
 bool Context::initialize( Json::ValuePtr& config )
 {
-	return false;
+	return true;
 }
 
 } // namespace openal

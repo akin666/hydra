@@ -19,9 +19,8 @@
 #endif
 
 #if defined(USE_GLEW) and defined(OS_WINDOWS)
-# define GLEW_STATIC
+//# define GLEW_STATIC
 # include <GL/glew.h>
-# define GL_INITIALIZATION ( (glewInit() == GLEW_OK) && GLEW_VERSION_3_0 )
 #else
 #endif
 

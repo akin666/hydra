@@ -6,6 +6,7 @@
  */
 
 #include "glfwrendertarget.hpp"
+#include <stdgl>
 
 namespace glfw {
 
@@ -14,6 +15,8 @@ namespace glfw {
 
 RenderTarget::RenderTarget()
 : state( GLFW_RENDERTARGET_NONE )
+, colormode( color::RGBA8 )
+, depthmode( color::DEPTH32 )
 {
 }
 
@@ -69,6 +72,38 @@ void RenderTarget::bind()
 
 void RenderTarget::unbind()
 {
+}
+
+bool RenderTarget::initialize( Json::ValuePtr& config )
+{
+	dimensions.x = 800;
+	dimensions.x = 600;
+
+	int r = 8;
+	int g = 8;
+	int b = 8;
+	int a = 8;
+	int d = 32;
+	int s = 0;
+	bool fs = false;
+
+	if( glfwOpenWindow(
+			dimensions.x,
+			dimensions.y,
+			r,
+			g,
+			b,
+			a,
+			d,
+			s,
+			fs ? GLFW_FULLSCREEN : GLFW_WINDOW
+			) == GL_FALSE )
+	{
+		// Failed!
+		return false;
+	}
+
+	return true;
 }
 
 } // namespace glfw 
