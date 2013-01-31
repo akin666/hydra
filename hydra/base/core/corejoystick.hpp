@@ -20,6 +20,7 @@ public:
 
 	typedef std::shared_ptr<Joystick> Ptr;
 	typedef std::weak_ptr<Joystick> WeakPtr;
+	typedef std::map<int , Ptr> Map;
 public:
 	Joystick();
 	~Joystick();

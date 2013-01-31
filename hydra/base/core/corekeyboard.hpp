@@ -20,6 +20,7 @@ public:
 
 	typedef std::shared_ptr<Keyboard> Ptr;
 	typedef std::weak_ptr<Keyboard> WeakPtr;
+	typedef std::map<int , Ptr> Map;
 public:
 	Keyboard();
 	~Keyboard();

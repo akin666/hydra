@@ -20,6 +20,7 @@ public:
 
 	typedef std::shared_ptr<Mouse> Ptr;
 	typedef std::weak_ptr<Mouse> WeakPtr;
+	typedef std::map<int , Ptr> Map;
 public:
 	Mouse();
 	~Mouse();

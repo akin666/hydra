@@ -36,6 +36,11 @@ public:
 	virtual void get( Keyboard::Ptr& ptr , int number = 0 );
 	virtual void get( Mouse::Ptr& ptr , int number = 0 );
 	virtual void get( Touch::Ptr& ptr , int number = 0 );
+
+	virtual int getJoystickCount();
+	virtual int getKeyboardCount();
+	virtual int getMouseCount();
+	virtual int getTouchCount();
 };
 
 } // namespace core 

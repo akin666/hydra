@@ -20,6 +20,7 @@ public:
 
 	typedef std::shared_ptr<Touch> Ptr;
 	typedef std::weak_ptr<Touch> WeakPtr;
+	typedef std::map<int , Ptr> Map;
 public:
 	Touch();
 	virtual ~Touch();

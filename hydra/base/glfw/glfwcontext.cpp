@@ -87,12 +87,118 @@ bool Context::initialize( Json::ValuePtr& config )
 		state |= GCORECONTEXT_GLINIT;
 	}
 
+	// Init peripherals
+	for( int i = 0 ; i < getJoystickCount() ; ++i )
+	{
+		joystickMap[i] = core::Joystick::Ptr( new core::Joystick );
+	}
+	for( int i = 0 ; i < getKeyboardCount() ; ++i )
+	{
+		keyboardMap[i] = core::Keyboard::Ptr( new core::Keyboard );
+	}
+	for( int i = 0 ; i < getMouseCount() ; ++i )
+	{
+		mouseMap[i] = core::Mouse::Ptr( new core::Mouse );
+	}
+	for( int i = 0 ; i < getTouchCount() ; ++i )
+	{
+		touchMap[i] = core::Touch::Ptr( new core::Touch );
+	}
+
 	return true;
 }
 
 void Context::getRenderTarget( graphics::RenderTarget::Ptr& ptr )
 {
 	ptr = rendertarget;
+}
+
+void Context::get( core::Joystick::Ptr& ptr , int number )
+{
+	if( number < 0  || number >= getJoystickCount() )
+	{
+		return;
+	}
+
+	ptr.reset();
+
+	ptr = joystickMap[ number ];
+//	if( !ptr )
+//	{
+//		ptr = core::Joystick::Ptr( new core::Joystick );
+//		joystickMap[ number ] = ptr;
+//	}
+}
+
+void Context::get( core::Keyboard::Ptr& ptr , int number )
+{
+	if( number < 0 || number >= getKeyboardCount() )
+	{
+		return;
+	}
+
+	ptr.reset();
+
+	ptr = keyboardMap[ number ];
+//	if( !ptr )
+//	{
+//		ptr = core::Keyboard::Ptr( new core::Keyboard );
+//		keyboardMap[ number ] = ptr;
+//	}
+}
+
+void Context::get( core::Mouse::Ptr& ptr , int number )
+{
+	if( number < 0 || number >= getMouseCount() )
+	{
+		return;
+	}
+
+	ptr.reset();
+
+	ptr = mouseMap[ number ];
+//	if( !ptr )
+//	{
+//		ptr = core::Mouse::Ptr( new core::Mouse );
+//		mouseMap[ number ] = ptr;
+//	}
+}
+
+void Context::get( core::Touch::Ptr& ptr , int number )
+{
+	if( number < 0 || number >= getTouchCount() )
+	{
+		return;
+	}
+
+	ptr.reset();
+
+	ptr = touchMap[ number ];
+//	if( !ptr )
+//	{
+//		ptr = core::Touch::Ptr( new core::Touch );
+//		touchMap[ number ] = ptr;
+//	}
+}
+
+int Context::getJoystickCount()
+{
+	return 16;
+}
+
+int Context::getKeyboardCount()
+{
+	return 1;
+}
+
+int Context::getMouseCount()
+{
+	return 1;
+}
+
+int Context::getTouchCount()
+{
+	return 0;
 }
 
 } // namespace core 

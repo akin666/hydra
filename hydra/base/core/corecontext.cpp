@@ -35,4 +35,24 @@ void Context::get( Touch::Ptr& ptr , int number )
 {
 }
 
+int Context::getJoystickCount()
+{
+	return 0;
+}
+
+int Context::getKeyboardCount()
+{
+	return 0;
+}
+
+int Context::getMouseCount()
+{
+	return 0;
+}
+
+int Context::getTouchCount()
+{
+	return 0;
+}
+
 } // namespace core 
