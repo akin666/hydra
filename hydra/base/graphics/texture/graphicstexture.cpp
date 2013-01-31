@@ -13,8 +13,8 @@
 namespace graphics {
 
 Texture::Texture()
-: mode( color::RGBA8 )
-, newMode( color::RGBA8 )
+: mode( pixel::RGBA8 )
+, newMode( pixel::RGBA8 )
 , glMode( GL_RGBA )
 , bytes( 4 )
 , texture_id( GL_NULL )
@@ -144,8 +144,8 @@ bool Texture::initialize( const unsigned char *data )
 		{
 			mode = newMode;
 
-			glMode = color::resolveGLMode( mode );
-			bytes = color::getByteSize( mode );
+			glMode = pixel::resolveGLMode( mode );
+			bytes = pixel::getByteSize( mode );
 		}
 		// Dimensions
 		{
@@ -186,8 +186,8 @@ bool Texture::isInitialized() const
 bool Texture::testMemory()
 {
 	// ColorMode
-	unsigned int tMode = color::resolveGLMode( newMode );
-	unsigned int tBytes = color::getByteSize( newMode );
+	unsigned int tMode = pixel::resolveGLMode( newMode );
+	unsigned int tBytes = pixel::getByteSize( newMode );
 
 	bind();
 
@@ -339,7 +339,7 @@ Texture& Texture::setDimensions( glm::ivec2 dimension )
 	return *this;
 }
 
-Texture& Texture::setColorMode( color::Type color )
+Texture& Texture::setColorMode( pixel::Format color )
 {
 	newMode = color;
 
@@ -378,7 +378,7 @@ void Texture::generateMipMap()
 	mipmapped = true;
 }
 
-color::Type Texture::getColorMode() const
+pixel::Format Texture::getColorMode() const
 {
 	return mode;
 }

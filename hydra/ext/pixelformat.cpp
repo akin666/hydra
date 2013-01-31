@@ -5,12 +5,12 @@
  *      Author: akin
  */
 
-#include "colortypes"
+#include "pixelformat"
 #include <stdgl>
 
-namespace color {
+namespace pixel {
 
-std::size_t getByteSize( color::Type mode )
+std::size_t getByteSize( Format mode )
 {
 	switch( mode )
 	{
@@ -36,7 +36,7 @@ std::size_t getByteSize( color::Type mode )
 	return 0;
 }
 
-std::size_t getNumberOfElements( color::Type mode )
+std::size_t getNumberOfElements( Format mode )
 {
 	switch( mode )
 	{
@@ -62,7 +62,7 @@ std::size_t getNumberOfElements( color::Type mode )
 	return 0;
 }
 
-unsigned int resolveGLMode( Type mode )
+unsigned int resolveGLMode( Format mode )
 {
 	switch( mode )
 	{
@@ -86,6 +86,65 @@ unsigned int resolveGLMode( Type mode )
 		default			: return 0;
 	}
 	return 0;
+}
+
+Format resolveColorFormat( const glm::ivec4& colorcount )
+{
+	if( colorcount.r == colorcount.g == colorcount.b )
+	{
+		if( colorcount.r == colorcount.a )
+		{
+			switch( colorcount.r )
+			{
+				case 4 : return RGBA4;
+				case 8 : return RGBA8;
+				case 12 : return RGBA12;
+				case 16 : return RGBA16;
+				case 32 : return RGBA32;
+				default: break;
+			}
+			return NONE;
+		}
+		else if( colorcount.a == 0 )
+		{
+			if( colorcount.r == 8 )
+			{
+				return RGB8;
+			}
+			return NONE;
+		}
+		else if( colorcount.a == 1 )
+		{
+			if( colorcount.r == 5 )
+			{
+				return RGBA5551;
+			}
+			return NONE;
+		}
+		else if( colorcount.r == 0 && colorcount.a == 8 )
+		{
+			return ALPHA8;
+		}
+		return NONE;
+	}
+	else if( colorcount.r == 5 && colorcount.g == 6 && colorcount.b == 5 && colorcount.a == 0 )
+	{
+		return RGB565;
+	}
+	return NONE;
+}
+
+Format resolveDepthFormat( const int depthcount )
+{
+	switch( depthcount )
+	{
+		case 8 : return DEPTH8;
+		case 16 : return DEPTH16;
+		case 24 : return DEPTH24;
+		case 32 : return DEPTH32;
+		default: break;
+	}
+	return NONE;
 }
 
 } // Color

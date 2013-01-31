@@ -58,6 +58,9 @@ public:
 
 	bool getFullscreen() const;
 	void setFullscreen(bool val);
+
+	pixel::Format getColorMode() const;
+	pixel::Format getDepthMode() const;
 };
 
 typedef std::vector<Settings> SettingsSet;

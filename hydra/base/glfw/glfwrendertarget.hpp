@@ -9,6 +9,7 @@
 #define GLFWRENDERTARGET_HPP_
 
 #include <graphics/graphicsrendertarget.hpp>
+#include <graphics/graphicssettings.hpp>
 #include <json>
 
 namespace glfw {
@@ -18,17 +19,15 @@ class RenderTarget : public graphics::RenderTarget
 private:
 	uint32 state;
 
-	color::Type colormode;
-	color::Type depthmode;
-	glm::ivec2 dimensions;
+	graphics::Settings settings;
 	glm::ivec2 clipping;
 public:
 	RenderTarget();
 	virtual ~RenderTarget();
 
 	// Current modes
-	virtual color::Type getColorMode() const;
-	virtual color::Type getDepthMode() const;
+	virtual pixel::Format getColorMode() const;
+	virtual pixel::Format getDepthMode() const;
 	virtual glm::ivec2 getDimensions() const;
 
 	// Clipping

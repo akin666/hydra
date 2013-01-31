@@ -20,6 +20,8 @@ namespace core {
 
 class Context
 {
+protected:
+	static const std::string PATH;
 public:
 	typedef std::shared_ptr<Context> Ptr;
 	typedef std::weak_ptr<Context> WeakPtr;

@@ -11,10 +11,11 @@
 #define STDCOLOR_H_123_
 
 #include <iostream>
+#include <glm/glm>
 
-namespace color {
+namespace pixel {
 
-enum Type
+enum Format
 {
 	NONE = 0,
 	RGB8 = 1,
@@ -37,9 +38,12 @@ enum Type
 };
 
 // Utility functions
-std::size_t getByteSize( Type mode );
-std::size_t getNumberOfElements( Type mode );
-unsigned int resolveGLMode( Type mode );
+std::size_t getByteSize( Format mode );
+std::size_t getNumberOfElements( Format mode );
+unsigned int resolveGLMode( Format mode );
+
+Format resolveColorFormat( const glm::ivec4& colorcount );
+Format resolveDepthFormat( const int depthcount );
 
 }
 

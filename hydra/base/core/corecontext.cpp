@@ -9,6 +9,8 @@
 
 namespace core {
 
+const std::string Context::PATH( "core" );
+
 Context::Context()
 {
 }

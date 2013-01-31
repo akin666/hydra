@@ -16,13 +16,13 @@ Buffer::Buffer()
 : buffer( NULL )
 , realbuffer( NULL )
 , totalSize( 0 )
-, mode( color::RGBA8 )
+, mode( pixel::RGBA8 )
 , bytespp( 0 )
 , iterator( NULL )
 {
 }
 
-Buffer::Buffer( const glm::ivec2& resolution , color::Type mode , void *pixelbuffer )
+Buffer::Buffer( const glm::ivec2& resolution , pixel::Format mode , void *pixelbuffer )
 : buffer( (int8*)pixelbuffer )
 , realbuffer( NULL )
 , totalSize( 0 )
@@ -34,7 +34,7 @@ Buffer::Buffer( const glm::ivec2& resolution , color::Type mode , void *pixelbuf
 	totalSize = bytespp * resolution.x * resolution.y;
 }
 
-Buffer::Buffer( const glm::ivec2& resolution , color::Type mode , mbuf::Buffer& pixelbuffer )
+Buffer::Buffer( const glm::ivec2& resolution , pixel::Format mode , mbuf::Buffer& pixelbuffer )
 : buffer( NULL )
 , realbuffer( NULL )
 , totalSize( 0 )
@@ -65,7 +65,7 @@ Buffer::~Buffer()
 	release();
 }
 
-void Buffer::setMode(color::Type mode)
+void Buffer::setMode(pixel::Format mode)
 {
 	if( buffer == NULL )
 	{
@@ -83,7 +83,7 @@ void Buffer::setResolution(const glm::ivec2& resolution)
 	this->resolution = resolution;
 }
 
-color::Type Buffer::getMode() const
+pixel::Format Buffer::getMode() const
 {
 	return mode;
 }

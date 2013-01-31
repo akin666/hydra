@@ -9,7 +9,7 @@
 #define SOFTIMAGE_BUFFER_HPP_
 
 #include <stdtypes>
-#include <colortypes>
+#include <pixelformat>
 #include <glm/glm>
 #include <mbuf/mbufbuffer.hpp>
 
@@ -23,20 +23,20 @@ protected:
 	int8 *realbuffer; 	// ownership
 	mbuf::Iterator *iterator;
 	int totalSize;
-	color::Type mode;
+	pixel::Format mode;
 	glm::ivec2 resolution;
 	uint8 bytespp;
 public:
 	Buffer();
 	// Wrap Buffer around existing buffer, does not transfer ownership.
-	Buffer( const glm::ivec2& resolution , color::Type mode , void *pixelbuffer );
-	Buffer( const glm::ivec2& resolution , color::Type mode , mbuf::Buffer& pixelbuffer );
+	Buffer( const glm::ivec2& resolution , pixel::Format mode , void *pixelbuffer );
+	Buffer( const glm::ivec2& resolution , pixel::Format mode , mbuf::Buffer& pixelbuffer );
 	virtual ~Buffer();
 
-	void setMode( color::Type mode );
+	void setMode( pixel::Format mode );
 	void setResolution( const glm::ivec2& resolution );
 
-	color::Type getMode() const;
+	pixel::Format getMode() const;
 	glm::ivec2 getResolution() const;
 
 	void *access() const;

@@ -23,8 +23,8 @@ class Texture
 private:
 	glm::ivec2 dimensions;
 	glm::ivec2 newDimensions;
-	color::Type mode;
-	color::Type newMode;
+	pixel::Format mode;
+	pixel::Format newMode;
 	unsigned int glMode;
 	unsigned int bytes;
 	unsigned int texture_id;
@@ -58,7 +58,7 @@ public:
 	Texture& setHeight( int height );
 	Texture& setDimensions( glm::ivec2 dimension );
 
-	Texture& setColorMode( color::Type color );
+	Texture& setColorMode( pixel::Format color );
 
 	WrapMode getSWrapMode() const;
 	WrapMode getTWrapMode() const;
@@ -70,7 +70,7 @@ public:
 
 	bool resize( glm::ivec2 newDimensions );
 
-	color::Type getColorMode() const;
+	pixel::Format getColorMode() const;
 
 	void renderSubTexture( glm::ivec2 pos , glm::ivec2 dim , const unsigned char *data );
 	void renderSubTexture( glm::ivec2 pos , glm::ivec2 dim , BufferObject& bo );

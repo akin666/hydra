@@ -23,7 +23,7 @@
 #include <time/time.hpp>
 #include <time/localtime.hpp>
 
-#include <colortypes>
+#include <pixelformat>
 #include <log>
 
 #include <sys/time.h>
@@ -40,7 +40,7 @@
 # define MAX_IMAGE_RESOLUTION 8192 // So, max to be 8192*8192 ~ 268,435,456 bytes, 268Mb, thats quite alot..
 #endif
 
-using namespace color;
+using namespace pixel;
 
 namespace native {
 

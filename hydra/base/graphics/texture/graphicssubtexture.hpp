@@ -19,7 +19,7 @@ class SubTexture
 private:
 	glm::ivec2 pixelDimension;
 	glm::ivec2 pixelPosition;
-	color::Type mode;
+	pixel::Format mode;
 
 	Texture *parent;
 
@@ -31,8 +31,8 @@ public:
 	glm::ivec2& getDimension();
 	glm::ivec2& getPosition();
 
-	void setColorMode( color::Type mode );
-	color::Type getColorMode() const;
+	void setColorMode( pixel::Format mode );
+	pixel::Format getColorMode() const;
 
 	glm::vec2 getMax();
 	glm::vec2 getMin();

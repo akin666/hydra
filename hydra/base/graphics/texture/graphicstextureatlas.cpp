@@ -18,7 +18,7 @@ TextureAtlas::~TextureAtlas()
 {
 }
 
-bool TextureAtlas::initialize( const glm::ivec2& dimensions , const int padding , const color::Type mode )
+bool TextureAtlas::initialize( const glm::ivec2& dimensions , const int padding , const pixel::Format mode )
 {
 	if( !initialized )
 	{
@@ -70,7 +70,7 @@ glm::ivec2 TextureAtlas::getDimension()
 	return texture.getDimension();
 }
 
-color::Type TextureAtlas::getColorMode() const
+pixel::Format TextureAtlas::getColorMode() const
 {
 	return texture.getColorMode();
 }

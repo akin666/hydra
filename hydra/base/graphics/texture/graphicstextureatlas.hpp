@@ -24,7 +24,7 @@ public:
 	TextureAtlas();
 	~TextureAtlas();
 
-	bool initialize( const glm::ivec2& dimensions , const int padding , color::Type mode = color::RGBA8 );
+	bool initialize( const glm::ivec2& dimensions , const int padding , pixel::Format mode = pixel::RGBA8 );
 	bool resize( const glm::ivec2& val );
 
 	bool request( const glm::ivec2& dimensions , glm::ivec2& position );
@@ -32,7 +32,7 @@ public:
 
 	unsigned int getPadding();
 	glm::ivec2 getDimension();
-	color::Type getColorMode() const;
+	pixel::Format getColorMode() const;
 
 	Texture& getTexture();
 };

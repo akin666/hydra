@@ -11,7 +11,7 @@ namespace graphics
 {
 SubTexture::SubTexture()
 : parent( nullptr )
-, mode( color::RGBA8 )
+, mode( pixel::RGBA8 )
 {
 }
 
@@ -47,12 +47,12 @@ glm::ivec2& SubTexture::getPosition()
 	return pixelPosition;
 }
 
-void SubTexture::setColorMode( color::Type mode )
+void SubTexture::setColorMode( pixel::Format mode )
 {
 	this->mode = mode;
 }
 
-color::Type SubTexture::getColorMode() const
+pixel::Format SubTexture::getColorMode() const
 {
 	return mode;
 }

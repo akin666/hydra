@@ -10,7 +10,7 @@
 
 #include <glm/glm>
 #include <stdtypes>
-#include <colortypes>
+#include <pixelformat>
 #include <mbuf/mbufbuffer.hpp>
 #include <mbuf/mbufiterator.hpp>
 #include <geometry/rectangle>
@@ -22,10 +22,10 @@ class Draw
 {
 private:
 	glm::ivec2 resolution;
-	color::Type mode;
+	pixel::Format mode;
 	mbuf::Iterator iterator;
 public:
-	Draw( const glm::ivec2& resolution , color::Type mode , mbuf::Iterator& iterator );
+	Draw( const glm::ivec2& resolution , pixel::Format mode , mbuf::Iterator& iterator );
 	~Draw();
 
 	void draw( const glm::ivec2& position , const glm::ivec2& res , mbuf::Iterator iterator );

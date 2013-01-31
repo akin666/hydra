@@ -22,8 +22,8 @@ public:
 	virtual ~RenderTarget() {}
 
 	// Current modes
-	virtual color::Type getColorMode() const = 0;
-	virtual color::Type getDepthMode() const = 0;
+	virtual pixel::Format getColorMode() const = 0;
+	virtual pixel::Format getDepthMode() const = 0;
 	virtual glm::ivec2 getDimensions() const = 0;
 
 	// Clipping

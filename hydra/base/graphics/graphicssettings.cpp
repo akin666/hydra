@@ -46,6 +46,7 @@ void Settings::Settings::parse( Json::Value *value )
 	setAlpha( Json::Helper::get( value , "alpha" ,  8 ) );
 	setStencil( Json::Helper::get( value , "stencil" ,  8 ) );
 	setDepth( Json::Helper::get( value , "depth" ,  24 ) );
+	setFullscreen( Json::Helper::get( value , "fullscreen" , false ) );
 }
 
 int32 Settings::getAlpha() const
@@ -153,6 +154,16 @@ void Settings::setFullscreen(bool val)
 	{
 		flags &= ~VIDMODEF_FULLSCREEN;
 	}
+}
+
+pixel::Format Settings::getColorMode() const
+{
+	return pixel::resolveColorFormat( colors );
+}
+
+pixel::Format Settings::getDepthMode() const
+{
+	return pixel::resolveDepthFormat( depth );
 }
 
 } // namespace graphics 
