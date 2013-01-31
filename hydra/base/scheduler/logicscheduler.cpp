@@ -45,7 +45,7 @@ void Scheduler::start( )
 		auto iter = threads.begin();
 		while( iter != threads.end() )
 		{
-			if( !(*iter)->isFinished() )
+			if( (*iter)->isFinished() )
 			{
 				iter = threads.erase( iter );
 				continue;

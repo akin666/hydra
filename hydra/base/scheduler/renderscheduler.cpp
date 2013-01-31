@@ -7,8 +7,8 @@
 
 #include "renderscheduler.hpp"
 
-#define RENDERSCHEDULER_NONE 0x0
-#define RENDERSCHEDULER_QUIT 0x1
+#define RENDERSCHEDULER_NONE 		0x0000
+#define RENDERSCHEDULER_RUNNING 	0x0001
 
 namespace render {
 
@@ -30,13 +30,13 @@ void Scheduler::add( Protothread::Ptr& thread )
 
 void Scheduler::finish()
 {
-	if( (flags & RENDERSCHEDULER_QUIT) != 0 )
+	if( (flags & RENDERSCHEDULER_RUNNING) == 0 )
 	{
 		// already finished, cannot finish twice.
 		return;
 	}
 
-	flags |= RENDERSCHEDULER_QUIT;
+	flags &= ~RENDERSCHEDULER_RUNNING;
 	condition.notify_one();
 }
 
@@ -49,20 +49,20 @@ bool Scheduler::stillRemaining()
 
 void Scheduler::start()
 {
-	flags &= ~RENDERSCHEDULER_QUIT;
+	flags |= RENDERSCHEDULER_RUNNING;
 
 	Protothread::Ptr current;
 
 	// Active state
 	// stuff still coming
-	while( (flags & RENDERSCHEDULER_QUIT) != 0 )
+	while( (flags & RENDERSCHEDULER_RUNNING) == RENDERSCHEDULER_RUNNING )
 	{
 		// Current should be pure at the beginning of the loop, dirty data confuses the loop.
 		current.reset();
 		{
 			// Block till we get new data OR till we get message that no more threads are coming in
 			std::unique_lock<std::mutex> lock(mutex);;
-			while( queue.empty() && ( (flags & RENDERSCHEDULER_QUIT) != 0 ) )
+			while( queue.empty() && ( (flags & RENDERSCHEDULER_RUNNING) == RENDERSCHEDULER_RUNNING ) )
 			{
 				condition.wait(lock);
 			}
