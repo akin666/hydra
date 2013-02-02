@@ -154,6 +154,11 @@ int Main::run()
 	// blocking, should block, until no more stuff to render and the lscheduler also has informed that all is done.
 	rscheduler->start();
 
+	if( core )
+	{
+		core->present();
+	}
+
 	return 0;
 }
 
@@ -175,15 +180,6 @@ void Main::get( render::Scheduler::Ptr& ptr )
 void Main::get( logic::Scheduler::Ptr& ptr )
 {
 	ptr = lscheduler;
-}
-
-// App exception handling
-void Main::handleException( std::exception& e )
-{
-}
-
-void Main::handleEllipsisException()
-{
 }
 
 } // hydra

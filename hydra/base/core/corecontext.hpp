@@ -29,6 +29,25 @@ public:
 	Context();
 	virtual ~Context();
 
+	// Application handling.
+	signal::Signal0<void> suspend;
+	signal::Signal0<void> resume;
+	signal::Signal0<void> exit;
+	signal::Signal0<void> restart;
+	signal::Signal0<void> minimize;
+	signal::Signal0<void> maximize;
+	signal::Signal2<int,int> resize;
+	signal::Signal0<void> windowed;
+	signal::Signal0<void> fullscreened;
+	signal::Signal0<void> lostFocus;
+
+	signal::Signal1<int> memoryWarning;
+	signal::Signal0<void> saveState;
+
+	// App exception handling
+	virtual void handleException( std::exception& e );
+	virtual void handleEllipsisException();
+
 	virtual bool initialize( Json::ValuePtr& config ) = 0;
 	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr ) = 0;
 
@@ -41,6 +60,8 @@ public:
 	virtual int getKeyboardCount();
 	virtual int getMouseCount();
 	virtual int getTouchCount();
+
+	virtual void present() = 0;
 };
 
 } // namespace core 

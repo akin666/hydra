@@ -55,4 +55,13 @@ int Context::getTouchCount()
 	return 0;
 }
 
+// App exception handling
+void Context::handleException( std::exception& e )
+{
+}
+
+void Context::handleEllipsisException()
+{
+}
+
 } // namespace core 

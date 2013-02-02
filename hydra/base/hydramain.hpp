@@ -33,6 +33,8 @@ private:
 	resource::Cache::Ptr cache;
 	core::Context::Ptr core;
 	audio::Context::Ptr audio;
+
+	Main( const Main& o ) {}
 public:
 	Main();
 	~Main();
@@ -49,24 +51,6 @@ public:
 
 	void get( render::Scheduler::Ptr& ptr );
 	void get( logic::Scheduler::Ptr& ptr );
-
-	signal::Signal0<void> suspend;
-	signal::Signal0<void> resume;
-	signal::Signal0<void> exit;
-	signal::Signal0<void> restart;
-	signal::Signal0<void> minimize;
-	signal::Signal0<void> maximize;
-
-	signal::Signal0<void> windowed;
-	signal::Signal0<void> fullscreened;
-	signal::Signal0<void> lostFocus;
-
-	signal::Signal1<int> memoryWarning;
-	signal::Signal0<void> saveState;
-
-	// App exception handling
-	void handleException( std::exception& e );
-	void handleEllipsisException();
 };
 
 } // hydra

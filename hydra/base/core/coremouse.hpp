@@ -8,7 +8,7 @@
 #ifndef COREMOUSE_HPP_
 #define COREMOUSE_HPP_
 
-#include <commontypes.h>
+#include "corecommon.hpp"
 #include <signal.h>
 
 namespace core {
@@ -16,8 +16,6 @@ namespace core {
 class Mouse
 {
 public:
-	enum State{ UP = 0 , DOWN = 1 };
-
 	typedef std::shared_ptr<Mouse> Ptr;
 	typedef std::weak_ptr<Mouse> WeakPtr;
 	typedef std::map<int , Ptr> Map;
@@ -26,7 +24,7 @@ public:
 	~Mouse();
 
 	signal::Signal2<float , float> move;
-	signal::Signal2<int , State> button;
+	signal::Signal2<int , ButtonState> button;
 	signal::Signal1<float> wheel;
 };
 

@@ -17,11 +17,6 @@ class Context : public core::Context
 private:
 	uint32 state;
 	graphics::RenderTarget::Ptr rendertarget;
-
-	core::Joystick::Map joystickMap;
-	core::Keyboard::Map keyboardMap;
-	core::Mouse::Map mouseMap;
-	core::Touch::Map touchMap;
 public:
 	Context();
 	virtual ~Context();
@@ -39,6 +34,8 @@ public:
 	virtual int getKeyboardCount();
 	virtual int getMouseCount();
 	virtual int getTouchCount();
+
+	virtual void present();
 };
 
 } // namespace glfw

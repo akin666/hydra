@@ -8,7 +8,7 @@
 #ifndef COREKEYBOARD_HPP_
 #define COREKEYBOARD_HPP_
 
-#include <commontypes.h>
+#include "corecommon.hpp"
 #include <signal.h>
 
 namespace core {
@@ -16,8 +16,6 @@ namespace core {
 class Keyboard
 {
 public:
-	enum State{ UP = 0 , DOWN = 1 };
-
 	typedef std::shared_ptr<Keyboard> Ptr;
 	typedef std::weak_ptr<Keyboard> WeakPtr;
 	typedef std::map<int , Ptr> Map;
@@ -25,8 +23,8 @@ public:
 	Keyboard();
 	~Keyboard();
 
-	signal::Signal2<int , State> key;
-	signal::Signal1<UNICODE> character;
+	signal::Signal2<int , ButtonState> key;
+	signal::Signal2<UNICODE , ButtonState> character;
 	signal::Signal1<float> wheel;
 };
 
