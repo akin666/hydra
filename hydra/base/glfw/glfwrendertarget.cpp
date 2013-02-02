@@ -98,6 +98,9 @@ bool RenderTarget::initialize( Json::ValuePtr& config )
 		settings.setFullscreen( false );
 	}
 
+	glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR , Json::Helper::get( value , "glmajor" , 3 ) );
+	glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR , Json::Helper::get( value , "glminor" , 3 ) );
+
 	if( glfwOpenWindow(
 			settings.getDimensions().x,
 			settings.getDimensions().y,
@@ -116,7 +119,7 @@ bool RenderTarget::initialize( Json::ValuePtr& config )
 
 	if( value != nullptr )
 	{
-		glfwSetWindowTitle( Json::Helper::get( value , "title" ,  String8("HYDRAx0") ).c_str() );
+		glfwSetWindowTitle( Json::Helper::get( value , "title" , String8("HYDRAx0") ).c_str() );
 	}
 	else
 	{

@@ -173,7 +173,7 @@ namespace InputHandling
 		glfwSetMouseWheelCallback( mouseWheelCallback );
 		glfwSetWindowCloseCallback( windowCloseCallback );
 		glfwSetWindowSizeCallback( windowSizeCallback );
-		glfwSetWindowRefreshCallback( windowRefreshCallback );
+	//	glfwSetWindowRefreshCallback( windowRefreshCallback );
 	}
 
 	void construct( Context *ptr )
@@ -220,15 +220,12 @@ bool Context::initialize( Json::ValuePtr& config )
 	// init GLFW
 	if( (state & GCORECONTEXT_GLFWINIT) == 0 )
 	{
-		if( glfwInit() == GL_FALSE )
+		if( glfwInit() != GL_TRUE )
 		{
 			LOG->error("%s:%i failed to init GLFW!" , __FILE__ , __LINE__ );
 			return false;
 		}
 		state |= GCORECONTEXT_GLFWINIT;
-
-		glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR , 3 );
-		glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR , 3 );
 	}
 
 	// Load rendertarget
@@ -380,6 +377,7 @@ void Context::present()
 {
 	GL_TEST_START();
 	glfwSwapBuffers();
+	glfwSleep( 0.02 );
 	GL_TEST_END();
 }
 

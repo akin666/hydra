@@ -6,6 +6,8 @@
  */
 
 #include "game.hpp"
+#include <stdgl>
+#include <random.hpp>
 
 Game::Game( hydra::Main& main )
 : main( main )
@@ -45,6 +47,8 @@ GameRender::~GameRender()
 
 bool GameRender::run()
 {
+	glClearColor( 0.2f , 0.6f , random<float32>( 0.8f , 1.0f ) , 1.0f );
+	glClear( GL_COLOR_BUFFER_BIT );
 	return false;
 }
 
