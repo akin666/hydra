@@ -41,6 +41,9 @@ public:
 	// indicate 'done' from logic
 	void finish();
 
+	// indicate that that this should reset..
+	void reset();
+
 	// run interface
 	void start();
 };

@@ -148,6 +148,10 @@ bool Main::initialize( String8 path )
 
 int Main::run()
 {
+	// blocking, reset schedulers.
+	lscheduler->reset();
+	rscheduler->reset();
+
 	// blocking, should start several threads to do their bidding
 	lscheduler->start();
 

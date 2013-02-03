@@ -40,6 +40,10 @@ void Scheduler::finish()
 	condition.notify_one();
 }
 
+void Scheduler::reset()
+{
+	flags |= RENDERSCHEDULER_RUNNING;
+}
 
 bool Scheduler::stillRemaining()
 {
@@ -49,8 +53,6 @@ bool Scheduler::stillRemaining()
 
 void Scheduler::start()
 {
-	flags |= RENDERSCHEDULER_RUNNING;
-
 	Protothread::Ptr current;
 
 	// Active state

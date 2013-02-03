@@ -25,6 +25,10 @@ void Scheduler::queue( Protothread::Ptr& thread )
 	added.push_back( thread );
 }
 
+void Scheduler::reset()
+{
+}
+
 void Scheduler::start( )
 {
 	std::lock_guard<std::mutex> lock( deepMutex );

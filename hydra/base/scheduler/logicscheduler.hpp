@@ -32,6 +32,9 @@ public:
 	// thread itself is responsible for locks et al.
 	void queue( Protothread::Ptr& thread );
 
+	// indicate that that this should reset..
+	void reset();
+
 	// spawn protos interface
 	void start();
 };
