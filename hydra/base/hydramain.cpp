@@ -149,14 +149,25 @@ bool Main::initialize( String8 path )
 int Main::run()
 {
 	// blocking, reset schedulers.
-	lscheduler->reset();
-	rscheduler->reset();
+	if( lscheduler )
+	{
+		lscheduler->reset();
+	}
+	if( rscheduler )
+	{
+		rscheduler->reset();
+	}
 
 	// blocking, should start several threads to do their bidding
-	lscheduler->start();
-
+	if( lscheduler )
+	{
+		lscheduler->start();
+	}
 	// blocking, should block, until no more stuff to render and the lscheduler also has informed that all is done.
-	rscheduler->start();
+	if( rscheduler )
+	{
+		rscheduler->start();
+	}
 
 	if( core )
 	{
