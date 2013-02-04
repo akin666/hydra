@@ -56,7 +56,7 @@ protected:
 public:
 	Atlas();
 	Atlas( const Atlas& other );
-	virtual ~Atlas();
+	~Atlas();
 
 	void reset();
 

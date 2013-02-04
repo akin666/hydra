@@ -31,7 +31,7 @@ public:
 	// Wrap Buffer around existing buffer, does not transfer ownership.
 	Buffer( const glm::ivec2& resolution , pixel::Format mode , void *pixelbuffer );
 	Buffer( const glm::ivec2& resolution , pixel::Format mode , mbuf::Buffer& pixelbuffer );
-	virtual ~Buffer();
+	~Buffer();
 
 	void setMode( pixel::Format mode );
 	void setResolution( const glm::ivec2& resolution );
