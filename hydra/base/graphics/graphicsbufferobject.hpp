@@ -33,7 +33,7 @@ protected:
 	unsigned int id;
 public:
 	BufferObject();
-	virtual ~BufferObject();
+	~BufferObject();
 
 	bool hasInitialized();
 	void initialize();
