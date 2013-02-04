@@ -48,9 +48,6 @@ public:
 	virtual void handleException( std::exception& e );
 	virtual void handleEllipsisException();
 
-	virtual bool initialize( Json::ValuePtr& config ) = 0;
-	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr ) = 0;
-
 	virtual void get( Joystick::Ptr& ptr , int number = 0 );
 	virtual void get( Keyboard::Ptr& ptr , int number = 0 );
 	virtual void get( Mouse::Ptr& ptr , int number = 0 );
@@ -60,6 +57,9 @@ public:
 	virtual int getKeyboardCount();
 	virtual int getMouseCount();
 	virtual int getTouchCount();
+
+	virtual bool initialize( Json::ValuePtr& config ) = 0;
+	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr ) = 0;
 
 	virtual void present() = 0;
 };

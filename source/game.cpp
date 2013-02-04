@@ -39,10 +39,12 @@ bool Game::run()
 GameRender::GameRender( hydra::Main& main )
 : main( main )
 {
+	LOG->message("CTOR");
 }
 
 GameRender::~GameRender()
 {
+	LOG->message("DTOR");
 }
 
 bool GameRender::run()

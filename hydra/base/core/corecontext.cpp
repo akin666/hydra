@@ -19,6 +19,15 @@ Context::~Context()
 {
 }
 
+// App exception handling
+void Context::handleException( std::exception& e )
+{
+}
+
+void Context::handleEllipsisException()
+{
+}
+
 void Context::get( Joystick::Ptr& ptr , int number )
 {
 }
@@ -53,15 +62,6 @@ int Context::getMouseCount()
 int Context::getTouchCount()
 {
 	return 0;
-}
-
-// App exception handling
-void Context::handleException( std::exception& e )
-{
-}
-
-void Context::handleEllipsisException()
-{
 }
 
 } // namespace core 

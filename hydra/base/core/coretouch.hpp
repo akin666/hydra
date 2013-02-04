@@ -21,7 +21,7 @@ public:
 	typedef std::map<int , Ptr> Map;
 public:
 	Touch();
-	virtual ~Touch();
+	~Touch();
 
 	signal::Signal4<int , float , float , TouchState> move;
 };

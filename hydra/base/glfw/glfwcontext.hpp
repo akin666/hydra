@@ -21,10 +21,6 @@ public:
 	Context();
 	virtual ~Context();
 
-	virtual bool initialize( Json::ValuePtr& config );
-
-	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr );
-
 	virtual void get( core::Joystick::Ptr& ptr , int number );
 	virtual void get( core::Keyboard::Ptr& ptr , int number );
 	virtual void get( core::Mouse::Ptr& ptr , int number );
@@ -34,6 +30,9 @@ public:
 	virtual int getKeyboardCount();
 	virtual int getMouseCount();
 	virtual int getTouchCount();
+
+	virtual bool initialize( Json::ValuePtr& config );
+	virtual void getRenderTarget( graphics::RenderTarget::Ptr& ptr );
 
 	virtual void present();
 };
