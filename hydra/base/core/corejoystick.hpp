@@ -26,6 +26,7 @@ public:
 	signal::Signal2<float , float> move;
 	signal::Signal2<int , ButtonState> button;
 	signal::Signal1<float> wheel;
+	signal::Signal1<bool> connected;
 };
 
 } // namespace core 
