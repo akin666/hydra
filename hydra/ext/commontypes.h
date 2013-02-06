@@ -12,6 +12,7 @@
 #include <native>
 #include <log>
 #include <stdtypes>
+#include <stdgeometry>
 #include <glm/glm.hpp>
 #include <protothread>
 

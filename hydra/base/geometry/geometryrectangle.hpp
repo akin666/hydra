@@ -1,9 +1,8 @@
 
-#ifndef GEOMETRY_RECTANGLE_UBER_CLASS_
-#define GEOMETRY_RECTANGLE_UBER_CLASS_
+#ifndef GEOMETRY_RECTANGLE_H_
+#define GEOMETRY_RECTANGLE_H_
 
-#include <glm/glm>
-#include <stdtypes>
+#include <commontypes.h>
 
 namespace geometry {
 
@@ -20,4 +19,4 @@ typedef Rectangle<int32> Rectanglei;
 
 } // namespace geometry
 
-#endif // GEOMETRY_RECTANGLE_UBER_CLASS_
+#endif // GEOMETRY_RECTANGLE_H_
