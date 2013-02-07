@@ -16,6 +16,14 @@ template <class CType> class Rectangle2D;
 template <class CType> class Sphere2D;
 
 template <class CType>
+class Line2D
+{
+public:
+	CType x,y;
+	CType x2,y2;
+};
+
+template <class CType>
 class Sphere2D
 {
 public:
