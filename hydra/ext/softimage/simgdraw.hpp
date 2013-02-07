@@ -13,7 +13,6 @@
 #include <pixelformat>
 #include <mbuf/mbufbuffer.hpp>
 #include <mbuf/mbufiterator.hpp>
-#include <geometry/rectangle>
 
 namespace simg
 {

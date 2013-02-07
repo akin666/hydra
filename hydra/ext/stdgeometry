@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 
 typedef std::vector<glm::vec3> VertexSet;
-typedef std::vector<glm::vec2> CoordinateSet;
+typedef std::vector<glm::vec2> Vertex2DSet;
 typedef std::vector<short> IndexSet;
 
 #endif // STDGEOMETRY_H_
