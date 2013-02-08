@@ -12,9 +12,18 @@
 
 #include "game.hpp"
 
+#include <cstdlib>
+
+void f1()
+{
+	std::cout << "Exitted" << std::endl;
+}
+
 int main()
 {
 	hydra::Main main;
+
+	std::atexit( f1 );
 
 	do
 	{
