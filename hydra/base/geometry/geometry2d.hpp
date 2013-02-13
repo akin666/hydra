@@ -12,6 +12,14 @@
 
 namespace geometry {
 
+class HitTestInterface
+{
+public:
+	virtual ~HitTestInterface() {}
+
+	virtual bool hitTest( const glm::vec2& point ) const = 0;
+};
+
 template <class CType> class Rectangle2D;
 template <class CType> class Sphere2D;
 

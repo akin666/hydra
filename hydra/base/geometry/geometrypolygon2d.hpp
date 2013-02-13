@@ -8,24 +8,24 @@
 #ifndef GEOMETRYPOLYGON2D_HPP_
 #define GEOMETRYPOLYGON2D_HPP_
 
-#include <commontypes.h>
+#include "geometry2d.hpp"
 
 namespace geometry {
 
-class Polygon2D
+class Polygon2D : public HitTestInterface
 {
 private:
 	Vertex2DSet vertexes;
 	IndexSet indices;
 public:
 	Polygon2D();
-	~Polygon2D();
+	virtual ~Polygon2D();
 
 	void clear();
 
 	bool tesselate();
 
-	bool hitTest( const glm::vec2& point );
+	virtual bool hitTest( const glm::vec2& point ) const;
 
 	Vertex2DSet& getVertexes();
 	IndexSet& getIndexes();
