@@ -41,8 +41,8 @@ bool Polygon2D::hitTest( const glm::vec2& point ) const
 
 	for( uint32 i = 0 ; i < size ; ++i )
 	{
-		glm::vec2& curr = vertexes[ i ];
-		glm::vec2& prev = vertexes[ (size - 1 + i) % size  ];
+		const glm::vec2& curr = vertexes[ i ];
+		const glm::vec2& prev = vertexes[ (size - 1 + i) % size  ];
 
 		if( curr.x > prev.x )
 		{

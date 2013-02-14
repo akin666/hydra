@@ -20,8 +20,11 @@ public:
 	virtual bool hitTest( const glm::vec2& point ) const = 0;
 };
 
-template <class CType> class Rectangle2D;
-template <class CType> class Sphere2D;
+template <class CType>
+class Rectangle2D;
+
+template <class CType>
+class Sphere2D;
 
 template <class CType>
 class Line2D
@@ -39,8 +42,12 @@ public:
 	CType radius;
 public:
 	Sphere2D();
-	template <class OType> Sphere2D( const Sphere2D<OType>& other );
-	template <class OType> Sphere2D( const Rectangle2D<OType>& other );
+
+	template <class OType>
+	Sphere2D( const Sphere2D<OType>& other );
+
+	template <class OType>
+	Sphere2D( const Rectangle2D<OType>& other );
 };
 
 template <class CType>
@@ -51,21 +58,27 @@ public:
 	CType width,height;
 public:
 	Rectangle2D();
-	template <class OType> Rectangle2D( const Rectangle2D<OType>& other );
-	template <class OType> Rectangle2D( const Sphere2D<OType>& other );
+
+	template<typename OType>
+	Rectangle2D( const Rectangle2D<OType>& other );
+
+	template <class OType>
+	Rectangle2D( const Sphere2D<OType>& other );
 };
 
 //////
 // Sphere2D Implementation
-
-template <class CType> Sphere2D<CType>::Sphere2D()
+template <class CType>
+Sphere2D<CType>::Sphere2D()
 : x( 0 )
 , y( 0 )
 , radius( 0 )
 {
 }
 
-template <class CType,class OType> Sphere2D<CType>::Sphere2D<OType>( const Sphere2D<OType>& other )
+template <class CType>
+template <class OType>
+Sphere2D<CType>::Sphere2D( const Sphere2D<OType>& other )
 {
 	// Convert other to Sphere type.
 	x = other.x;
@@ -73,7 +86,9 @@ template <class CType,class OType> Sphere2D<CType>::Sphere2D<OType>( const Spher
 	radius = other.radius;
 }
 
-template <class CType,class OType> Sphere2D<CType>::Sphere2D<OType>( const Rectangle2D<OType>& other )
+template <class CType>
+template <class OType>
+Sphere2D<CType>::Sphere2D( const Rectangle2D<OType>& other )
 {
 	// Convert other to Sphere type.
 	x = other.x + (other.width / 2);
@@ -97,7 +112,9 @@ template <class CType> Rectangle2D<CType>::Rectangle2D()
 {
 }
 
-template <class CType,class OType> Rectangle2D<CType>::Rectangle2D<OType>( const Rectangle2D<OType>& other )
+template <class CType>
+template <class OType>
+Rectangle2D<CType>::Rectangle2D( const Rectangle2D<OType>& other )
 {
 	// Convert other to Rectanlge type.
 	x = other.x;
@@ -106,7 +123,9 @@ template <class CType,class OType> Rectangle2D<CType>::Rectangle2D<OType>( const
 	height = other.height;
 }
 
-template <class CType,class OType> Rectangle2D<CType>::Rectangle2D<OType>( const Sphere2D<OType>& other )
+template <class CType>
+template <class OType>
+Rectangle2D<CType>::Rectangle2D( const Sphere2D<OType>& other )
 {
 	// Convert other to Rectanlge type.
 	x = other.x - other.radius;
