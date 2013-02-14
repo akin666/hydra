@@ -44,6 +44,9 @@ public:
 	Sphere2D();
 
 	template <class OType>
+	Sphere2D( OType x , OType y , OType r );
+
+	template <class OType>
 	Sphere2D( const Sphere2D<OType>& other );
 
 	template <class OType>
@@ -60,6 +63,9 @@ public:
 	Rectangle2D();
 
 	template<typename OType>
+	Rectangle2D( OType x , OType y , OType w , OType h );
+
+	template<typename OType>
 	Rectangle2D( const Rectangle2D<OType>& other );
 
 	template <class OType>
@@ -73,6 +79,15 @@ Sphere2D<CType>::Sphere2D()
 : x( 0 )
 , y( 0 )
 , radius( 0 )
+{
+}
+
+template <class CType>
+template <class OType>
+Sphere2D<CType>::Sphere2D( OType x , OType y , OType r )
+: x( x )
+, y( y )
+, radius( r )
 {
 }
 
@@ -109,6 +124,16 @@ template <class CType> Rectangle2D<CType>::Rectangle2D()
 , y( 0 )
 , width( 0 )
 , height( 0 )
+{
+}
+
+template <class CType>
+template <class OType>
+Rectangle2D<CType>::Rectangle2D( OType x , OType y , OType w , OType h )
+: x( x )
+, y( y )
+, width( w )
+, height( h )
 {
 }
 
