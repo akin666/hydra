@@ -23,12 +23,18 @@ public:
 
 	void clear();
 
-	bool tesselate();
-
 	virtual bool hitTest( const glm::vec2& point ) const;
 
 	Vertex2DSet& getVertexes();
 	IndexSet& getIndexes();
+
+	void tesselate();
+
+	void createBox( glm::vec2 mid , float width , float height );
+	void createEllipse( glm::vec2 mid , float width , float height , float count );
+	void createCircle( glm::vec2 mid , float radius , float count );
+	void createTriangle( glm::vec2 v1 , glm::vec2 v2 , glm::vec2 v3 );
+	void createLine( glm::vec2 start , glm::vec2 end , float width );
 };
 
 } // namespace geometry
