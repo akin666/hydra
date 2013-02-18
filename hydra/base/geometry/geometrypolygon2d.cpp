@@ -306,14 +306,14 @@ void Polygon2D::createLine( glm::vec2 start , glm::vec2 end , float width )
 	// *                     *
 	// |_____________________|
 	//
-	// calculate normals for start and end points..
-	glm::vec2 sn = glm::normalize( glm::vec2( start.y , -start.x ) );
-	glm::vec2 en = glm::normalize( glm::vec2( end.y , -end.x ) );
+	// calculate normal
+	glm::vec2 diff( end - start );
+	glm::vec2 normal = glm::normalize( glm::vec2( diff.y , -diff.x ) );
 
-	vertexes.push_back( start + ( sn * half ) );
-	vertexes.push_back( end + ( en * half ) );
-	vertexes.push_back( end + ( (-en) * half ) );
-	vertexes.push_back( start + ( (-sn) * half ) );
+	vertexes.push_back( start + 	( normal * half ) );
+	vertexes.push_back( end + 		( normal * half ) );
+	vertexes.push_back( end + 		(-normal * half ) );
+	vertexes.push_back( start + 	(-normal * half ) );
 }
 
 } // namespace geometry
