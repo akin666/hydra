@@ -14,5 +14,8 @@
 #  include <sys/mman.h>
 # endif
 #else
-#warning NO MANN NO OS_DETECTED
+# warning NO MANN NO OS_DETECTED
 #endif
+
+#include <sys/stat.h>
+#include <iostream>
