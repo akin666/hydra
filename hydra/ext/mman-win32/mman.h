@@ -36,6 +36,9 @@ extern "C" {
 
 #define MAP_FAILED      ((void *)-1)
 
+//somehow need to solve page size for win32... sigh..
+//int pageBegins = requestBegins & ~(sysconf(_SC_PAGE_SIZE) - 1); if( size == 0 ) size = st.st_size; else size += requestBegins - pageBegins;
+
 /* Flags for msync. */
 #define MS_ASYNC        1
 #define MS_SYNC         2
