@@ -106,7 +106,7 @@ size_t Buffer::getOffset() const
 	return offset;
 }
 
-void Buffer::open()
+Buffer& Buffer::open()
 {
 	if( filename.empty() )
 	{
@@ -194,13 +194,15 @@ void Buffer::open()
 
 	// dislocate buffer to be at right spot.
 	buffer = root + pagePadding;
+
+    return *this;
 }
 
-void Buffer::close()
+Buffer& Buffer::close()
 {
 	if( fd == -1 )
 	{
-		return;
+	    return *this;
 	}
     if( munmap( root , realSize ) == -1)
     {
@@ -211,6 +213,8 @@ void Buffer::close()
 
     ::close( fd );
     fd = -1;
+
+    return *this;
 }
 
 bool Buffer::isOpen() const

@@ -42,8 +42,8 @@ public:
 	size_t getSize() const;
 	size_t getOffset() const;
 
-	void open();
-	void close();
+	Buffer& open();
+	Buffer& close();
 
 	bool isOpen() const;
 
