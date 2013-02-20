@@ -1,4 +1,7 @@
 
+#ifndef MMAN_HEADER_THINGY
+#define MMAN_HEADER_THINGY
+
 #include <os>
 
 #ifndef OS_NOT_DETECTED
@@ -17,5 +20,9 @@
 # warning NO MANN NO OS_DETECTED
 #endif
 
-#include <sys/stat.h>
-#include <iostream>
+int mmapGetPageSize();
+
+#include <sys/stat.h> 	// should be on every platform
+#include <iostream>		// standard
+
+#endif
