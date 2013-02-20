@@ -23,6 +23,8 @@ private:
 	void *root;
 	void *buffer;
 	uint32 flags;
+
+	Buffer( const Buffer& o ) {}
 public:
 	Buffer();
 	~Buffer();
