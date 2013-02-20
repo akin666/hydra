@@ -18,7 +18,8 @@ private:
 	String8 filename;
 	int fd;
 	size_t size;
-	size_t position;
+	int realSize;
+	size_t offset;
 	void *root;
 	void *buffer;
 	uint32 flags;
@@ -26,21 +27,18 @@ public:
 	Buffer();
 	~Buffer();
 
-	Buffer& setFilename( const String8& filename );
-	Buffer& setPosition( size_t position );
-	Buffer& setSize( size_t size );
-	Buffer& setCreate( bool flag );
-	Buffer& setRead( bool flag );
-	Buffer& setWrite( bool flag );
-	Buffer& setWholeFile( bool flag );
+	// cases:
+	// a) whole file
+	Buffer& setup( const String8& filename , int accessflags = ACCESS_READ | ACCESS_WRITE );
+	// b) part of the file
+	Buffer& setup( const String8& filename , size_t offset , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE );
+	// c) new whole file
+	Buffer& setup( const String8& filename , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE | ACCESS_CREATE );
 
-	bool hasCreate() const;
-	bool hasRead() const;
-	bool hasWrite() const;
-	bool hasWholeFile() const;
+	uint32 getFlags() const;
 
 	size_t getSize() const;
-	size_t getPosition() const;
+	size_t getOffset() const;
 
 	void open();
 	void close();

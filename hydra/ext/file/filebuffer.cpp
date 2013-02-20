@@ -6,23 +6,19 @@
  */
 
 #include "filebuffer.hpp"
-
-#define FBFLAGS_NONE 			0x0000
-#define FBFLAGS_CREATE	 		0x0001
-#define FBFLAGS_READ	 		0x0002
-#define FBFLAGS_WRITE	 		0x0004
-#define FBFLAGS_FULL	 		0x0008
-#define FBFLAGS_DEFAULT 		( FBFLAGS_CREATE | FBFLAGS_READ | FBFLAGS_WRITE | FBFLAGS_FULL )
+#include <mman>
+#include <fcntl.h> // open, O_ flags.
 
 namespace file {
 
 Buffer::Buffer()
 : fd( -1 )
 , size( 0 )
-, position( 0 )
-, root( nullptr )
+, realSize( 0 )
+, offset( 0 )
+, root( MAP_FAILED )
 , buffer( nullptr )
-, flags( FBFLAGS_DEFAULT )
+, flags( ACCESS_NONE )
 {
 }
 
@@ -31,66 +27,73 @@ Buffer::~Buffer()
 	close();
 }
 
-Buffer& Buffer::setFilename( const String8& filename )
+// cases:
+// a) whole file
+Buffer& Buffer::setup( const String8& filename , int accessflags )
 {
+	if( isOpen() )
+	{
+		LOG->error( "%s:%i Buffer is already open, close first." , __FILE__ , __LINE__);
+		throw std::runtime_error("Buffer already open.");
+	}
+
 	this->filename = filename;
+	this->flags = accessflags;
+
+	size = 0;
+	offset = 0;
+	fd = -1;
+	root = MAP_FAILED;
+	buffer = nullptr;
+
 	return *this;
 }
 
-Buffer& Buffer::setPosition( size_t position )
+// b) part of the file
+Buffer& Buffer::setup( const String8& filename , size_t offset , size_t size  , int accessflags )
 {
-	this->position = position;
-	return *this;
-}
+	if( isOpen() )
+	{
+		LOG->error( "%s:%i Buffer is already open, close first." , __FILE__ , __LINE__);
+		throw std::runtime_error("Buffer already open.");
+	}
 
-Buffer& Buffer::setSize( size_t size )
-{
+	this->filename = filename;
+	this->flags = accessflags;
 	this->size = size;
+	this->offset = offset;
+
+	fd = -1;
+	root = MAP_FAILED;
+	buffer = nullptr;
+
 	return *this;
 }
 
-Buffer& Buffer::setCreate( bool flag )
+// c) new whole file
+Buffer& Buffer::setup( const String8& filename , size_t size  , int accessflags )
 {
-	flag ? flags |= FBFLAGS_CREATE : flags &= ~FBFLAGS_CREATE;
+	if( isOpen() )
+	{
+		LOG->error( "%s:%i Buffer is already open, close first." , __FILE__ , __LINE__);
+		throw std::runtime_error("Buffer already open.");
+	}
+
+	this->filename = filename;
+	this->flags = accessflags;
+	this->size = size;
+
+	offset = 0;
+	fd = -1;
+	root = MAP_FAILED;
+	buffer = nullptr;
+
 	return *this;
 }
 
-Buffer& Buffer::setRead( bool flag )
+uint32 Buffer::getFlags() const
 {
-	flag ? flags |= FBFLAGS_READ : flags &= ~FBFLAGS_READ;
-	return *this;
-}
-
-Buffer& Buffer::setWrite( bool flag )
-{
-	flag ? flags |= FBFLAGS_WRITE : flags &= ~FBFLAGS_WRITE;
-	return *this;
-}
-
-Buffer& Buffer::setWholeFile( bool flag )
-{
-	flag ? flags |= FBFLAGS_FULL : flags &= ~FBFLAGS_FULL;
-	return *this;
-}
-
-bool Buffer::hasCreate() const
-{
-	return ( flags & FBFLAGS_CREATE ) != 0;
-}
-
-bool Buffer::hasRead() const
-{
-	return ( flags & FBFLAGS_READ ) != 0;
-}
-
-bool Buffer::hasWrite() const
-{
-	return ( flags & FBFLAGS_WRITE ) != 0;
-}
-
-bool Buffer::hasWholeFile() const
-{
-	return ( flags & FBFLAGS_FULL ) != 0;
+	return flags;
 }
 
 size_t Buffer::getSize() const
@@ -98,9 +101,9 @@ size_t Buffer::getSize() const
 	return size;
 }
 
-size_t Buffer::getPosition() const
+size_t Buffer::getOffset() const
 {
-	return position;
+	return offset;
 }
 
 void Buffer::open()
@@ -111,9 +114,9 @@ void Buffer::open()
 		throw std::runtime_error("Empty filename provided!");
 	}
 
-	bool create = hasCreate();
-	bool read = hasRead();
-	bool write = hasWrite();
+	bool create = (flags & ACCESS_CREATE) == ACCESS_CREATE;
+	bool read = (flags & ACCESS_READ) == ACCESS_READ;
+	bool write = (flags & ACCESS_WRITE) == ACCESS_WRITE;
 
 	struct stat st;
 	switch( stat(filename.c_str(), &st) )
@@ -124,6 +127,11 @@ void Buffer::open()
 		{
 			if( create )
 			{
+				if( size < 1 )
+				{
+					LOG->error( "%s:%i File create not allowed for size less than 1 [%s]." , __FILE__ , __LINE__ , filename.c_str() );
+					throw std::runtime_error("File creation not allowed for less than 1 byte size!");
+				}
 				break; // all ok
 			}
 			LOG->error( "%s:%i File does not exist and create is not allowed [%s]." , __FILE__ , __LINE__ , filename.c_str() );
@@ -155,7 +163,7 @@ void Buffer::open()
 
 	if( create )
 	{
-		openflags |= ::O_CREAT;
+		openflags |= O_CREAT;
 	}
 
 	fd = ::open( filename.c_str() , openflags );
@@ -165,27 +173,58 @@ void Buffer::open()
 		throw std::runtime_error("File error!");
 	}
 
-	root = mmap( 0 , size, mmapflags , MAP_SHARED, fd , 0 );
+	// resolve page differences..
+	int pageOffset = mmapResolvePage( offset );
+	int pagePadding = 0;
+	if( pageOffset != offset )
+	{
+		pagePadding = offset - pageOffset;
+	}
 
-	if( data == MAP_FAILED )
+	realSize = size + pagePadding;
+
+	root = mmap( 0 , realSize, mmapflags , MAP_SHARED, fd , pageOffset );
+	if( root == MAP_FAILED )
 	{
 		::close( fd );
-		return false;
+		fd = -1;
+		LOG->error( "%s:%i Failed to mmap [%s]." , __FILE__ , __LINE__ , filename.c_str() );
+		throw std::runtime_error("File mmap error!");
 	}
-	return true;
+
+	// dislocate buffer to be at right spot.
+	buffer = root + pagePadding;
 }
 
 void Buffer::close()
 {
+	if( fd == -1 )
+	{
+		return;
+	}
+    if( munmap( root , realSize ) == -1)
+    {
+		LOG->error( "%s:%i Failed to close mmap [%s]." , __FILE__ , __LINE__ , filename.c_str() );
+		throw std::runtime_error("File close mmap error!");
+    }
+    root = MAP_FAILED;
+
+    ::close( fd );
+    fd = -1;
 }
 
 bool Buffer::isOpen() const
 {
-	return false;
+	return root != MAP_FAILED;
 }
 
 void *Buffer::access() const
 {
+	if( !isOpen() )
+	{
+		LOG->error( "%s:%i Failed to access mmap [%s]." , __FILE__ , __LINE__ , filename.c_str() );
+		throw std::runtime_error("File access mmap error!");
+	}
 	return buffer;
 }
 

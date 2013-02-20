@@ -20,9 +20,9 @@
 # warning NO MANN NO OS_DETECTED
 #endif
 
-int mmapGetPageSize();
-
 #include <sys/stat.h> 	// should be on every platform
 #include <iostream>		// standard
+
+int mmapResolvePage( int begin );
 
 #endif

@@ -42,6 +42,26 @@
 # define PI_OVER_360 0.0087266462599716478846184538424431
 #endif
 
+// Access defines
+#ifndef ACCESS_NONE
+# define ACCESS_NONE 0x0000
+#endif
+#ifndef ACCESS_READ
+# define ACCESS_READ 0x0001
+#endif
+#ifndef ACCESS_WRITE
+# define ACCESS_WRITE 0x0002
+#endif
+#ifndef ACCESS_CREATE
+# define ACCESS_CREATE 0x0004
+#endif
+#ifndef ACCESS_APPEND
+# define ACCESS_APPEND 0x0008
+#endif
+#ifndef ACCESS_OVERWRITE
+# define ACCESS_OVERWRITE 0x0010
+#endif
+
 // Standard types
 #ifndef SKIP_STANDARD_TYPES
 	// signed types

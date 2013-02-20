@@ -7,16 +7,19 @@
 
 #include "mman"
 
-
 #if defined(OS_WINDOWS)
-int mmapGetPageSize()
+
+int mmapResolvePage( int begin )
 {
-	return 0;
+	return begin;
 }
+
 #else
 // Unixeh!
-int mmapGetPageSize()
+// http://stackoverflow.com/questions/5074981/please-explain-what-this-piece-of-c-code-does
+int mmapResolvePage( int begin )
 {
-	return sysconf(_SC_PAGE_SIZE);
+	return begin & ~(sysconf(_SC_PAGE_SIZE) - 1);
 }
+
 #endif
