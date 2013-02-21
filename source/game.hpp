@@ -12,6 +12,8 @@
 #include <hydramain.hpp>
 #include <entity>
 
+#include "graphicsobject.hpp"
+
 class Game : public Protothread
 {
 private:
@@ -23,6 +25,9 @@ public:
 	Game( hydra::Main& main );
 	virtual ~Game();
 
+	glm::mat4 camera;
+	GraphicsObject object;
+
 	virtual bool run();
 };
 
@@ -30,8 +35,9 @@ class GameRender : public Protothread
 {
 private:
 	hydra::Main& main;
+	Game& game;
 public:
-	GameRender( hydra::Main& main );
+	GameRender( hydra::Main& main , Game& game );
 	virtual ~GameRender();
 
 	virtual bool run();

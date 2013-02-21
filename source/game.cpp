@@ -11,7 +11,7 @@
 
 Game::Game( hydra::Main& main )
 : main( main )
-, render( new GameRender( main ) )
+, render( new GameRender( main , *this ) )
 {
 }
 
@@ -36,8 +36,9 @@ bool Game::run()
 	return false;
 }
 
-GameRender::GameRender( hydra::Main& main )
+GameRender::GameRender( hydra::Main& main , Game& game )
 : main( main )
+, game( game )
 {
 }
 
