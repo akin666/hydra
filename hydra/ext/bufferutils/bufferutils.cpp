@@ -11,6 +11,162 @@
 namespace buffer {
 namespace utils {
 
+bool transformRGB8toRGBA8( const unsigned char *source , unsigned char *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 1 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 2 ];
+		target[ i * 4 + 3 ] = 0xFF;
+	}
+	return true;
+}
+bool transformRGB8toARGB8( const unsigned char *source , unsigned char *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+	}
+	return true;
+}
+bool transformRGB8toRGB565( const unsigned char *source , unsigned short *target , size_t pixelcount )
+{
+	// TODO
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+	}
+	return false;
+}
+bool transformRGB8toRGBA4( const unsigned char *source , unsigned short *target , size_t pixelcount )
+{
+	// TODO
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+	}
+	return false;
+}
+bool transformRGB8toRGBA5551( const unsigned char *source , unsigned short *target , size_t pixelcount )
+{
+	// TODO
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+	}
+	return false;
+}
+bool transformRGB8toRGBA12( const unsigned char *source , unsigned char *target , size_t pixelcount )
+{
+	// TODO
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
+		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
+		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+	}
+	return false;
+}
+bool transformRGB8toRGBA16( const unsigned char *source , unsigned short *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = ((unsigned int)source[ i * 3 + 0 ]) << 8;
+		target[ i * 4 + 1 ] = ((unsigned int)source[ i * 3 + 1 ]) << 8;
+		target[ i * 4 + 2 ] = ((unsigned int)source[ i * 3 + 2 ]) << 8;
+		target[ i * 4 + 3 ] = 0xFFFF;
+	}
+	return true;
+}
+bool transformRGB8toRGBA32( const unsigned char *source , unsigned int *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = ((unsigned int)source[ i * 3 + 0 ]) << 24;
+		target[ i * 4 + 1 ] = ((unsigned int)source[ i * 3 + 1 ]) << 24;
+		target[ i * 4 + 2 ] = ((unsigned int)source[ i * 3 + 2 ]) << 24;
+		target[ i * 4 + 3 ] = 0xFFFFFFFF;
+	}
+	return true;
+}
+bool transformRGB8toRGBA32F( const unsigned char *source , float *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = source[ i * 3 + 0 ] / 256.0f;
+		target[ i * 4 + 1 ] = source[ i * 3 + 1 ] / 256.0f;
+		target[ i * 4 + 2 ] = source[ i * 3 + 2 ] / 256.0f;
+		target[ i * 4 + 3 ] = 1.0f;
+	}
+	return false;
+}
+
+bool transformRGB8(
+		const unsigned char *source ,
+		void *target ,
+		pixel::Format tformat ,
+		size_t pixelcount )
+{
+	switch( tformat )
+	{
+		case pixel::RGBA8 :
+		{
+			return transformRGB8toRGBA8( source , (unsigned char *)target , pixelcount );
+		}
+		case pixel::ARGB8 :
+		{
+			return transformRGB8toARGB8( source , (unsigned char *)target , pixelcount );
+		}
+		case pixel::RGBA16 :
+		{
+			return transformRGB8toRGBA16( source , (unsigned short *)target , pixelcount );
+		}
+		case pixel::RGBA32 :
+		{
+			return transformRGB8toRGBA32( source , (unsigned int *)target , pixelcount );
+		}
+		case pixel::RGB565 :
+		{
+			return transformRGB8toRGB565( source , (unsigned short *)target , pixelcount );
+		}
+		case pixel::RGBA4 :
+		{
+			return transformRGB8toRGBA4( source , (unsigned short *)target , pixelcount );
+		}
+		case pixel::RGBA5551 :
+		{
+			return transformRGB8toRGBA5551( source , (unsigned short *)target , pixelcount );
+		}
+		case pixel::RGBA32F :
+		{
+			return transformRGB8toRGBA32F( source , (float *)target , pixelcount );
+		}
+		case pixel::RGBA12 :
+		{
+			return transformRGB8toRGBA12( source , (unsigned char *)target , pixelcount );
+		}
+		default:
+		{
+			break;
+		}
+	}
+	return false;
+}
+
 bool transformColor(
 		const void *source ,
 		size_t slen ,
@@ -42,12 +198,12 @@ bool transformColor(
 	RGBA5551 = 17,
 	*/
 
-	size_t totalPixels = dimensions.x * dimensions.y;
+	size_t pixelcount = dimensions.x * dimensions.y;
 	size_t sbypp = pixel::getByteSize( sformat );
 	size_t tbypp = pixel::getByteSize( tformat );
 
-	size_t ttotal = totalPixels * tbypp;
-	size_t stotal = totalPixels * sbypp;
+	size_t ttotal = pixelcount * tbypp;
+	size_t stotal = pixelcount * sbypp;
 
 	// will it fit?
 	// is there anything there?
@@ -67,75 +223,7 @@ bool transformColor(
 	{
 		case pixel::RGB8 :
 		{
-			const unsigned char *u8source = (const unsigned char*)source;
-			switch( tformat )
-			{
-				case pixel::RGBA8 :
-				{
-					unsigned char *u8target = (unsigned char*)target;
-					for( size_t i = 0 ; i < totalPixels ; ++i )
-					{
-						u8target[ i * 4 + 0 ] = u8source[ i * 3 + 0 ];
-						u8target[ i * 4 + 1 ] = u8source[ i * 3 + 1 ];
-						u8target[ i * 4 + 2 ] = u8source[ i * 3 + 2 ];
-						u8target[ i * 4 + 3 ] = 0xFF;
-					}
-					return true;
-				}
-				case pixel::ARGB8 :
-				{
-					for( size_t i = 0 ; i < totalPixels ; ++i )
-					{
-						unsigned char *u8target = (unsigned char*)target;
-						u8target[ i * 4 + 0 ] = 0xFF;
-						u8target[ i * 4 + 1 ] = u8source[ i * 3 + 0 ];
-						u8target[ i * 4 + 2 ] = u8source[ i * 3 + 1 ];
-						u8target[ i * 4 + 3 ] = u8source[ i * 3 + 2 ];
-					}
-					return true;
-				}
-				case pixel::RGBA16 :
-				{
-					unsigned short *u16target = (unsigned short*)target;
-					for( size_t i = 0 ; i < totalPixels ; ++i )
-					{
-						u16target[ i * 4 + 0 ] = ((unsigned int)u8source[ i * 3 + 0 ]) << 8;
-						u16target[ i * 4 + 1 ] = ((unsigned int)u8source[ i * 3 + 1 ]) << 8;
-						u16target[ i * 4 + 2 ] = ((unsigned int)u8source[ i * 3 + 2 ]) << 8;
-						u16target[ i * 4 + 3 ] = 0xFF;
-					}
-					return true;
-				}
-				case pixel::RGBA32 :
-				{
-					unsigned int *u32target = (unsigned int*)target;
-					for( size_t i = 0 ; i < totalPixels ; ++i )
-					{
-						u32target[ i * 4 + 0 ] = ((unsigned int)u8source[ i * 3 + 0 ]) << 24;
-						u32target[ i * 4 + 1 ] = ((unsigned int)u8source[ i * 3 + 1 ]) << 24;
-						u32target[ i * 4 + 2 ] = ((unsigned int)u8source[ i * 3 + 2 ]) << 24;
-						u32target[ i * 4 + 3 ] = 0xFF;
-					}
-					return true;
-				}
-				case pixel::RGB565 :
-				case pixel::RGBA4 :
-				case pixel::RGBA5551 :
-				case pixel::RGBA32F :
-				case pixel::RGBA12 :
-				case pixel::ALPHA8 :
-				case pixel::LUMINANCE :
-				case pixel::INTENSITY :
-				case pixel::DEPTH8 :
-				case pixel::DEPTH16 :
-				case pixel::DEPTH24 :
-				case pixel::DEPTH32 :
-				default:
-				{
-					break;
-				}
-			}
-			break;
+			return transformRGB8( (const unsigned char*)source , target , tformat , pixelcount );
 		}
 		case pixel::RGBA8 :
 		{
