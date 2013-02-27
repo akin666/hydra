@@ -8,8 +8,21 @@
 #include "filebuffer.hpp"
 #include <mman>
 #include <fcntl.h> // open, O_ flags.
+#include <cassert>
 
 namespace file {
+
+Buffer::Buffer( const Buffer& o )
+: fd( o.fd )
+, size( o.size )
+, realSize( o.realSize )
+, offset( o.offset )
+, root( o.root )
+, buffer( o.buffer )
+, flags( o.flags )
+{
+	assert( false );
+}
 
 Buffer::Buffer()
 : fd( -1 )
