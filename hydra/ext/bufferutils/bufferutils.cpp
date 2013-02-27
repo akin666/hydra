@@ -35,27 +35,26 @@ bool transformRGB8toARGB8( const unsigned char *source , unsigned char *target ,
 }
 bool transformRGB8toRGB565( const unsigned char *source , unsigned short *target , size_t pixelcount )
 {
-	// TODO
 	for( size_t i = 0 ; i < pixelcount ; ++i )
 	{
-		target[ i * 4 + 0 ] = 0xFF;
-		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
-		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
-		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+		target[ i ] =
+				(((unsigned int)source[ i * 3 + 0 ] << 8 ) & 0xF800 ) |
+				(((unsigned int)source[ i * 3 + 1 ] << 3 ) & 0x7E0 ) |
+				(((unsigned int)source[ i * 3 + 2 ] >> 3 ) & 0x1F );
 	}
-	return false;
+	return true;
 }
 bool transformRGB8toRGBA4( const unsigned char *source , unsigned short *target , size_t pixelcount )
 {
-	// TODO
 	for( size_t i = 0 ; i < pixelcount ; ++i )
 	{
-		target[ i * 4 + 0 ] = 0xFF;
-		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
-		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
-		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+		target[ i ] =
+				(((unsigned int)source[ i * 3 + 0 ] << 8 ) & 0xF000 ) |
+				(((unsigned int)source[ i * 3 + 1 ] << 4 ) & 0x0F00 ) |
+				(((unsigned int)source[ i * 3 + 1 ] ) & 0x00F0 ) |
+				0x000F;
 	}
-	return false;
+	return true;
 }
 bool transformRGB8toRGBA5551( const unsigned char *source , unsigned short *target , size_t pixelcount )
 {
