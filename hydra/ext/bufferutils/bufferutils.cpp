@@ -7,26 +7,55 @@
 
 #include "bufferutils.h"
 #include <cstring>
+#include <limits>
 
 namespace buffer {
 namespace utils {
 
-bool transformRGB8toRGBA8( const unsigned char *source , unsigned char *target , size_t pixelcount )
+template <typename TargetType>
+bool transformRGB8toRGBA( const unsigned char *source , TargetType *target , size_t pixelcount )
 {
 	for( size_t i = 0 ; i < pixelcount ; ++i )
 	{
 		target[ i * 4 + 0 ] = source[ i * 3 + 0 ];
 		target[ i * 4 + 1 ] = source[ i * 3 + 1 ];
 		target[ i * 4 + 2 ] = source[ i * 3 + 2 ];
-		target[ i * 4 + 3 ] = 0xFF;
+		target[ i * 4 + 3 ] = std::numeric_limits<TargetType>::max();
 	}
 	return true;
 }
-bool transformRGB8toARGB8( const unsigned char *source , unsigned char *target , size_t pixelcount )
+// float specialization
+template <>
+bool transformRGB8toRGBA<float>( const unsigned char *source , float *target , size_t pixelcount )
 {
 	for( size_t i = 0 ; i < pixelcount ; ++i )
 	{
-		target[ i * 4 + 0 ] = 0xFF;
+		target[ i * 4 + 0 ] = source[ i * 3 + 0 ] / 256.0f;
+		target[ i * 4 + 1 ] = source[ i * 3 + 1 ] / 256.0f;
+		target[ i * 4 + 2 ] = source[ i * 3 + 2 ] / 256.0f;
+		target[ i * 4 + 3 ] = 1.0f;
+	}
+	return true;
+}
+// double specialization
+template <>
+bool transformRGB8toRGBA<double>( const unsigned char *source , double *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = source[ i * 3 + 0 ] / 256.0;
+		target[ i * 4 + 1 ] = source[ i * 3 + 1 ] / 256.0;
+		target[ i * 4 + 2 ] = source[ i * 3 + 2 ] / 256.0;
+		target[ i * 4 + 3 ] = 1.0;
+	}
+	return true;
+}
+template <typename TargetType>
+bool transformRGB8toARGB( const unsigned char *source , TargetType *target , size_t pixelcount )
+{
+	for( size_t i = 0 ; i < pixelcount ; ++i )
+	{
+		target[ i * 4 + 0 ] = std::numeric_limits<TargetType>::max();
 		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
 		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
 		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
@@ -58,15 +87,15 @@ bool transformRGB8toRGBA4( const unsigned char *source , unsigned short *target 
 }
 bool transformRGB8toRGBA5551( const unsigned char *source , unsigned short *target , size_t pixelcount )
 {
-	// TODO
 	for( size_t i = 0 ; i < pixelcount ; ++i )
 	{
-		target[ i * 4 + 0 ] = 0xFF;
-		target[ i * 4 + 1 ] = source[ i * 3 + 0 ];
-		target[ i * 4 + 2 ] = source[ i * 3 + 1 ];
-		target[ i * 4 + 3 ] = source[ i * 3 + 2 ];
+		target[ i ] =
+				(((unsigned int)source[ i * 3 + 0 ] << 8 ) & 0xF800 ) |
+				(((unsigned int)source[ i * 3 + 1 ] << 3 ) & 0x7E0 ) |
+				(((unsigned int)source[ i * 3 + 2 ] >> 2 ) & 0x1F ) |
+				(((unsigned int)source[ i * 3 + 2 ] >> 7 ) & 0x1 );
 	}
-	return false;
+	return true;
 }
 bool transformRGB8toRGBA12( const unsigned char *source , unsigned char *target , size_t pixelcount )
 {
@@ -80,40 +109,6 @@ bool transformRGB8toRGBA12( const unsigned char *source , unsigned char *target 
 	}
 	return false;
 }
-bool transformRGB8toRGBA16( const unsigned char *source , unsigned short *target , size_t pixelcount )
-{
-	for( size_t i = 0 ; i < pixelcount ; ++i )
-	{
-		target[ i * 4 + 0 ] = ((unsigned int)source[ i * 3 + 0 ]) << 8;
-		target[ i * 4 + 1 ] = ((unsigned int)source[ i * 3 + 1 ]) << 8;
-		target[ i * 4 + 2 ] = ((unsigned int)source[ i * 3 + 2 ]) << 8;
-		target[ i * 4 + 3 ] = 0xFFFF;
-	}
-	return true;
-}
-bool transformRGB8toRGBA32( const unsigned char *source , unsigned int *target , size_t pixelcount )
-{
-	for( size_t i = 0 ; i < pixelcount ; ++i )
-	{
-		target[ i * 4 + 0 ] = ((unsigned int)source[ i * 3 + 0 ]) << 24;
-		target[ i * 4 + 1 ] = ((unsigned int)source[ i * 3 + 1 ]) << 24;
-		target[ i * 4 + 2 ] = ((unsigned int)source[ i * 3 + 2 ]) << 24;
-		target[ i * 4 + 3 ] = 0xFFFFFFFF;
-	}
-	return true;
-}
-bool transformRGB8toRGBA32F( const unsigned char *source , float *target , size_t pixelcount )
-{
-	for( size_t i = 0 ; i < pixelcount ; ++i )
-	{
-		target[ i * 4 + 0 ] = source[ i * 3 + 0 ] / 256.0f;
-		target[ i * 4 + 1 ] = source[ i * 3 + 1 ] / 256.0f;
-		target[ i * 4 + 2 ] = source[ i * 3 + 2 ] / 256.0f;
-		target[ i * 4 + 3 ] = 1.0f;
-	}
-	return false;
-}
-
 bool transformRGB8(
 		const unsigned char *source ,
 		void *target ,
@@ -124,19 +119,19 @@ bool transformRGB8(
 	{
 		case pixel::RGBA8 :
 		{
-			return transformRGB8toRGBA8( source , (unsigned char *)target , pixelcount );
+			return transformRGB8toRGBA( source , (unsigned char *)target , pixelcount );
 		}
 		case pixel::ARGB8 :
 		{
-			return transformRGB8toARGB8( source , (unsigned char *)target , pixelcount );
+			return transformRGB8toARGB( source , (unsigned char *)target , pixelcount );
 		}
 		case pixel::RGBA16 :
 		{
-			return transformRGB8toRGBA16( source , (unsigned short *)target , pixelcount );
+			return transformRGB8toRGBA( source , (unsigned short *)target , pixelcount );
 		}
 		case pixel::RGBA32 :
 		{
-			return transformRGB8toRGBA32( source , (unsigned int *)target , pixelcount );
+			return transformRGB8toRGBA( source , (unsigned int *)target , pixelcount );
 		}
 		case pixel::RGB565 :
 		{
@@ -152,7 +147,7 @@ bool transformRGB8(
 		}
 		case pixel::RGBA32F :
 		{
-			return transformRGB8toRGBA32F( source , (float *)target , pixelcount );
+			return transformRGB8toRGBA( source , (float *)target , pixelcount );
 		}
 		case pixel::RGBA12 :
 		{
