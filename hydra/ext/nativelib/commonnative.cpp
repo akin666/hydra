@@ -27,6 +27,7 @@
 #include <log>
 
 #include <sys/time.h>
+#include <mman>
 
 #ifndef MAX_TEXT_FILE_SIZE
 # define MAX_TEXT_FILE_SIZE 1048576 // 1Megs
@@ -44,21 +45,10 @@ using namespace pixel;
 
 namespace native {
 
-void message( const char *message )
+void log( const std::string& hint , const char *message )
 {
-	std::cout << message << std::endl;
+	std::cout << hint << " : " << message << std::endl;
 }
-
-void warning( const char *message )
-{
-	std::cout << "Warning! " << message << std::endl;
-}
-
-void alert( const char *message )
-{
-	std::cout << "Error!!! " << message << std::endl;
-}
-
 
 // Time
 // Precise UTC Time
@@ -92,12 +82,12 @@ void getTime( LocalTime& time )
 
 
 // File I/O
-FILE *openFileRead( const String8& path )
+FILE *openFileRead( const std::string& hint , const std::string& path )
 {
 	return fopen ( path.c_str() , "rb" );
 }
 
-FILE *openFileWrite( const String8& path )
+FILE *openFileWrite( const std::string& hint , const std::string& path )
 {
 	return fopen ( path.c_str() , "wb" );
 }
@@ -107,7 +97,7 @@ void closeFile( FILE *file )
 	fclose( file );
 }
 
-bool readFile( const String8& path , String8& content )
+bool readFile( const std::string& hint , const std::string& path , std::string& content )
 {
 	std::ifstream file( path , std::ios::in | std::ios::binary );
 	if( file )
@@ -120,57 +110,66 @@ bool readFile( const String8& path , String8& content )
 		return true;
 	}
 	return false;
-	/*
-	FILE * file = openFileRead( path );
+}
 
-	if( file == NULL )
+// File information
+// returns true, if exists
+bool fileInfo( const std::string& hint , const std::string& path , bool& directory , Second& modified , size_t& filesize )
+{
+	struct stat st;
+	if( stat(path.c_str(), &st) == -1 )
+	{
+		return false;
+	}
+	modified = st.st_mtime;
+	filesize = st.st_size;
+	directory = (st.st_mode & S_IFMT) == S_IFDIR;
+	return true;
+}
+
+bool directoryInfo( const std::string& hint , const std::string& path , Second& modified , size_t& contentCount )
+{
+	struct stat st;
+	if( stat(path.c_str(), &st) == -1 )
 	{
 		return false;
 	}
 
-	int64 size;
-	int8 *buffer;
-
-	fseek( file , 0L , SEEK_END);
-	size = ftell( file );
-	rewind( file );
-
-	if( size > MAX_TEXT_FILE_SIZE )
+	modified = st.st_mtime;
+	if( (st.st_mode & S_IFMT) != S_IFDIR )
 	{
-		closeFile( file );
 		return false;
 	}
 
-	buffer = new int8[size + 1];
-
-	if( buffer == NULL )
-	{
-		closeFile( file );
-		return false;
-	}
-
-	if( fread( buffer , size, 1 , file ) != 1 )
-	{
-		delete[] buffer;
-		closeFile( file );
-		return false;
-	}
-	closeFile( file );
-
-	content = (char*)buffer;
-
-	delete[] buffer;
-	*/
+	// TODO
+	// http://www.java-samples.com/showtutorial.php?tutorialid=573
+	// http://linux.die.net/man/2/stat
 
 	return true;
 }
 
+bool directoryListing( const std::string& hint , const std::string& path , const size_t at , std::string& name , bool& directory , Second& modified , size_t& filesize )
+{
+	return false;
+}
+
+
+// MMAP File I/O
+void *openMMAP( const std::string& hint , const String8& path , int& totalSize , int& offset , int& fd , int requestedOffset , int requestedSize , unsigned int accessFlags )
+{
+	return nullptr;
+}
+
+void closeMMAP( void *ptr , int size , int fd )
+{
+}
+
 // Image loading functionality _always_ happens through softimage
-bool loadImageFile( const String8 path , simg::Buffer& softimage )
+bool loadImageFile( const std::string path , simg::Buffer& softimage )
 {
 	// define MAX_IMAGE_FILE_SIZE 33554432
 	// define MAX_IMAGE_RESOLUTION 8192
-	FILE * file = openFileRead( path );
+	FILE * file = openFileRead( "" , path );
 
 	if( file == NULL )
 	{
@@ -256,7 +255,7 @@ bool loadImageFile( const String8 path , simg::Buffer& softimage )
 	return true;
 }
 
-bool saveImageFile( const String8 path , simg::Buffer& softimage )
+bool saveImageFile( const std::string path , simg::Buffer& softimage )
 {
 	switch( softimage.getMode() )
 	{

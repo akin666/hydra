@@ -36,17 +36,17 @@ void Log::uninitialize()
 
 void Log::printMessage( const String8& message )
 {
-	::native::message( message.c_str() );
+	::native::log( "log" , message.c_str() );
 }
 
 void Log::printError( const String8& message )
 {
-	::native::alert( message.c_str() );
+	::native::log( "error" , message.c_str() );
 }
 
 void Log::printWarning( const String8& message )
 {
-	::native::warning( message.c_str() );
+	::native::log( "warning" , message.c_str() );
 }
 
 void Log::message( const char* format , ... )
