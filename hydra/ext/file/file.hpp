@@ -19,6 +19,7 @@ private:
 	Second modified;
 	size_t size;
 	uint flags;
+	static const std::string slash;
 public:
 	File();
 	~File();
@@ -26,6 +27,7 @@ public:
 	void setModified( Second second );
 	void setSize( size_t size );
 	void setDirectory( bool val );
+	void setPath( const File& parent , const std::string& filename );
 	void setPath( const std::string& path );
 
 	std::string getPath() const;

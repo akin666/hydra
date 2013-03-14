@@ -11,6 +11,8 @@
 #define FILEDIRECTORY	0x0001
 #define FILEDEFAULT		FILENONE
 
+const std::string File::slash("/");
+
 File::File()
 : modified( 0 )
 , size( 0 )
@@ -35,6 +37,11 @@ void File::setSize( size_t size )
 void File::setDirectory( bool val )
 {
 	val ? flags |= FILEDIRECTORY : flags &= ~FILEDIRECTORY;
+}
+
+void File::setPath( const File& parent , const std::string& filename )
+{
+	this->fullPath = parent.getPath() + slash + filename;
 }
 
 void File::setPath( const std::string& path )
