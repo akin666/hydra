@@ -19,8 +19,10 @@
 # define USE_COMMON_NATIVELIB
 #endif
 
-class Time;
-class LocalTime;
+#include <time/time.hpp>
+#include <time/localtime.hpp>
+
+#include <file/file.hpp>
 
 namespace native {
 
@@ -40,9 +42,8 @@ bool readFile( const std::string& hint = "" , const std::string& path , std::str
 
 // File information
 // returns true, if exists
-bool fileInfo( const std::string& hint = "" , const std::string& path , bool& directory , Second& modified , size_t& filesize );
-bool directoryInfo( const std::string& hint = "" , const std::string& path , Second& modified , size_t& contentCount );
-bool directoryListing( const std::string& hint , const std::string& path , const size_t at , std::string& name , bool& directory , Second& modified , size_t& filesize );
+bool fileInfo( const std::string& hint = "" , File& file );
+bool directoryListing( const std::string& hint , File& file , File::Set& set );
 
 // MMAP File I/O
 void *openMMAP( const std::string& hint = "" , const String8& path , int& totalSize , int& offset , int& fd , int requestedOffset = 0 , int requestedSize = 0 , unsigned int accessFlags = ACCESS_READ | ACCESS_WRITE )

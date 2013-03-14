@@ -20,9 +20,6 @@
 #include <stb_image.h>
 #include <TGAImage.h>
 
-#include <time/time.hpp>
-#include <time/localtime.hpp>
-
 #include <pixelformat>
 #include <log>
 
@@ -114,32 +111,39 @@ bool readFile( const std::string& hint , const std::string& path , std::string& 
 
 // File information
 // returns true, if exists
-bool fileInfo( const std::string& hint , const std::string& path , bool& directory , Second& modified , size_t& filesize )
+bool fileInfo( const std::string& hint , File& file )
 {
 	struct stat st;
-	if( stat(path.c_str(), &st) == -1 )
+	if( stat( file.getPath().c_str(), &st) == -1 )
 	{
 		return false;
 	}
-	modified = st.st_mtime;
-	filesize = st.st_size;
-	directory = (st.st_mode & S_IFMT) == S_IFDIR;
+
+	file.setModified( st.st_mtime );
+	file.setSize( st.st_size );
+	file.setDirectory( (st.st_mode & S_IFMT) == S_IFDIR );
+
 	return true;
 }
 
-bool directoryInfo( const std::string& hint , const std::string& path , Second& modified , size_t& contentCount )
+bool directoryListing( const std::string& hint , File& file , File::Set& set )
 {
 	struct stat st;
-	if( stat(path.c_str(), &st) == -1 )
+	if( stat( file.getPath().c_str(), &st) == -1 )
 	{
 		return false;
 	}
 
-	modified = st.st_mtime;
-	if( (st.st_mode & S_IFMT) != S_IFDIR )
+	file.setModified( st.st_mtime );
+	file.setSize( st.st_size );
+	file.setDirectory( (st.st_mode & S_IFMT) == S_IFDIR );
+
+	if( !file.isDirectory() )
 	{
 		return false;
 	}
+
+	// now populate the set.
 
 	// TODO
 	// http://www.java-samples.com/showtutorial.php?tutorialid=573
@@ -147,12 +151,6 @@ bool directoryInfo( const std::string& hint , const std::string& path , Second& 
 
 	return true;
 }
-
-bool directoryListing( const std::string& hint , const std::string& path , const size_t at , std::string& name , bool& directory , Second& modified , size_t& filesize )
-{
-	return false;
-}
-
 
 // MMAP File I/O
 void *openMMAP( const std::string& hint , const String8& path , int& totalSize , int& offset , int& fd , int requestedOffset , int requestedSize , unsigned int accessFlags )
