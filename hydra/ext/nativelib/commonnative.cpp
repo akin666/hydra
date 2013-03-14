@@ -126,6 +126,110 @@ bool fileInfo( const std::string& hint , File& file )
 	return true;
 }
 
+// Directory listing.. in C ... needs a lot of refactoring, to bring the code to this century..
+// http://www.java-samples.com/showtutorial.php?tutorialid=573
+#define NAME_MAX   14
+#ifndef DIRSIZ
+# define DIRSIZ  14
+#endif
+typedef struct { long ino; char name[NAME_MAX+1]; } Dirent;
+typedef struct { int fd; Dirent d; } DIR;
+struct direct { ino_t d_ino; char  d_name[DIRSIZ]; };
+
+DIR *opendir(char *dirname);
+Dirent *readdir(DIR *dfd);
+void closedir(DIR *dfd);
+
+#define MAX_PATH 1024
+
+void dirwalk(char *dir, void (*fcn)(char *))
+{
+	char name[MAX_PATH];
+	Dirent *dp;
+	DIR *dfd;
+
+	if( (dfd = opendir(dir)) == NULL )
+	{
+		fprintf(stderr, "dirwalk: can't open %s\n", dir);
+		return;
+	}
+	while( (dp = readdir(dfd)) != NULL )
+	{
+		if( strcmp(dp->name, ".") == 0 || strcmp(dp->name, "..") )
+		{
+		   continue;
+		}
+		if( strlen(dir)+strlen(dp->name)+2 > sizeof(name) )
+		{
+		   fprintf(stderr, "dirwalk: name %s %s too long\n", dir, dp->name);
+		}
+		else
+		{
+		   sprintf(name, "%s/%s", dir, dp->name);
+		   (*fcn)(name);
+		}
+	}
+	closedir(dfd);
+}
+
+DIR *opendir(char *dirname)
+{
+	int fd;
+	struct stat stbuf;
+	DIR *dp;
+
+	if( (fd = open(dirname, O_RDONLY, 0) ) == -1 )
+	{
+		return NULL;
+	}
+
+	if( fstat(fd, &stbuf) == -1 )
+	{
+		return NULL;
+	}
+
+	if( ( stbuf.st_mode & S_IFMT ) != S_IFDIR )
+	{
+		return NULL;
+	}
+
+	if( ( dp = (DIR *)malloc( sizeof(DIR) ) ) == NULL )
+	{
+		return NULL;
+	}
+
+	dp->fd = fd;
+	return dp;
+}
+
+void closedir(DIR *dp)
+{
+	if( dp )
+	{
+		close(dp->fd);
+		free(dp);
+	}
+}
+
+Dirent *readdir(DIR *dp)
+{
+   struct direct dirbuf;  /* local directory structure */
+   static Dirent d;      /* return: portable structure */
+
+   while( read(dp->fd, (char *) &dirbuf, sizeof(dirbuf) ) == sizeof(dirbuf) )
+   {
+	   if (dirbuf.d_ino == 0)
+	   {
+		   continue;
+	   }
+	   d.ino = dirbuf.d_ino;
+	   strncpy(d.name, dirbuf.d_name, DIRSIZ);
+	   d.name[DIRSIZ] = '\0';  /* ensure termination */
+	   return &d;
+   }
+   return NULL;
+}
+
 bool directoryListing( const std::string& hint , File& file , File::Set& set )
 {
 	struct stat st;
@@ -146,8 +250,6 @@ bool directoryListing( const std::string& hint , File& file , File::Set& set )
 	// now populate the set.
 
 	// TODO
-	// http://www.java-samples.com/showtutorial.php?tutorialid=573
-	// http://linux.die.net/man/2/stat
 
 	return true;
 }
