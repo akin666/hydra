@@ -19,11 +19,6 @@ Property::Property( Manager& manager )
 
 Property::~Property()
 {
-	clear();
-}
-
-void Property::clear()
-{
 }
 
 void Property::attach( ID id )

@@ -24,7 +24,17 @@
 
 #include <file/file.hpp>
 
+#define FD_EMPTY -1
+
 namespace native {
+
+class Folder
+{
+public:
+	static const std::string RESOURCES;
+	static const std::string DOCUMENTS;
+	static const std::string TEMP;
+};
 
 // Logging..
 void log( const std::string& hint , const char *message );
@@ -35,8 +45,8 @@ void getTime( LocalTime& time ); // Local Time!
 
 // File I/O
 // Hint gives a clue where the lib wants to access ("temp" , "documents" , "resources")
-FILE *openFileRead( const std::string& hint , const String8& path );
-FILE *openFileWrite( const std::string& hint , const String8& path );
+FILE *openFileRead( const std::string& hint , const std::string& path );
+FILE *openFileWrite( const std::string& hint , const std::string& path );
 void closeFile( FILE *file );
 bool readFile( const std::string& hint , const std::string& path , std::string& content );
 
@@ -46,8 +56,8 @@ bool fileInfo( const std::string& hint , File& file );
 bool directoryListing( const std::string& hint , File& file , File::Set& set );
 
 // MMAP File I/O
-void *openMMAP( const std::string& hint , const String8& path , int& totalSize , int& offset , int& fd , int requestedOffset = 0 , int requestedSize = 0 , unsigned int accessFlags = ACCESS_READ | ACCESS_WRITE );
-void closeMMAP( void *ptr , int size , int fd );
+void *openMMAP( const std::string& hint , const std::string& path , int& totalSize , int& offset , int& fd , int requestedOffset = 0 , int requestedSize = 0 , unsigned int accessFlags = ACCESS_READ | ACCESS_WRITE );
+void closeMMAP( void *ptr , int size , int& fd );
 
 // Image loading functionality _always_ happens through softimage
 bool loadImageFile( const std::string& path , simg::Buffer& softimage );

@@ -24,7 +24,10 @@
 #include <log>
 
 #include <sys/time.h>
+
 #include <mman>
+#include <fcntl.h> // open, O_ flags.
+#include <cassert>
 
 #ifndef MAX_TEXT_FILE_SIZE
 # define MAX_TEXT_FILE_SIZE 1048576 // 1Megs
@@ -44,6 +47,10 @@
 using namespace pixel;
 
 namespace native {
+
+const std::string Folder::RESOURCES("resources/");
+const std::string Folder::DOCUMENTS("documents/");
+const std::string Folder::TEMP("temp/");
 
 void log( const std::string& hint , const char *message )
 {
@@ -177,13 +184,103 @@ bool directoryListing( const std::string& hint , File& file , File::Set& set )
 }
 
 // MMAP File I/O
-void *openMMAP( const std::string& hint , const String8& path , int& totalSize , int& offset , int& fd , int requestedOffset , int requestedSize , unsigned int accessFlags )
+void *openMMAP( const std::string& hint , const std::string& path , int& totalSize , int& offset , int& fd , int requestedOffset , int requestedSize , unsigned int accessFlags )
 {
-	return nullptr;
+	if( path.empty() )
+	{
+		throw std::runtime_error("Empty filename provided!");
+	}
+
+	bool create = (accessFlags & ACCESS_CREATE) == ACCESS_CREATE;
+	bool read = (accessFlags & ACCESS_READ) == ACCESS_READ;
+	bool write = (accessFlags & ACCESS_WRITE) == ACCESS_WRITE;
+
+	struct stat st;
+	switch( stat(path.c_str(), &st) )
+	{
+		case 0 :
+			break; // all ok
+		case ENOENT :
+		{
+			if( create )
+			{
+				if( requestedSize < 1 )
+				{
+					throw std::runtime_error("File creation not allowed for less than 1 byte size!");
+				}
+				break; // all ok
+			}
+			throw std::runtime_error("File does not exist!");
+		}
+		default:
+		{
+			throw std::runtime_error("File error!");
+		}
+	}
+
+	int mmapflags = 0;
+	int openflags = 0;
+	if( read )
+	{
+		mmapflags |= PROT_READ;
+		openflags |= O_RDONLY;
+	}
+	if( write )
+	{
+		mmapflags |= PROT_WRITE;
+		openflags |= O_WRONLY;
+	}
+	if( read && write )
+	{
+		openflags = O_RDWR;
+	}
+
+	if( create )
+	{
+		openflags |= O_CREAT;
+	}
+
+	fd = ::open( path.c_str() , openflags );
+	if( fd == FD_EMPTY )
+	{
+		throw std::runtime_error("File error!");
+	}
+
+	// resolve page differences..
+	offset = mmapResolvePage( requestedOffset );
+	int pagePadding = 0;
+	if( offset != requestedOffset )
+	{
+		pagePadding = requestedOffset - offset;
+	}
+
+	totalSize = requestedSize + pagePadding;
+
+	void *root = mmap( 0 , totalSize, mmapflags , MAP_SHARED, fd , offset );
+	if( root == MAP_FAILED )
+	{
+		::close( fd );
+		fd = FD_EMPTY;
+		throw std::runtime_error("File mmap error!");
+	}
+
+	return root;
 }
 
-void closeMMAP( void *ptr , int size , int fd )
+void closeMMAP( void *ptr , int size , int& fd )
 {
+	// closed ?
+	if( fd == FD_EMPTY )
+	{
+	    return;
+	}
+    if( munmap( ptr , size ) == -1)
+    {
+		throw std::runtime_error("File close mmap error!");
+    }
+
+    ::close( fd );
+    fd = FD_EMPTY;
 }
 
 // Image loading functionality _always_ happens through softimage

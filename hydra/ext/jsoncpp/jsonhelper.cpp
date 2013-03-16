@@ -17,7 +17,7 @@ typedef std::string::size_type StringPos;
 bool loadFromPath( ValuePtr& root , const std::string path )
 {
 	std::string content;
-	if( native::readFile( path , content ) )
+	if( native::readFile( native::Folder::TEMP , path , content ) )
 	{
 		return loadFromString( root , content );
 	}

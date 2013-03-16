@@ -19,7 +19,7 @@ class TProperty : public Property
 {
 public:
 	static ducktype const std::string type;
-protected:
+private:
 	typedef std::unordered_map< ID , PType* > Map;
 
 	Map data;
@@ -49,6 +49,11 @@ public:
 	{
 	}
 
+	virtual ~TProperty()
+	{
+		clear();
+	}
+
 	virtual bool has( ID id )
 	{
 		return data.find( id ) != data.end();
@@ -57,6 +62,7 @@ public:
 	virtual void clear()
 	{
 		pool.clear();
+		data.clear();
 	}
 
 	PType& get( ID id )

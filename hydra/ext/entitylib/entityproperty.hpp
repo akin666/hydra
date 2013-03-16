@@ -36,7 +36,7 @@ public:
 	void attach( ID id );
 	void detach( ID id );
 
-	virtual void clear();
+	virtual void clear() = 0;
 	virtual bool has( ID id ) const;
 };
 
