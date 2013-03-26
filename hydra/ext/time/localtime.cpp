@@ -124,7 +124,7 @@ void LocalTime::setYear(Year year)
 	this->year = year;
 }
 
-void LocalTime::parse( String8 string )
+void LocalTime::parse( std::string string )
 {
 }
 
@@ -133,7 +133,7 @@ void LocalTime::update()
 	native::getTime( *this );
 }
 
-String8 LocalTime::toString()
+std::string LocalTime::toString()
 {
 	return "";
 }

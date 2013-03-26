@@ -17,12 +17,12 @@ PolygonLoader::~PolygonLoader()
 {
 }
 
-bool PolygonLoader::canLoad( const String8& path )
+bool PolygonLoader::canLoad( const std::string& path )
 {
 	return false;
 }
 
-bool PolygonLoader::load( const String8& path , Polygon& target )
+bool PolygonLoader::load( const std::string& path , Polygon& target )
 {
 	return false;
 }

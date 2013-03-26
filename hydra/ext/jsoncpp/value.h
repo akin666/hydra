@@ -4,7 +4,8 @@
 # include "forwards.h"
 # include <string>
 # include <vector>
-#include <memory>
+
+# include <memory> // shared_ptr
 
 # ifndef JSON_USE_CPPTL_SMALLMAP
 #  include <map>
@@ -1063,9 +1064,7 @@ public: // overridden from ValueArrayAllocator
       }
    };
 
-
    typedef std::shared_ptr<Value> ValuePtr;
-
 } // namespace Json
 
 

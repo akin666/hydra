@@ -24,7 +24,6 @@ int main()
 	hydra::Main main;
 
 	std::atexit( f1 );
-
 	do
 	{
 		if( !main.initialize() )

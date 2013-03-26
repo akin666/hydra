@@ -15,12 +15,12 @@ Duration::Duration()
 {
 }
 
-void Duration::setName( const String8& name )
+void Duration::setName( const std::string& name )
 {
 	this->name = name;
 }
 
-String8 Duration::getName() const
+std::string Duration::getName() const
 {
 	return name;
 }
@@ -50,7 +50,7 @@ PreciseTime Duration::getEnd() const
 	return begin + length;
 }
 
-void Duration::setup( PreciseTime begin , PreciseTime length , const String8& name )
+void Duration::setup( PreciseTime begin , PreciseTime length , const std::string& name )
 {
 	this->begin = begin;
 	this->length = length;

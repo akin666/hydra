@@ -10,7 +10,7 @@
 
 namespace resource {
 
-Handle::Handle( const String8& name , Cache *parent )
+Handle::Handle( const std::string& name , Cache *parent )
 : parent( parent )
 , name( name )
 {
@@ -20,12 +20,12 @@ Handle::~Handle()
 {
 }
 
-const String8& Handle::getName() const
+const std::string& Handle::getName() const
 {
 	return name;
 }
 
-void Handle::setName( const String8& name )
+void Handle::setName( const std::string& name )
 {
 	this->name = name;
 }

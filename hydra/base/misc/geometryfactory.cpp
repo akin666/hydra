@@ -22,7 +22,7 @@ Factory::~Factory()
 	loaders.clear();
 }
 
-bool Factory::load( const String8& path , Polygon& polygon )
+bool Factory::load( const std::string& path , Polygon& polygon )
 {
 	for( auto& loader : loaders )
 	{

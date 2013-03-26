@@ -30,7 +30,7 @@ void Shader::setCompiled( bool status )
 	status ? ( state |= GRAPHICS_SHADER_COMPILED ) : ( state &= ~GRAPHICS_SHADER_COMPILED );
 }
 
-void Shader::set( const String8& source )
+void Shader::set( const std::string& source )
 {
 	this->source = source;
 }
@@ -173,7 +173,7 @@ bool Shader::hasError() const
 	return status != GL_TRUE;
 }
 
-String8 Shader::getError() const
+std::string Shader::getError() const
 {
 	if( !initialized() )
 	{
@@ -187,7 +187,7 @@ String8 Shader::getError() const
 
 	if (loglen > 0)
 	{
-		String8 msg;
+		std::string msg;
 		msg.resize( loglen );
 
 		glGetShaderInfoLog( id , loglen , NULL , &(msg[0]) );
@@ -196,7 +196,7 @@ String8 Shader::getError() const
 	return "";
 }
 
-/*	void Shader::setTypeString( String8 type )
+/*	void Shader::setTypeString( std::string type )
 {
 	if( type == "fragment" )
 	{

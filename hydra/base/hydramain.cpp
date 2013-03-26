@@ -53,10 +53,9 @@ void Main::uninitialize()
 	lscheduler.reset();
 
 	resetSingleton<tpool::ThreadPool>();
-	resetSingleton<Log>();
 }
 
-bool Main::initialize( String8 path )
+bool Main::initialize( std::string path )
 {
 	// Add render scheduler
 	rscheduler = render::Scheduler::Ptr( new render::Scheduler );
@@ -64,9 +63,9 @@ bool Main::initialize( String8 path )
 	// Add logic scheduler
 	lscheduler = logic::Scheduler::Ptr( new logic::Scheduler );
 
-	Singleton<Log>::Ptr log( new Log );
-	Singleton<tpool::ThreadPool>::Ptr threadpool( new tpool::ThreadPool );
-	Singleton<Json::Value>::Ptr config( new Json::Value );
+	Singleton<Log>::Ptr log = std::make_shared<Log>();
+	Singleton<tpool::ThreadPool>::Ptr threadpool = std::make_shared<tpool::ThreadPool>();
+	Singleton<Json::Value>::Ptr config = std::make_shared<Json::Value>();
 
 	if( !log->initialize( ) )
 	{
@@ -90,7 +89,7 @@ bool Main::initialize( String8 path )
 			return false;
 		}
 	}
-	setSingleton<Json::Value>( config );
+//	setSingleton<Json::Value>( config ); // TODO! Why does this not work!
 
 	// Threading
 	unsigned int queryCount = tpool::ThreadPool::getHardwareThreadCount();
@@ -179,7 +178,7 @@ int Main::run()
 
 bool Main::shouldExit()
 {
-	return false;
+	return true;
 }
 
 bool Main::shouldRestart()

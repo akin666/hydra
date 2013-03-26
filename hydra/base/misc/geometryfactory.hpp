@@ -25,7 +25,7 @@ public:
 		loaders.push_back( new PLoadClass );
 	}
 
-	bool load( const String8& path , Polygon& polygon );
+	bool load( const std::string& path , Polygon& polygon );
 };
 
 } // namespace geometry

@@ -260,12 +260,12 @@ bool Context::initialize( Json::ValuePtr& config )
 	}
 
 	// populate extension list.
-	String8 extensionlist;
+	std::string extensionlist;
 	GLint n, i;
 	glGetIntegerv(GL_NUM_EXTENSIONS, &n);
 	for (i = 0; i < n; i++)
 	{
-		extensionlist += String8( (const char*)glGetStringi(GL_EXTENSIONS, i) );
+		extensionlist += std::string( (const char*)glGetStringi(GL_EXTENSIONS, i) );
 		if( i+1 < n ) extensionlist += ",";
 	}
 

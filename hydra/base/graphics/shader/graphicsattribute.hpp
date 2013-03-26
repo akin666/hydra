@@ -16,17 +16,17 @@ class Attribute
 {
 private:
 	int id;
-	String8 name;
+	std::string name;
 public:
 	// Possibility of creating attribute in non error state.
-	Attribute( const String8& name , int id = -1 );
+	Attribute( const std::string& name , int id = -1 );
 	// Copies the attribute indicated, whether it is in error or not.
 	Attribute( const Attribute& other );
 
 	const Attribute& operator = ( const Attribute& other );
 
-	void setName( const String8& name );
-	const String8& getName() const;
+	void setName( const std::string& name );
+	const std::string& getName() const;
 
 	bool hasError() const;
 	int getID() const;

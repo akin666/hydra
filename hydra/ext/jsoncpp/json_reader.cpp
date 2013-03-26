@@ -855,7 +855,7 @@ Reader::getLocationLineAndColumn( Location location ) const
 
 
 std::string 
-Reader::getFormattedErrorMessages() const
+Reader::getFormatedErrorMessages() const
 {
    std::string formattedMessage;
    for ( Errors::const_iterator itError = errors_.begin();
@@ -877,7 +877,7 @@ std::istream& operator>>( std::istream &sin, Value &root )
     Json::Reader reader;
     bool ok = reader.parse(sin, root, true);
     //JSON_ASSERT( ok );
-    if (!ok) throw std::runtime_error(reader.getFormattedErrorMessages());
+    if (!ok) throw std::runtime_error(reader.getFormatedErrorMessages());
     return sin;
 }
 

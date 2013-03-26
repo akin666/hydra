@@ -33,6 +33,9 @@ public:
 	// blocking, but pushes a bunch of things
 	void push( PtrSet& ptr );
 	
+	// nonblocking, notifys all blocked and waiting threads to go forth
+	void notifyAll();
+	
 	// blocking.
 	void pop( Ptr& ptr );
 	
@@ -58,6 +61,12 @@ void TQue<CType>::push( PtrSet& ptr )
 	{
 		data.push_back( unit );
 	}
+	condition.notify_all();
+}
+
+template <class CType>
+void TQue<CType>::notifyAll()
+{
 	condition.notify_all();
 }
 

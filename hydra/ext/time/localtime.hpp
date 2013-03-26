@@ -45,10 +45,10 @@ public:
 	Year getYear() const;
 	void setYear(Year year);
 
-	void parse( String8 string );
+	void parse( std::string string );
 	void update();
 
-	String8 toString();
+	std::string toString();
 };
 
 #endif // HH_LOCALTIME_HPP_

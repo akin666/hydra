@@ -32,7 +32,7 @@ void Program::setLinking( bool val )
 	val ? (state |= GRAPHICS_PROGRAM_LINKED) : (state &= ~GRAPHICS_PROGRAM_LINKED);
 }
 
-sint Program::getUniformID( const String8& key ) const
+sint Program::getUniformID( const std::string& key ) const
 {
 	GL_TEST_RAII;
 	if( hasError() )
@@ -76,7 +76,7 @@ void Program::release()
 	}
 }
 
-Attribute Program::getAttribute( const String8& key ) const
+Attribute Program::getAttribute( const std::string& key ) const
 {
 	GL_TEST_RAII;
 	if( hasError() )
@@ -152,7 +152,7 @@ bool Program::hasError() const
 	return loglen > 0;
 }
 
-String8 Program::getError() const
+std::string Program::getError() const
 {
 	if( !initialized() )
 	{
@@ -166,7 +166,7 @@ String8 Program::getError() const
 
 	if (loglen > 0)
 	{
-		String8 msg;
+		std::string msg;
 		msg.resize( loglen );
 
 		glGetProgramInfoLog( id , loglen , NULL , &(msg[0]) );

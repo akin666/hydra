@@ -28,7 +28,7 @@ public:
 		text.clear();
 	}
 
-	String8 text;
+	std::string text;
 };
 
 typedef entity::TProperty<Text> TextProperty;

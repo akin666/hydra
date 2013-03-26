@@ -68,7 +68,7 @@ namespace Json {
        *         the parsed document. An empty string is returned if no error occurred
        *         during parsing.
        */
-      std::string getFormattedErrorMessages() const;
+      std::string getFormatedErrorMessages() const;
 
    private:
       enum TokenType

@@ -43,7 +43,7 @@ public:
 
 	void uninitialize();
 
-	bool initialize( String8 path = HYDRA_CONFIG );
+	bool initialize( std::string path = HYDRA_CONFIG );
 
 	int run();
 	bool shouldExit();

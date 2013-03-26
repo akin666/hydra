@@ -27,7 +27,7 @@ public:
 private:
 	uint id;
 	Type type;
-	String8 source;
+	std::string source;
 	uint state;
 
 	void setCompiled( bool status );
@@ -35,7 +35,7 @@ public:
 	Shader();
 	~Shader();
 
-	void set( const String8& source );
+	void set( const std::string& source );
 	void setType( Type type );
 	Type getType() const;
 
@@ -49,7 +49,7 @@ public:
 	void release();
 
 	bool hasError() const;
-	String8 getError() const;
+	std::string getError() const;
 };
 
 } // namespace graphics

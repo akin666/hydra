@@ -33,7 +33,7 @@ bool loadFromString( ValuePtr& root , const std::string& data )
 		success = reader.parse( data , *(root.get()) );
 		if( !success )
 		{
-			LOG->error("%s:%i Failed %s" , __FILE__ , __LINE__ , reader.getFormattedErrorMessages().c_str() );
+			LOG->error("%s:%i Failed %s" , __FILE__ , __LINE__ , reader.getFormatedErrorMessages().c_str() );
 		}
 	}
 	catch( ... )

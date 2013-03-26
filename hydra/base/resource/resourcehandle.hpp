@@ -30,13 +30,13 @@ public:
 	typedef std::shared_ptr<Handle> Ptr;
 private:
 	Cache *parent;
-	String8 name;
+	std::string name;
 public:
-	Handle( const String8& name = "" , Cache *parent = nullptr );
+	Handle( const std::string& name = "" , Cache *parent = nullptr );
 	virtual ~Handle();
 
-	const String8& getName() const;
-	void setName( const String8& name );
+	const std::string& getName() const;
+	void setName( const std::string& name );
 
 	virtual bool isLoaded() const;
 	virtual void load();

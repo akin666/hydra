@@ -57,10 +57,9 @@ void Worker::init( ProtoQueuePtr& wqueu )
 void Worker::operator()()
 {
 	// Thread initialization/volatile/sync block
+	// Notifying that the thread really started.
 	{
 		std::lock_guard<std::mutex> lock(mutex);
-
-		// Do initialization here!
 
 		// Initialization done.
 		going = true;
@@ -87,17 +86,6 @@ void Worker::operator()()
 			}
 		}
 	}
-
-	// Thread dying/sync block
-	{
-		std::lock_guard<std::mutex> lock(mutex);
-
-		// Do KILLING here.
-
-		// Initialization done.
-		going = true;
-		condition.notify_one();
-	}
 }
 
 void Worker::terminate()
@@ -107,13 +95,7 @@ void Worker::terminate()
 		std::unique_lock<std::mutex> lock(mutex);
 		going = false;
 
-		while( !going )
-		{
-			condition.wait(lock);
-		}
-
-		delete thread;
-		thread = nullptr;
+		queu->notifyAll();
 	}
 }
 

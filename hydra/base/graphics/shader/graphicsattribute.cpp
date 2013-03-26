@@ -10,7 +10,7 @@
 
 namespace graphics {
 
-Attribute::Attribute( const String8& name , int id )
+Attribute::Attribute( const std::string& name , int id )
 : id( id )
 , name( name )
 {
@@ -29,12 +29,12 @@ const Attribute& Attribute::operator = ( const Attribute& other )
 	return *this;
 }
 
-void Attribute::setName( const String8& name )
+void Attribute::setName( const std::string& name )
 {
 	this->name = name;
 }
 
-const String8& Attribute::getName() const
+const std::string& Attribute::getName() const
 {
 	return name;
 }

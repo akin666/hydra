@@ -22,7 +22,7 @@ private:
 	uint state;
 
 	void setLinking( bool val );
-	sint getUniformID( const String8& key ) const;
+	sint getUniformID( const std::string& key ) const;
 public:
 	static const unsigned int null;
 
@@ -35,12 +35,12 @@ public:
 	bool initialized() const;
 	void release();
 
-	template <class CType> Uniform<CType> getUniform( const String8& key ) const
+	template <class CType> Uniform<CType> getUniform( const std::string& key ) const
 	{
 		return Uniform<CType>( getUniformID( key ) );
 	}
 
-	Attribute getAttribute( const String8& key ) const;
+	Attribute getAttribute( const std::string& key ) const;
 
 	void setAttribute( const Attribute& attribute );
 
@@ -52,7 +52,7 @@ public:
 	void link();
 
 	bool hasError() const;
-	String8 getError() const;
+	std::string getError() const;
 	bool linked() const;
 };
 

@@ -19,8 +19,8 @@ public:
 	PolygonLoader();
 	virtual ~PolygonLoader();
 
-	virtual bool canLoad( const String8& path );
-	virtual bool load( const String8& path , Polygon& target );
+	virtual bool canLoad( const std::string& path );
+	virtual bool load( const std::string& path , Polygon& target );
 };
 
 } // namespace geometry

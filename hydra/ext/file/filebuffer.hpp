@@ -15,7 +15,7 @@ namespace file {
 class Buffer
 {
 private:
-	String8 filename;
+	std::string filename;
 	int fd;
 	size_t size;
 	int realSize;
@@ -31,11 +31,11 @@ public:
 
 	// cases:
 	// a) whole file
-	Buffer& setup( const String8& filename , int accessflags = ACCESS_READ | ACCESS_WRITE );
+	Buffer& setup( const std::string& filename , int accessflags = ACCESS_READ | ACCESS_WRITE );
 	// b) part of the file
-	Buffer& setup( const String8& filename , size_t offset , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE );
+	Buffer& setup( const std::string& filename , size_t offset , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE );
 	// c) new whole file
-	Buffer& setup( const String8& filename , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE | ACCESS_CREATE );
+	Buffer& setup( const std::string& filename , size_t size  , int accessflags = ACCESS_READ | ACCESS_WRITE | ACCESS_CREATE );
 
 	uint32 getFlags() const;
 

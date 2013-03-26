@@ -119,7 +119,7 @@ bool RenderTarget::initialize( Json::ValuePtr& config )
 
 	if( value != nullptr )
 	{
-		glfwSetWindowTitle( Json::Helper::get( value , "title" , String8("HYDRAx0") ).c_str() );
+		glfwSetWindowTitle( Json::Helper::get( value , "title" , std::string("HYDRAx0") ).c_str() );
 	}
 	else
 	{

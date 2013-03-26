@@ -40,7 +40,7 @@ Buffer::~Buffer()
 
 // cases:
 // a) whole file
-Buffer& Buffer::setup( const String8& filename , int accessflags )
+Buffer& Buffer::setup( const std::string& filename , int accessflags )
 {
 	if( isOpen() )
 	{
@@ -61,7 +61,7 @@ Buffer& Buffer::setup( const String8& filename , int accessflags )
 }
 
 // b) part of the file
-Buffer& Buffer::setup( const String8& filename , size_t offset , size_t size  , int accessflags )
+Buffer& Buffer::setup( const std::string& filename , size_t offset , size_t size  , int accessflags )
 {
 	if( isOpen() )
 	{
@@ -82,7 +82,7 @@ Buffer& Buffer::setup( const String8& filename , size_t offset , size_t size  , 
 }
 
 // c) new whole file
-Buffer& Buffer::setup( const String8& filename , size_t size  , int accessflags )
+Buffer& Buffer::setup( const std::string& filename , size_t size  , int accessflags )
 {
 	if( isOpen() )
 	{

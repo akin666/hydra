@@ -24,21 +24,25 @@ private:
 public:
 	static bool isSet()
 	{
+		std::lock_guard<std::mutex> lock(mutex);
 		return singleton;
 	}
 
 	static void reset()
 	{
+		std::lock_guard<std::mutex> lock(mutex);
 		singleton.reset();
 	}
 
 	static void set( Ptr& ct )
 	{
+		std::lock_guard<std::mutex> lock(mutex);
 		singleton = ct;
 	}
 
 	static Ptr get()
 	{
+		std::lock_guard<std::mutex> lock(mutex);
 		return singleton;
 	}
 
