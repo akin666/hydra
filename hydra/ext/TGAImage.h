@@ -17,9 +17,12 @@
 
 namespace imagesaver {
 
-bool RGBA8write( std::string filename , int width , int height , void *pixels );
-bool RGB8write( std::string filename , int width , int height , void *pixels );
-bool ALPHA8write( std::string filename , int width , int height , void *pixels );
+bool RGBA8InterleavedWrite( std::string filename , int width , int height , const void *pixels );
+bool RGB8InterleavedWrite( std::string filename , int width , int height , const void *pixels );
+bool ALPHA8Write( std::string filename , int width , int height , const void *pixels );
+
+bool RGBA8Write( std::string filename , int width , int height , const void *pixels );
+bool RGB8Write( std::string filename , int width , int height , const void *pixels );
 
 } // imagesaver
 

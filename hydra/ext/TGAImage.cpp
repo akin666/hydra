@@ -2,10 +2,11 @@
 #include "TGAImage.h"
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 namespace imagesaver {
 
-bool RGBA8write( std::string filename , int width , int height , void *pixels )
+bool RGBA8InterleavedWrite( std::string filename , int width , int height , const void *pixels )
 {
 	//Error checking
 	if( pixels == NULL || width <= 0 || height <= 0 )
@@ -49,7 +50,7 @@ bool RGBA8write( std::string filename , int width , int height , void *pixels )
 	return true;
 }
 
-bool RGB8write( std::string filename , int width , int height , void *pixels )
+bool RGB8InterleavedWrite( std::string filename , int width , int height , const void *pixels )
 {
 	//Error checking
 	if( pixels == NULL || width <= 0 || height <= 0 )
@@ -83,7 +84,7 @@ bool RGB8write( std::string filename , int width , int height , void *pixels )
 		o.put( ((char*)pixels)[i+2] );
 		o.put( ((char*)pixels)[i+1] );
 		o.put( ((char*)pixels)[i+0] );
-		o.put( (char)0x0 );
+		o.put( (char)0xFF );
 		// BGRA
 	}
 
@@ -93,7 +94,7 @@ bool RGB8write( std::string filename , int width , int height , void *pixels )
 	return true;
 }
 
-bool ALPHA8write( std::string filename , int width , int height , void *pixels )
+bool ALPHA8Write( std::string filename , int width , int height , const void *pixels )
 {
 	//Error checking
 	if( pixels == NULL || width <= 0 || height <= 0 )
@@ -135,6 +136,52 @@ bool ALPHA8write( std::string filename , int width , int height , void *pixels )
 	o.close();
 
 	return true;
+}
+
+bool RGBA8Write( std::string filename , int width , int height , const void *pixels )
+{
+	// convert RGBARGBA... -> RRR...GGG...BBB...AAA...
+	int total = width * height;
+
+	std::vector<unsigned char> target;
+	target.resize( total * 4 );
+
+	unsigned char *tr = (unsigned char *)pixels;
+	unsigned char *tg = (unsigned char *)pixels + ( total );
+	unsigned char *tb = (unsigned char *)pixels + ( 2 * total );
+	unsigned char *ta = (unsigned char *)pixels + ( 3 * total );
+
+	for( int i = 0 ; i < total ; ++i )
+	{
+		target[ i * 4 + 0 ] = tr[i];
+		target[ i * 4 + 1 ] = tg[i];
+		target[ i * 4 + 2 ] = tb[i];
+		target[ i * 4 + 3 ] = ta[i];
+	}
+
+	return RGBA8InterleavedWrite(filename , width , height , &target[ 0 ] );
+}
+
+bool RGB8Write( std::string filename , int width , int height , const void *pixels )
+{
+	// convert RGBARGBA... -> RRR...GGG...BBB...AAA...
+	int total = width * height;
+
+	std::vector<unsigned char> target;
+	target.resize( total * 3 );
+
+	unsigned char *tr = (unsigned char *)pixels;
+	unsigned char *tg = (unsigned char *)pixels + ( total );
+	unsigned char *tb = (unsigned char *)pixels + ( 2 * total );
+
+	for( int i = 0 ; i < total ; ++i )
+	{
+		target[ i * 3 + 0 ] = tr[i];
+		target[ i * 3 + 1 ] = tg[i];
+		target[ i * 3 + 2 ] = tb[i];
+	}
+
+	return RGB8InterleavedWrite(filename , width , height , &target[ 0 ] );
 }
 
 } // imagesaver
