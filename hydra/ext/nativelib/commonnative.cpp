@@ -379,13 +379,13 @@ bool saveImageFile( const std::string path , simg::Buffer& softimage )
 	switch( softimage.getMode() )
 	{
 	case RGBA8 :
-		return imagesaver::RGBA8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+		return imagesaver::RGBA8Write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
 	case RGB8 :
-		return imagesaver::RGB8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+		return imagesaver::RGB8Write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
 	case ALPHA8 	:
 	case LUMINANCE 	:
 	case INTENSITY 	:
-		return imagesaver::ALPHA8write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
+		return imagesaver::ALPHA8Write( path + ".tga" , softimage.getResolution().x , softimage.getResolution().y , softimage.access() );
 	default :
 		break;
 	}
